@@ -1,0 +1,16 @@
+# Wrangler cache / logs
+.wrangler/
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp

@@ -1,0 +1,51 @@
+from pathlib import Path
+import json
+import re
+import unittest
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+class GrowthPagesContract(unittest.TestCase):
+    def text(self, name):
+        return (ROOT / name).read_text()
+
+    def test_homepage_targets_maker_and_links_growth_pages(self):
+        html = self.text('index.html')
+        h1 = re.search(r'<h1[^>]*>(.*?)</h1>', html, re.S | re.I)
+        self.assertIsNotNone(h1)
+        assert h1 is not None
+        heading = re.sub(r'<[^>]+>', ' ', h1.group(1)).lower()
+        self.assertIn('free printable chore chart maker', heading)
+        self.assertIn('/printable-chore-chart', html)
+        self.assertIn('/chore-randomizer', html)
+        self.assertIn('age-aware', html.lower())
+        self.assertIn('weekly rotation', html.lower())
+
+    def test_printable_page_has_unique_search_contract(self):
+        html = self.text('printable-chore-chart.html')
+        self.assertRegex(html, r'<title>[^<]*Printable Chore Chart[^<]*</title>')
+        self.assertIn('https://chorecharteasy.com/printable-chore-chart', html)
+        self.assertIn('application/ld+json', html)
+        self.assertIn('FAQPage', html)
+        self.assertIn('/?template=blank#chart-editor', html)
+        self.assertGreaterEqual(len(re.findall(r'<h2', html)), 4)
+
+    def test_randomizer_page_exposes_real_tool(self):
+        html = self.text('chore-randomizer.html')
+        self.assertIn('id="people-input"', html)
+        self.assertIn('id="chores-input"', html)
+        self.assertIn('id="randomize-button"', html)
+        self.assertIn('id="result-list"', html)
+        self.assertIn('function randomizeChores', html)
+        self.assertIn('crypto.getRandomValues', html)
+        self.assertIn('application/ld+json', html)
+
+    def test_sitemap_contains_growth_pages(self):
+        xml = self.text('sitemap.xml')
+        self.assertIn('<loc>https://chorecharteasy.com/printable-chore-chart</loc>', xml)
+        self.assertIn('<loc>https://chorecharteasy.com/chore-randomizer</loc>', xml)
+
+
+if __name__ == '__main__':
+    unittest.main()

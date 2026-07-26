@@ -147,6 +147,8 @@ class FrontendV2Contract(unittest.TestCase):
             "globalPrivacyControl",
             "loadAnalytics",
             "deleteAnalyticsCookies",
+            "ga-disable-",
+            ".chorecharteasy.pages.dev",
         ]:
             self.assertIn(contract, js)
         self.assertRegex(js, r"function\s+loadAnalytics")

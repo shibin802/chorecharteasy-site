@@ -4,6 +4,7 @@
   const CONSENT_KEY = "chorecharteasy.consent.v2";
   const CONSENT_VERSION = 2;
   const ANALYTICS_ID = "G-WZL9EYQM8E";
+  const GA_DISABLE_KEY = `ga-disable-${ANALYTICS_ID}`;
   const MAX_AGE_MS = 180 * 24 * 60 * 60 * 1000;
 
   const EVENT_FIELDS = {
@@ -70,24 +71,36 @@
 
   function deleteCookie(name, domain) {
     const domainPart = domain ? `; domain=${domain}` : "";
-    document.cookie = `${name}=; Max-Age=0; path=/${domainPart}; SameSite=Lax`;
+    const securePart = location.protocol === "https:" ? "; Secure" : "";
+    document.cookie = `${name}=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/${domainPart}; SameSite=Lax${securePart}`;
   }
 
   function deleteAnalyticsCookies() {
     const names = document.cookie.split(";").map(part => part.split("=")[0].trim()).filter(name => name === "_ga" || name.startsWith("_ga_"));
-    const domains = ["", location.hostname, ".chorecharteasy.com"];
+    const domains = ["", location.hostname, `.${location.hostname}`, ".chorecharteasy.com"];
+    if (location.hostname === "chorecharteasy.pages.dev" || location.hostname.endsWith(".chorecharteasy.pages.dev")) {
+      domains.push(".chorecharteasy.pages.dev");
+    }
     names.forEach(name => domains.forEach(domain => deleteCookie(name, domain)));
   }
 
   function denyAnalytics() {
+    window[GA_DISABLE_KEY] = true;
     if (typeof window.gtag === "function" && analyticsLoaded) {
       window.gtag("consent", "update", { analytics_storage: "denied" });
     }
     deleteAnalyticsCookies();
+    window.setTimeout(deleteAnalyticsCookies, 0);
+    window.setTimeout(deleteAnalyticsCookies, 250);
   }
 
   function loadAnalytics() {
-    if (analyticsLoaded || !currentPreference?.analytics || gpcEnabled()) return;
+    if (!currentPreference?.analytics || gpcEnabled()) return;
+    window[GA_DISABLE_KEY] = false;
+    if (analyticsLoaded) {
+      window.gtag("consent", "update", { analytics_storage: "granted" });
+      return;
+    }
     analyticsLoaded = true;
     window.dataLayer = window.dataLayer || [];
     window.gtag = function () { window.dataLayer.push(arguments); };

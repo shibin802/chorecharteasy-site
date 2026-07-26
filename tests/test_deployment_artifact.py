@@ -38,6 +38,10 @@ class DeploymentArtifactContract(unittest.TestCase):
         self.assertIn("pages functions build functions", workflow)
         self.assertIn("cp .wrangler/pages-functions-build/index.js dist/_worker.js", workflow)
         self.assertIn("pages deploy dist", workflow)
+        self.assertIn("wranglerVersion: 4.80.0", workflow)
+        self.assertIn('--commit-message="GitHub Actions deploy"', workflow)
+        self.assertIn("--commit-dirty=false", workflow)
+        self.assertNotIn("github.event.head_commit.message", workflow)
         self.assertNotIn("pages deploy . ", workflow)
 
 

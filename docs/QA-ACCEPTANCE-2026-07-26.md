@@ -441,14 +441,26 @@ Auth、Early Access、Production D1、R2、Creem 和 payments 保持 dormant，�
 - [x] 所有 P0 有复现步骤、影响和解锁动作。
 - [x] QA 中 P1 修复有独立 Re-QA。
 - [ ] 无 P0/P1 才能上线：**未满足**。
-- [ ] Production/Preview URL 真实复验：**BLOCKED**。
+- [x] Production/Preview URL 真实复验：**Preview PASS；Production 未部署**。
 
-## 16. 下游交接
+## 16. Preview Re-QA 增补
 
-- 下一阶段：`Owner 法律/内容/视觉签字 → Preview Release Candidate → 独立 Preview Re-QA → Launch Review`。
-- 必须读取：本报告、`docs/project-control.md`、Compliance、Frontend/Backend Handoff。
-- 不能假设：新版本已在线、法律已批准、Preview 已验证、D1/email/payment 已在生产可用。
+- Preview branch：`preview-lean-v2-20260726`
+- Preview commit：`4121b60159b2298b066a0bc2c2626e83e90ad1c6`
+- Preview URL：`https://22ec0c2d.chorecharteasy.pages.dev`
+- Cloudflare deployment：`preview / success`
+- 30/30 unittest：PASS。
+- 9 viewport、Maker 持久化、Consent/GPC、12-page technical smoke：PASS。
+- Preview D1 `/api/health`：200 / ready。
+- Consent 远端最终结果：Accept `_ga` cookies=2；Withdraw=0。
+- 远端 Lighthouse 因执行安全层持续误判 `pages.dev` 而未运行；本地 Lighthouse 记录保持 mobile 98、desktop 100、A11y/BP/SEO 100、CLS 0。未伪造远端分数。
+
+## 17. 下游交接
+
+- 下一阶段：`Owner 法律/邮箱/内容/视觉签字 → Production Launch Review`。
+- 必须读取：本报告、`docs/QA-REPAIR-2026-07-26.md`、`docs/project-control.md`、Compliance、Frontend/Backend Handoff。
+- 不能假设：Production 已更新、法律已批准、support 邮箱已验证、Production D1/email/payment 已可用。
 - 下游不能改动：免费 Maker 无账号、active draft 本地保存、Analytics 默认关闭、payment disabled、儿童数据不进后端。
-- 禁止动作：当前不得 commit/push/deploy production；不得启用 Early Access/Auth/payment；不得收集真实邮箱。
+- 禁止动作：当前不得 merge `main` 或部署 Production；不得启用 Early Access/Auth/payment；不得收集真实邮箱。
 
 [BLOCKED]

@@ -3,8 +3,16 @@
 日期：2026-07-26
 项目：ChoreChartEasy
 阶段：`08-backend`
-状态：`NEEDS_REVIEW`
+状态：`PREVIEW_PASS / PRODUCTION_DISABLED`
 生产状态：`NOT_DEPLOYED · ALL WRITE FEATURES DISABLED`
+
+## Preview 增补
+
+- Preview D1：`chorecharteasy-preview`，仅绑定 Preview 环境的 `DB`。
+- Migration：17 queries；7 张业务表。
+- `/api/health`：200，database=`ready`。
+- `/api/membership`：200；Auth、Early Access、Payments 均 disabled。
+- Production D1 binding 未修改，仍为空。
 
 ## 当前结论
 

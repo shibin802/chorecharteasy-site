@@ -2,10 +2,10 @@
 
 日期：2026-07-26
 阶段：`06-frontend-implementation`
-状态：`NEEDS_REVIEW`
-部署状态：`NOT_DEPLOYED`
+状态：`PREVIEW_PASS / NEEDS_OWNER_REVIEW`
+部署状态：`PREVIEW_DEPLOYED / PRODUCTION_NOT_DEPLOYED`
 
-> 本轮已将首页从旧 SaaS/订阅模型重构为免费 Printable chore chart maker，并完成本地真实交互、Consent、响应式、打印和 Cloudflare Pages runtime QA。当前代码只在本地 `main` 工作树中，**未 commit、未 push、未部署**。
+> Preview：`https://preview-lean-v2-20260726.chorecharteasy.pages.dev`，candidate commit `4121b60`。远端 9 viewport、Maker、Consent/GPC 和 12-page technical smoke 已通过；Production 仍是旧版本，禁止把 Preview 描述为已上线。
 
 ## 1. 实现范围
 

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">ChoreChartEasy logo mark</title>
+  <desc id="desc">A paper sheet with a folded corner and a checked task.</desc>
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="#1F6D62"/>
+  <path d="M17 13h20l10 10v28H17z" fill="#FFFDF8" stroke="#17313A" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M37 13v10h10" fill="none" stroke="#17313A" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M23 34l5 5 11-12" fill="none" stroke="#C9432B" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M23 45h17" fill="none" stroke="#1F6D62" stroke-width="3" stroke-linecap="round"/>
+</svg>

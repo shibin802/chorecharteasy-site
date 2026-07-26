@@ -1,0 +1,50 @@
+Create a high-fidelity DESKTOP homepage screen, 1440px wide, for ChoreChartEasy — a free printable chore chart maker for parents and caregivers of children ages 3–12.
+
+VISUAL DIRECTION B — EDITORIAL FAMILY WORKBOOK
+Treat the website like a modern illustrated household workbook from an independent print publisher, not a SaaS product. It should feel authored, editorial, tactile, and adult-facing.
+
+STYLE SYSTEM
+- Background warm cream #F4EFE4.
+- Paper #FFFCF5.
+- Text charcoal #263238.
+- Primary forest #315C45.
+- CTA brick #B84A3A.
+- Supporting mustard #D7A62F.
+- Secondary burgundy #6D303A.
+- Borders #B9B2A5.
+- Typography: Fraunces for display headings; Source Sans 3 for body and UI.
+- Strong editorial grid, oversized chapter numerals, thin rules, margin notes, paper tabs, occasional underlined labels.
+- Use rectangular or 6–10px radius controls. No uniform 24px rounded cards.
+- No gradients, purple, glassmorphism, blobs, stock family photos, cartoon children, emoji icons, fake testimonials, ratings, badges, or user counts.
+- Use simple custom SVG line icons and real chore-chart paper previews.
+
+PRIMARY MESSAGE — exact copy
+Eyebrow: “Free printable tool · No sign-up · Ages 3–12”
+H1: “Make a printable chore chart that fits your child’s age”
+Subhead: “Choose an age group, start with practical chore ideas, edit every task, and print a clear weekly chart on US Letter or A4.”
+Primary CTA: “Make my free chart”
+Secondary CTA: “Start with a blank chart”
+Microcopy: “For parents and caregivers. No child account required.”
+
+PAGE STRUCTURE
+1. Compact editorial masthead: logo/wordmark left; How it works, Print examples, Age guides, FAQ; CTA “Make a chart”. No Pricing or Sign in.
+2. Asymmetric hero: large left-aligned type taking 55%; right side shows two overlapped real paper chart previews with visible task rows, weekday columns, and checkboxes. Add four restrained product facts: Age-based starters; Edit every task; US Letter & A4; One draft saved in this browser.
+3. “Start with a useful first draft”: workbook-like form with age tabs Ages 3–4, Ages 5–6, Ages 7–9, Ages 10–12; optional “Nickname or initials (optional)”; starters Weekly chores, Morning routine, Blank chart, Multiple kids (Beta); CTA “Create my starting chart”. Include helper “Avoid full names, school names, addresses, health details, or other sensitive information.” Include adult-review note.
+4. “Edit your chart”: dominant weekly chart editor, not a dashboard. Title “Our Weekly Chore Chart”; editable rows; Mon–Sun checkboxes; “Add a task”; US Letter/A4; CTA “Preview and print”; “Clear local data”.
+5. “See what you’ll print”: three offset paper samples — Weekly chore chart / US Letter · Color; Ink-friendly weekly chart / A4 · Ink-friendly; Morning routine / US Letter · Color. CTA “Make a chart like this”.
+6. “Skip the blank design canvas”: editorial text block plus three numbered reasons: Start with age-based ideas; Change the plan to fit your home; Print for Letter or A4.
+7. “From age group to printable chart in three steps”: Choose a starting point; Edit every row; Preview, then print.
+8. “Choose the way you want to start”: four horizontal workbook tabs for Weekly chores, Morning routine, Blank chart, Multiple kids — Beta. Include: “Assignments are starting suggestions, not a guarantee of equal effort or suitability.”
+9. “Designed for adults, built around a paper routine”: quiet bordered note, links Privacy Policy, Clear local data, Cookie settings. Do not use shields or absolute privacy claims.
+10. “Chore ideas and printable tools”: two-column text-led directory of six links.
+11. Quiet planned-product strip: label “PLANNED · NO CHARGE TODAY”; heading “Want more ready-to-print layouts?”; planned price “$9.99 one-time”; email and CTA “Join early access”; clearly state no charge today. No subscription, Pro, Buy Now, lifetime, countdown, or scarcity.
+12. Full-width FAQ accordion with seven questions.
+13. Final CTA “Make this week’s chore chart” with “Make my free chart” and “Start with a blank chart”.
+14. Footer with Privacy, Terms, Cookies, Refunds, Contact, Cookie settings.
+
+INTERACTION / ACCESSIBILITY
+- 1180px max content width, 16px minimum body, 44px controls, strong focus states, semantic labels.
+- Make the tool visible within one viewport or one short scroll.
+- Preserve exact copy and HTML heading order; do not replace SEO content with image text.
+- Weekly chart readable in grayscale and as a real printable page.
+- Do not invent content, claims, testimonials, or capabilities.

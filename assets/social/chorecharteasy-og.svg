@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">ChoreChartEasy printable chore chart maker</title>
+  <desc id="desc">A warm cream social card with a printable weekly chore chart preview.</desc>
+  <rect width="1200" height="630" fill="#F6F1E7"/>
+  <circle cx="1090" cy="90" r="170" fill="#F2C8B5" opacity=".58"/>
+  <circle cx="120" cy="590" r="190" fill="#BBD9D0" opacity=".62"/>
+
+  <g transform="translate(70 60)">
+    <rect width="52" height="52" rx="15" fill="#174E45"/>
+    <path d="M14 27l8 8 17-19" fill="none" stroke="#FFFDF7" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="70" y="38" fill="#1F2A26" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700">ChoreChartEasy</text>
+  </g>
+
+  <g transform="translate(70 170)">
+    <text x="0" y="0" fill="#9D3E28" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" letter-spacing="2">FREE PRINTABLE TOOL</text>
+    <text x="0" y="68" fill="#1F2A26" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700">A chore chart kids</text>
+    <text x="0" y="132" fill="#1F2A26" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700">can actually follow.</text>
+    <text x="0" y="190" fill="#4E5C56" font-family="Arial, Helvetica, sans-serif" font-size="27">Start by age. Edit every task. Print in one page.</text>
+
+    <g transform="translate(0 238)" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">
+      <rect width="130" height="45" rx="22.5" fill="#E2EEE9" stroke="#174E45" stroke-width="2"/>
+      <text x="65" y="29" fill="#174E45" text-anchor="middle">No sign-up</text>
+      <rect x="146" width="124" height="45" rx="22.5" fill="#FCE5D9" stroke="#9D3E28" stroke-width="2"/>
+      <text x="208" y="29" fill="#9D3E28" text-anchor="middle">Ages 3–12</text>
+      <rect x="286" width="150" height="45" rx="22.5" fill="#FFFDF7" stroke="#6B746F" stroke-width="2"/>
+      <text x="361" y="29" fill="#3F4B46" text-anchor="middle">Letter + A4</text>
+    </g>
+  </g>
+
+  <g transform="translate(760 105) rotate(2 175 220)">
+    <rect x="13" y="18" width="350" height="438" rx="18" fill="#263A35" opacity=".14"/>
+    <rect width="350" height="438" rx="18" fill="#FFFDF7" stroke="#D8CAB8" stroke-width="3"/>
+    <rect x="25" y="25" width="300" height="58" rx="12" fill="#174E45"/>
+    <text x="175" y="61" fill="#FFFDF7" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700">Our Weekly Chore Chart</text>
+    <g font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#4E5C56" text-anchor="middle">
+      <text x="148" y="111">M</text><text x="178" y="111">T</text><text x="208" y="111">W</text><text x="238" y="111">T</text><text x="268" y="111">F</text><text x="298" y="111">S</text><text x="328" y="111">S</text>
+    </g>
+    <g stroke="#D8CAB8" stroke-width="2" fill="none">
+      <path d="M25 120H325M25 176H325M25 232H325M25 288H325M25 344H325M25 400H325"/>
+      <path d="M132 96V400"/>
+      <path d="M163 96V400M193 96V400M223 96V400M253 96V400M283 96V400M313 96V400"/>
+    </g>
+    <g font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#1F2A26">
+      <text x="38" y="153">Make the bed</text>
+      <text x="38" y="209">Pack school bag</text>
+      <text x="38" y="265">Clear the table</text>
+      <text x="38" y="321">Put laundry away</text>
+      <text x="38" y="377">Sweep a small area</text>
+    </g>
+    <g fill="none" stroke="#9D3E28" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M140 143l6 7 11-15M201 199l6 7 11-15M261 255l6 7 11-15M291 311l6 7 11-15M170 367l6 7 11-15"/>
+    </g>
+  </g>
+
+  <text x="70" y="585" fill="#4E5C56" font-family="Arial, Helvetica, sans-serif" font-size="21">chorecharteasy.com</text>
+</svg>

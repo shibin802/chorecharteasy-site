@@ -1,0 +1,71 @@
+Refine the existing ChoreChartEasy Kitchen Table Utility desktop screen. Preserve its overall warm paper-first visual direction, Bricolage Grotesque + Atkinson Hyperlegible typography, asymmetric product-first layout, and realistic weekly chart editor. Do not replace it with a different template.
+
+CRITICAL COPY AND COMPLIANCE CORRECTIONS
+1. Change the main CTA background to #C9432B with white text. Hover target #B83A25. Do not use #E85D3F with white text.
+2. Replace the maker heading with the exact text: “Start with a useful first draft”. Do not prefix headings with “1.” or “2.”.
+3. Use this exact privacy helper: “Avoid full names, school names, addresses, health details, or other sensitive information.”
+4. Use this exact adult-review helper: “Chore ideas are starting points. An adult should adjust each task to the child’s abilities and home environment.”
+5. Remove every invented claim or label, including “motor skills”, “developmental milestones”, “MOST POPULAR”, “DRAFT SAVED”, “safe”, “expert”, usage numbers, ratings, and testimonials.
+6. Do not claim that data is safe, private, secure, or never uploaded.
+7. Replace external Material Symbols with simple inline SVG line icons. Do not use emoji or an external icon font.
+8. Keep all user-facing copy as real HTML text, not text baked into images.
+
+RESTORE MISSING SECTIONS
+Add these sections in this order after the editor and print examples:
+
+A. H2 “Skip the blank design canvas”
+Body: “A blank template still leaves you deciding what to write. A fixed PDF may not fit your child or your week. ChoreChartEasy gives you an age-based starting list, then lets you replace, remove, or add any task before you print.”
+Three text-led benefits: “Start with age-based ideas”, “Change the plan to fit your home”, “Print for Letter or A4”.
+
+B. H2 “From age group to printable chart in three steps”
+Steps: “Choose a starting point”, “Edit every row”, “Preview, then print”.
+
+C. H2 “Choose the way you want to start”
+Rows: “Weekly chores”, “Morning routine”, “Blank chart”, “Multiple kids — Beta”.
+Boundary copy: “Assignments are starting suggestions, not a guarantee of equal effort or suitability.”
+
+D. H2 “Designed for adults, built around a paper routine”
+Body: “ChoreChartEasy is for parents, caregivers, teachers, and other adults creating charts for children. Children do not need an account.”
+Links: “Read the Privacy Policy”, “Clear local data”, “Cookie settings”.
+Use a quiet bordered note, not a shield or privacy badge.
+
+E. H2 “Chore ideas and printable tools”
+Six text links: Printable chore chart; Chores for ages 3–4; Chores for ages 5–6; Morning routine chart; Chore randomizer; Multiple-kids chart.
+
+F. Planned section exact content:
+Label “PLANNED · NO CHARGE TODAY”
+H2 “Want more ready-to-print layouts?”
+Body “We’re planning a Printable Family Pack with age-group charts, multiple-kids layouts, PDF and PNG files, and ink-friendly versions.”
+Line “Planned pilot price: $9.99 one-time”
+CTA “Join early access”
+Microcopy “No charge today. Joining the list does not purchase or reserve the pack. You can unsubscribe at any time.”
+Do not add Buy Now, Pro, subscription, lifetime, countdown, scarcity, or “popular”.
+
+G. FAQ title exact: “Frequently asked questions”
+Use these exact seven visible questions and no substitutes:
+- “Is ChoreChartEasy free?”
+- “Do I need an account?”
+- “What ages does the chart maker support?”
+- “Can I make one chart for multiple children?”
+- “Can I print on US Letter and A4 paper?”
+- “Where is my chart saved?”
+- “Are the chore suggestions right for every child?”
+
+H. Final CTA:
+H2 “Make this week’s chore chart”
+Body “Choose a starting point, edit the tasks, and preview the finished chart before you print.”
+Primary “Make my free chart”
+Secondary “Start with a blank chart”
+Microcopy “No sign-up required for the free chart maker.”
+
+I. Footer exact content:
+“© 2026 ChoreChartEasy. A chart-making tool for parents and caregivers.”
+Links: Privacy, Terms, Cookies, Refunds, Contact, Cookie settings.
+
+STRUCTURE AND OUTPUT
+- Preserve the dominant editor and real paper previews.
+- Keep the tool visible within the first viewport or one short scroll.
+- Do not use repetitive generic card grids.
+- Minimum body 16px, controls 44px, visible focus, WCAG AA contrast.
+- No Pricing, Sign in, account, Pro, checkout, cloud library, or subscription UI.
+- Generate a complete long desktop homepage, not a shortened teaser page.

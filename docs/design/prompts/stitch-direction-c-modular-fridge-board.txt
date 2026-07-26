@@ -1,0 +1,51 @@
+Create a high-fidelity DESKTOP homepage screen, 1440px wide, for ChoreChartEasy — a free printable chore chart maker for parents and caregivers of children ages 3–12.
+
+VISUAL DIRECTION C — MODULAR FRIDGE BOARD
+Build a bright, structured family utility inspired by a neatly organized refrigerator planner and quality stationery. It may feel energetic, but it must remain adult-facing, calm enough for long-form content, and clearly printable. Avoid childish cartoons and generic SaaS styling.
+
+STYLE SYSTEM
+- Background pale mint-paper #EEF4EF.
+- Main surface #FFFDF8.
+- Text deep teal #153B3D.
+- Primary dark teal #176B65.
+- CTA coral-red #DE604D.
+- Accent sun yellow #F2C14E.
+- Secondary blue-gray #557A83.
+- Borders #B7CDC5.
+- Typography: Bricolage Grotesque for headings and IBM Plex Sans for body/UI.
+- Modular grid with colored section tabs, checklist markers, clipped-paper edges, solid offset borders, and nearly no shadows.
+- Use varied composition: stacked tool zones and asymmetrical paper previews, not repetitive three-card rows.
+- No gradients, purple, glass effects, 3D blobs, stock children, emoji icons, fake social proof, awards, user numbers, or testimonials.
+- Use custom SVG checks, paper, pencil, print, and arrow icons.
+
+EXACT HERO COPY
+Eyebrow: “Free printable tool · No sign-up · Ages 3–12”
+H1: “Make a printable chore chart that fits your child’s age”
+Subhead: “Choose an age group, start with practical chore ideas, edit every task, and print a clear weekly chart on US Letter or A4.”
+Primary CTA: “Make my free chart”
+Secondary CTA: “Start with a blank chart”
+Microcopy: “For parents and caregivers. No child account required.”
+Product facts: “Age-based starters”, “Edit every task”, “US Letter & A4”, “One draft saved in this browser”.
+
+REQUIRED PAGE
+1. Header: check-in-paper logo, ChoreChartEasy, How it works, Print examples, Age guides, FAQ, CTA “Make a chart”. Never show Pricing or Sign in.
+2. Hero: left copy and CTAs; right actual weekly chart UI. Place the maker controls partly within the hero so utility is immediately visible.
+3. Maker heading “Start with a useful first draft”; age choices Ages 3–4 / 5–6 / 7–9 / 10–12; optional nickname/initials field; starters Weekly chores / Morning routine / Blank chart / Multiple kids (Beta); CTA “Create my starting chart”. Include privacy helper and adult-review helper.
+4. Large editor heading “Edit your chart”; editable “Our Weekly Chore Chart”; task rows; Mon–Sun checkbox columns; “Add a task”; US Letter/A4; primary “Preview and print”; secondary “Clear local data”. The editor is the main product, not a decorative screenshot.
+5. Print examples heading “See what you’ll print”; three realistic, differently sized paper previews for weekly color, weekly ink-friendly, and morning routine; CTA “Make a chart like this”.
+6. Explanation heading “Skip the blank design canvas”; show three text-led benefits: “Start with age-based ideas”, “Change the plan to fit your home”, “Print for Letter or A4”.
+7. How it works: “From age group to printable chart in three steps” with Choose a starting point / Edit every row / Preview, then print.
+8. Starting points heading “Choose the way you want to start”; four tabbed rows. Multiple Kids marked Beta; include “Assignments are starting suggestions, not a guarantee of equal effort or suitability.”
+9. Adult/privacy section “Designed for adults, built around a paper routine”; no shield badges and no absolute private/safe claim.
+10. Text directory “Chore ideas and printable tools” with six links.
+11. Secondary planned product section: “PLANNED · NO CHARGE TODAY”, “Want more ready-to-print layouts?”, “Planned pilot price: $9.99 one-time”, email field, “Join early access”, and explicit no-charge microcopy. Do not use Pro, subscription, Buy Now, lifetime, countdown, or scarcity.
+12. Seven-question FAQ accordion.
+13. Final CTA “Make this week’s chore chart”; “Make my free chart”; “Start with a blank chart”.
+14. Footer with Privacy, Terms, Cookies, Refunds, Contact, Cookie settings.
+
+ACCESSIBILITY AND RESPONSIVENESS
+- Desktop 1440, max width 1180, minimum body 16px, minimum touch 44px, visible focus, sufficient contrast.
+- Keep H1 left aligned and maximum 3 lines. Avoid a generic centered hero.
+- Preserve exact text in HTML; do not hide SEO copy in images.
+- Make paper output work in grayscale, with no meaning conveyed by color alone.
+- Do not invent copy, claims, prices beyond the stated planned price, statistics, reviews, or features.

@@ -16,11 +16,12 @@ class GrowthPagesContract(unittest.TestCase):
         self.assertIsNotNone(h1)
         assert h1 is not None
         heading = re.sub(r'<[^>]+>', ' ', h1.group(1)).lower()
-        self.assertIn('free printable chore chart maker', heading)
+        self.assertIn('make a printable chore chart that fits your child’s age', heading)
         self.assertIn('/printable-chore-chart', html)
         self.assertIn('/chore-randomizer', html)
-        self.assertIn('age-aware', html.lower())
-        self.assertIn('weekly rotation', html.lower())
+        self.assertIn('age-based ideas', html.lower())
+        self.assertIn('us letter', html.lower())
+        self.assertIn('a4', html.lower())
 
     def test_printable_page_has_unique_search_contract(self):
         html = self.text('printable-chore-chart.html')
@@ -33,12 +34,13 @@ class GrowthPagesContract(unittest.TestCase):
 
     def test_randomizer_page_exposes_real_tool(self):
         html = self.text('chore-randomizer.html')
+        js = self.text('assets/pages/chore-randomizer.js')
         self.assertIn('id="people-input"', html)
         self.assertIn('id="chores-input"', html)
         self.assertIn('id="randomize-button"', html)
         self.assertIn('id="result-list"', html)
-        self.assertIn('function randomizeChores', html)
-        self.assertIn('crypto.getRandomValues', html)
+        self.assertIn('function randomizeChores', js)
+        self.assertIn('crypto.getRandomValues', js)
         self.assertIn('application/ld+json', html)
 
     def test_sitemap_contains_growth_pages(self):

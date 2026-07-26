@@ -1,0 +1,59 @@
+Refine the existing ChoreChartEasy mobile screen. Preserve its 390px Kitchen Table Utility layout, warm paper palette, dominant chart editor, and overall section flow. This is a strict repair, not a redesign.
+
+FIX ALL OF THESE ITEMS:
+
+1. TYPOGRAPHY AND ICONS
+- Use exactly Bricolage Grotesque for headings and Atkinson Hyperlegible for body/UI.
+- Remove Atkinson Hyperlegible Next.
+- Remove Material Symbols and its external stylesheet. Replace every interface icon with a simple inline SVG line icon.
+- No emoji.
+
+2. REMOVE UNSUPPORTED CLAIMS
+- Remove every occurrence of “developmental milestones”, “motor skills”, “safe”, “private”, “secure”, “popular”, “expert”, ratings, testimonials, and user counts.
+- Adult-review helper must be exactly: “Chore ideas are starting points. An adult should adjust each task to the child’s abilities and home environment.”
+
+3. RESTORE THE REQUIRED ADULT-USE SECTION
+Add this exact section before the guide links:
+H2: “Designed for adults, built around a paper routine”
+Body: “ChoreChartEasy is for parents, caregivers, teachers, and other adults creating charts for children. Children do not need an account.”
+Links/buttons: “Read the Privacy Policy”, “Clear local data”, “Cookie settings”.
+Use a quiet bordered paper note. Do not use a shield, lock, privacy badge, or absolute privacy claim.
+
+4. RESTORE FINAL CTA
+Add this exact section after FAQ and before footer:
+H2: “Make this week’s chore chart”
+Body: “Choose a starting point, edit the tasks, and preview the finished chart before you print.”
+Primary CTA: “Make my free chart”
+Secondary CTA: “Start with a blank chart”
+Microcopy: “No sign-up required for the free chart maker.”
+
+5. FIX ANALYTICS CONSENT BOTTOM SHEET
+Exact body: “We use essential storage to run the chart maker. With your permission, we use analytics to understand site usage. Analytics is off until you choose.”
+Show three controls with equal accessibility:
+- “Accept analytics”
+- “Reject non-essential”
+- “Cookie settings”
+Accept and Reject must have equal size and prominence. Cookie settings may be a bordered full-width button or link. The sheet must not cover the final CTA or footer; show it as a separate state specimen near the end of the design, not permanently obscuring content.
+
+6. COPY FIDELITY
+Keep exact headings:
+- “Make a printable chore chart that fits your child’s age”
+- “Start with a useful first draft”
+- “Edit your chart”
+- “See what you’ll print”
+- “Skip the blank design canvas”
+- “From age group to printable chart in three steps”
+- “Choose the way you want to start”
+- “Designed for adults, built around a paper routine”
+- “Chore ideas and printable tools”
+- “Want more ready-to-print layouts?”
+- “Frequently asked questions”
+- “Make this week’s chore chart”
+
+7. VISUAL / MOBILE
+- Keep 16px side gutters and 44px touch targets.
+- No page horizontal overflow.
+- Only the chart table may scroll horizontally, with visible text “Swipe sideways to see all days”.
+- Main CTA #C9432B with white text; teal #1F6D62 for selected tool states.
+- Preserve all legal footer links: Privacy, Terms, Cookies, Refunds, Contact, Cookie settings.
+- No Pricing, Sign in, Pro, subscription, checkout, cloud sync, fake social proof, or stock imagery.

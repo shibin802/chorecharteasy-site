@@ -1,0 +1,48 @@
+{
+  "projectId": "10112449553961527926",
+  "createdAt": "2026-07-26T05:09:17.248Z",
+  "screens": [
+    {
+      "slug": "direction-a-kitchen-table-utility",
+      "screenId": "59ebbaf3cbab4f06a1a8f796cca1f42d",
+      "htmlFile": "/root/workspace/chorecharteasy-site/docs/design/stitch-artifacts/direction-a-kitchen-table-utility.html",
+      "imageFile": "/root/workspace/chorecharteasy-site/docs/design/stitch-artifacts/direction-a-kitchen-table-utility.png",
+      "html": {
+        "bytes": 34379,
+        "contentType": "text/html"
+      },
+      "image": {
+        "bytes": 28655,
+        "contentType": "image/png"
+      }
+    },
+    {
+      "slug": "direction-b-editorial-workbook",
+      "screenId": "020094ddb56d4714a41c7d9b2d89a2f6",
+      "htmlFile": "/root/workspace/chorecharteasy-site/docs/design/stitch-artifacts/direction-b-editorial-workbook.html",
+      "imageFile": "/root/workspace/chorecharteasy-site/docs/design/stitch-artifacts/direction-b-editorial-workbook.png",
+      "html": {
+        "bytes": 34220,
+        "contentType": "text/html"
+      },
+      "image": {
+        "bytes": 18959,
+        "contentType": "image/png"
+      }
+    },
+    {
+      "slug": "direction-c-modular-fridge-board",
+      "screenId": "5acb2629359a4ecf872053b1d511f036",
+      "htmlFile": "/root/workspace/chorecharteasy-site/docs/design/stitch-artifacts/direction-c-modular-fridge-board.html",
+      "imageFile": "/root/workspace/chorecharteasy-site/docs/design/stitch-artifacts/direction-c-modular-fridge-board.png",
+      "html": {
+        "bytes": 27331,
+        "contentType": "text/html"
+      },
+      "image": {
+        "bytes": 33297,
+        "contentType": "image/png"
+      }
+    }
+  ]
+}

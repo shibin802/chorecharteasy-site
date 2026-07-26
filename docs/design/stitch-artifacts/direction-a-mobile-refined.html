@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=390, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>ChoreChartEasy | Simple Printable Chore Charts for Kids</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&amp;family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1f6d62", // Teal
+                        "secondary": "#c9432b", // Coral/CTA
+                        "tertiary": "#e9b949", // Mustard
+                        "surface": "#fffdf8", // White paper
+                        "background": "#f6f1e7", // Warm canvas
+                        "on-surface": "#17313a", // Ink
+                        "on-background": "#17313a",
+                        "outline": "#c9d7d1", // Border
+                        "outline-variant": "#bec9c5",
+                        "surface-container": "#eceeec",
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0px",
+                        "lg": "4px",
+                        "xl": "8px",
+                    },
+                    spacing: {
+                        "margin-mobile": "16px",
+                        "gutter": "20px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "xl": "40px",
+                    },
+                    fontFamily: {
+                        "caption": ["Atkinson Hyperlegible"],
+                        "label-md": ["Atkinson Hyperlegible"],
+                        "body-md": ["Atkinson Hyperlegible"],
+                        "body-lg": ["Atkinson Hyperlegible"],
+                        "headline-md": ["Bricolage Grotesque"],
+                        "headline-lg-mobile": ["Bricolage Grotesque"],
+                        "display-lg": ["Bricolage Grotesque"],
+                    },
+                    fontSize: {
+                        "caption": ["13px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.1", "fontWeight": "800" }],
+                        "display-lg": ["44px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #f6f1e7;
+            color: #17313a;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100dvh;
+        }
+
+        .paper-card {
+            background-color: #fffdf8;
+            border: 1px solid #c9d7d1;
+            position: relative;
+        }
+
+        .clipped-corner::after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(225deg, #f6f1e7 50%, transparent 50%);
+            border-bottom: 1px solid #c9d7d1;
+            border-left: 1px solid #c9d7d1;
+        }
+
+        .hard-shadow {
+            box-shadow: 4px 4px 0px #17313a;
+        }
+
+        .hard-shadow-active:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #17313a;
+        }
+
+        .registration-mark {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+        }
+
+        .registration-mark::before, .registration-mark::after {
+            content: '';
+            position: absolute;
+            background-color: #c9d7d1;
+        }
+
+        .registration-mark::before { width: 100%; height: 1px; top: 50%; left: 0; }
+        .registration-mark::after { height: 100%; width: 1px; left: 50%; top: 0; }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        button, a, input {
+            min-height: 44px;
+        }
+    </style>
+</head>
+<body class="font-body-md">
+<!-- Header -->
+<header class="fixed top-0 left-0 w-full z-50 h-[64px] bg-surface border-b border-outline flex items-center justify-between px-margin-mobile">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 paper-card flex items-center justify-center border-on-surface">
+<svg fill="none" height="20" stroke="#17313a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="20"><path d="M20 6L9 17l-5-5"></path></svg>
+</div>
+<span class="font-headline-md text-[20px] tracking-tight">ChoreChartEasy</span>
+</div>
+<div class="flex items-center gap-3">
+<button class="bg-secondary text-white font-label-md px-3 h-10 flex items-center justify-center text-[12px] uppercase">Make a chart</button>
+<button class="w-11 h-11 flex items-center justify-center">
+<svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="24"><line x1="4" x2="20" y1="8" y2="8"></line><line x1="4" x2="20" y1="16" y2="16"></line></svg>
+</button>
+</div>
+</header>
+<main class="pt-[64px] pb-12 space-y-xl">
+<!-- HERO -->
+<section class="px-margin-mobile pt-lg text-center">
+<span class="font-label-md text-primary uppercase text-[12px] tracking-[0.1em] block mb-sm">Free printable tool · No sign-up · Ages 3–12</span>
+<h1 class="font-display-lg text-on-surface mb-md">Make a printable chore chart that fits your child’s age</h1>
+<p class="font-body-lg text-on-surface-variant mb-lg px-4">Stop browsing templates. Build a custom, high-legibility schedule in 60 seconds.</p>
+<div class="flex flex-col gap-3 mb-xl">
+<button class="bg-secondary text-white font-label-md h-12 uppercase hard-shadow hard-shadow-active transition-all">Make my free chart</button>
+<button class="bg-surface border border-outline text-on-surface font-label-md h-12 uppercase">Start with a blank chart</button>
+<p class="font-caption text-on-surface-variant">No sign-up required for the free chart maker.</p>
+</div>
+<!-- Preview Image -->
+<div class="relative mx-auto w-full aspect-[4/3] paper-card clipped-corner p-4 shadow-sm mb-lg">
+<div class="registration-mark -top-1.5 -left-1.5"></div>
+<div class="registration-mark -bottom-1.5 -right-1.5"></div>
+<div class="w-full h-full bg-cover bg-center opacity-90 border border-outline-variant" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuABBpgiubIaIyyZtehuDAHQu4a7ABcH2apvM8VynqRus6TS-UJ4EH2Y4UqO0C-bN2kawQznaPNakbhHfNQZntS2gsc478fy-hgky_v4utaTEqZBzbYzpAgMFhrmAfs3ImoI9OzeWvyU99e7HaxfyAfvvm6hyf2PTqjIn2wAV-pCc0qsR6rwpCKMyOX56jKPmVan-SJworvbLb2EwZDkbOZFAaxLZdRv4Oq4C3LypLVFTA9z8ka7CMFzP3iFEilrF6KoCaWviEFRI82v')"></div>
+</div>
+<!-- Proof Points -->
+<div class="grid grid-cols-2 gap-4 text-left border-t border-outline pt-lg">
+<div class="flex gap-2">
+<svg class="shrink-0" fill="none" height="20" stroke="#1f6d62" stroke-width="2.5" viewbox="0 0 24 24" width="20"><path d="M20 6L9 17l-5-5"></path></svg>
+<span class="font-label-md text-[13px]">Print-optimized design</span>
+</div>
+<div class="flex gap-2">
+<svg class="shrink-0" fill="none" height="20" stroke="#1f6d62" stroke-width="2.5" viewbox="0 0 24 24" width="20"><path d="M20 6L9 17l-5-5"></path></svg>
+<span class="font-label-md text-[13px]">Age-appropriate tasks</span>
+</div>
+<div class="flex gap-2">
+<svg class="shrink-0" fill="none" height="20" stroke="#1f6d62" stroke-width="2.5" viewbox="0 0 24 24" width="20"><path d="M20 6L9 17l-5-5"></path></svg>
+<span class="font-label-md text-[13px]">Mobile friendly editor</span>
+</div>
+<div class="flex gap-2">
+<svg class="shrink-0" fill="none" height="20" stroke="#1f6d62" stroke-width="2.5" viewbox="0 0 24 24" width="20"><path d="M20 6L9 17l-5-5"></path></svg>
+<span class="font-label-md text-[13px]">Print from browser</span>
+</div>
+</div>
+</section>
+<!-- MAKER -->
+<section class="px-margin-mobile" id="maker">
+<div class="paper-card p-6 border-on-surface">
+<h2 class="font-headline-md mb-6">Start with a useful first draft</h2>
+<!-- Age Groups -->
+<div class="mb-8">
+<p class="font-label-md uppercase text-primary mb-3 text-[12px]">1. Select Child's Age</p>
+<div class="grid grid-cols-2 gap-3">
+<button class="h-14 border border-outline bg-surface text-on-surface font-body-md flex items-center justify-center">3-4 years</button>
+<button class="h-14 border-2 border-primary bg-primary/5 text-primary font-bold flex items-center justify-center">5-6 years</button>
+<button class="h-14 border border-outline bg-surface text-on-surface font-body-md flex items-center justify-center">7-9 years</button>
+<button class="h-14 border border-outline bg-surface text-on-surface font-body-md flex items-center justify-center">10-12 years</button>
+</div>
+</div>
+<!-- Nickname Input -->
+<div class="mb-8">
+<p class="font-label-md uppercase text-primary mb-3 text-[12px]">2. Add Nickname (Optional)</p>
+<div class="relative">
+<input class="w-full border-0 border-b-2 border-outline focus:border-primary bg-background/30 h-12 px-0 font-body-md transition-all focus:ring-0 placeholder:text-outline-variant" placeholder="e.g. Leo's Chart" type="text"/>
+</div>
+<p class="font-caption text-on-surface-variant mt-2 flex items-center gap-1">
+                        Avoid full names, school names, addresses, health details, or other sensitive information.
+                    </p>
+</div>
+<!-- Starters -->
+<div class="mb-8">
+<p class="font-label-md uppercase text-primary mb-3 text-[12px]">3. Choose a Starting Template</p>
+<div class="space-y-3">
+<div class="flex items-center gap-3 p-4 border border-outline bg-surface">
+<input class="w-5 h-5 text-primary focus:ring-primary" id="s1" name="starter" type="radio"/>
+<label class="font-body-md" for="s1">Standard Weekly Chores</label>
+</div>
+<div class="flex items-center gap-3 p-4 border border-outline bg-surface">
+<input checked="" class="w-5 h-5 text-primary focus:ring-primary" id="s2" name="starter" type="radio"/>
+<label class="font-body-md" for="s2">Morning &amp; Evening Routine</label>
+</div>
+</div>
+</div>
+<button class="w-full bg-secondary text-white font-label-md h-14 uppercase hard-shadow hard-shadow-active">Create my starting chart</button>
+<div class="mt-4 p-3 bg-tertiary/10 border border-tertiary/20 flex gap-3">
+<svg class="shrink-0 mt-0.5" fill="none" height="20" stroke="#8a6d2b" stroke-width="2" viewbox="0 0 24 24" width="20"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="16" y2="12"></line><line x1="12" x2="12.01" y1="8" y2="8"></line></svg>
+<p class="font-caption text-on-surface-variant">Chore ideas are starting points. An adult should adjust each task to the child’s abilities and home environment.</p>
+</div>
+</div>
+</section>
+<!-- EDITOR -->
+<section class="px-margin-mobile">
+<div class="flex justify-between items-end mb-4">
+<h2 class="font-headline-md">Edit your chart</h2>
+<div class="flex gap-2">
+<button class="w-11 h-11 flex items-center justify-center border border-outline bg-surface"><svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M12 20v-6M9 20v-10M6 20v-4M15 20v-8M18 20V4"></path></svg></button>
+<button class="w-11 h-11 flex items-center justify-center border border-outline bg-surface"><svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
+</div>
+</div>
+<div class="paper-card border-on-surface overflow-hidden">
+<div class="bg-on-surface text-white px-4 py-2 flex justify-between items-center">
+<span class="font-label-md text-[11px] uppercase tracking-widest">Leo's Routine</span>
+<span class="font-caption text-[11px] opacity-70">Mon - Sun View</span>
+</div>
+<!-- Table Scroll Affordance -->
+<div class="bg-primary/5 py-2 flex items-center justify-center gap-2 border-b border-outline">
+<svg fill="none" height="14" stroke="#1f6d62" stroke-width="2.5" viewbox="0 0 24 24" width="14"><path d="M15 18l-6-6 6-6"></path></svg>
+<span class="font-label-md text-[10px] uppercase text-primary">Swipe sideways to see all days</span>
+<svg fill="none" height="14" stroke="#1f6d62" stroke-width="2.5" viewbox="0 0 24 24" width="14"><path d="M9 18l6-6-6-6"></path></svg>
+</div>
+<div class="overflow-x-auto no-scrollbar">
+<table class="w-full min-w-[600px] border-collapse">
+<thead>
+<tr class="border-b border-outline text-[12px]">
+<th class="text-left p-4 font-label-md bg-surface border-r border-outline sticky left-0 z-10 w-[140px]">Chore</th>
+<th class="p-4 font-label-md">Mon</th>
+<th class="p-4 font-label-md">Tue</th>
+<th class="p-4 font-label-md">Wed</th>
+<th class="p-4 font-label-md">Thu</th>
+<th class="p-4 font-label-md">Fri</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-outline">
+<td class="p-4 font-body-md bg-surface border-r border-outline sticky left-0 z-10">Make Bed</td>
+<td class="p-4 text-center"><div class="w-10 h-10 border-2 border-outline mx-auto flex items-center justify-center"><svg fill="none" height="24" stroke="#1f6d62" stroke-width="3" viewbox="0 0 24 24" width="24"><path d="M20 6L9 17l-5-5"></path></svg></div></td>
+<td class="p-4 text-center"><div class="w-10 h-10 border-2 border-outline mx-auto"></div></td>
+<td class="p-4 text-center"><div class="w-10 h-10 border-2 border-outline mx-auto"></div></td>
+<td class="p-4 text-center"><div class="w-10 h-10 border-2 border-outline mx-auto"></div></td>
+<td class="p-4 text-center"><div class="w-10 h-10 border-2 border-outline mx-auto"></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-outline">
+<button class="w-full h-12 flex items-center justify-center gap-2 font-label-md uppercase text-on-surface border border-dashed border-outline-variant">
+<svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="20"><line x1="12" x2="12" y1="5" y2="19"></line><line x1="5" x2="19" y1="12" y2="12"></line></svg>
+                        Add a task
+                    </button>
+</div>
+</div>
+<div class="mt-6 flex flex-col gap-4">
+<button class="w-full bg-primary text-white font-label-md h-14 uppercase hard-shadow hard-shadow-active">Preview and print</button>
+<button class="text-on-surface-variant font-caption underline text-center h-11">Clear all local data and start over</button>
+</div>
+</section>
+<!-- PRINT EXAMPLES -->
+<section class="bg-on-surface/5 py-xl overflow-hidden">
+<div class="px-margin-mobile mb-8">
+<h2 class="font-headline-md">High-clarity print examples</h2>
+</div>
+<div class="flex gap-6 overflow-x-auto px-margin-mobile no-scrollbar pb-6">
+<div class="shrink-0 w-[240px] space-y-3">
+<div class="paper-card aspect-[1/1.4] p-2 rotate-[-2deg] shadow-lg">
+<div class="w-full h-full bg-cover" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDvlkYdf9kGyQcaAmb7uj-t-E7BPCWfyy5WZ2WCyX-ZdGnhZs3joc5OddKo_Je5uPvhGrdhBIo2DKHAvX1kSiiNZS5dpKFwAq2nyjxTEZRjsi-9vRe_DsTKXR0EDHYq87eYwjm97_fl8Yc_9Fj4LUAHqWaYiNEVmERqGKZsvpOTvgDK78dJxLKwvyrvobqqDzadZ_lPjOgK7r8DikWqJ21T1_aY5n3ETsr-skd9blCsaWOXomDnedzpVC9pBE_R_kqKN90Qx90BW_Sr')"></div>
+</div>
+<p class="font-label-md text-center">Toddler Routine (Ages 3-4)</p>
+</div>
+<div class="shrink-0 w-[240px] space-y-3">
+<div class="paper-card aspect-[1/1.4] p-2 rotate-[1deg] shadow-lg">
+<div class="w-full h-full bg-cover" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBTCXF-OmrqU6DQ3-S5g9r2WFDjISa2VTBZY2CtnIhvwEpHgSSQNH9tprNUFdENCz8YVrbXr-uv26VmFjuGeqeEgqzWmdljNnilgbhZE-GRpCPzOE0DeUcmpbFKxFZirSLOyGm0DLKEMLyiZ_TaAuFg7qegzPUBgX3wUiMyrDemSdiTxTaYrop-biRUSWt4XUcUV8-GVJheRaf56dt9KXpl0d7XacBBCHEeO94rqiDoMHX26sCCh_rin3-dHBLy06OgAdXi3mr70YuT')"></div>
+</div>
+<p class="font-label-md text-center">Standard Weekly (Ages 7-9)</p>
+</div>
+</div>
+</section>
+<!-- VALUE PROPS -->
+<section class="px-margin-mobile space-y-8">
+<h2 class="font-headline-md mb-8">Skip the blank design canvas</h2>
+<div class="flex gap-4">
+<div class="w-12 h-12 shrink-0 bg-tertiary flex items-center justify-center">
+<svg fill="none" height="24" stroke="#17313a" stroke-width="2.5" viewbox="0 0 24 24" width="24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+</div>
+<div>
+<h3 class="font-label-md text-on-surface mb-1">Pre-filled with logic</h3>
+<p class="font-body-md text-on-surface-variant">Don't guess what chores to add. Our templates use common age-appropriate tasks to help you start.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-12 h-12 shrink-0 bg-primary flex items-center justify-center">
+<svg fill="none" height="24" stroke="white" stroke-width="2.5" viewbox="0 0 24 24" width="24"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect height="8" width="12" x="6" y="14"></rect></svg>
+</div>
+<div>
+<h3 class="font-label-md text-on-surface mb-1">Ink-friendly printing</h3>
+<p class="font-body-md text-on-surface-variant">No heavy black backgrounds or color-draining photos. Optimized for standard home printers.</p>
+</div>
+</div>
+</section>
+<!-- STEPS -->
+<section class="px-margin-mobile bg-surface py-xl border-y border-outline space-y-12">
+<h2 class="font-headline-md mb-8">From age group to printable chart in three steps</h2>
+<div class="relative">
+<span class="absolute -top-6 left-0 font-display-lg text-primary/10">01</span>
+<h3 class="font-label-md uppercase mb-2">Pick your age group</h3>
+<p class="font-body-md text-on-surface-variant">Select your child's age range to load task suggestions from our database.</p>
+</div>
+<div class="relative">
+<span class="absolute -top-6 left-0 font-display-lg text-primary/10">02</span>
+<h3 class="font-label-md uppercase mb-2">Customize the tasks</h3>
+<p class="font-body-md text-on-surface-variant">Add your family's unique routines. Drag tasks to reorder them and set daily or weekly frequencies.</p>
+</div>
+<div class="relative">
+<span class="absolute -top-6 left-0 font-display-lg text-primary/10">03</span>
+<h3 class="font-label-md uppercase mb-2">Print and pin</h3>
+<p class="font-body-md text-on-surface-variant">Generate a high-resolution PDF. Print it out, stick it on the fridge, and start your new routine.</p>
+</div>
+</section>
+<!-- FAQ -->
+<section class="px-margin-mobile">
+<h2 class="font-headline-md mb-6">Frequently asked questions</h2>
+<div class="divide-y divide-outline">
+<div class="py-4">
+<button class="flex justify-between items-center w-full text-left font-label-md">
+<span>Is this really free?</span>
+<svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="20"><path d="M19 9l-7 7-7-7"></path></svg>
+</button>
+</div>
+<div class="py-4">
+<button class="flex justify-between items-center w-full text-left font-label-md">
+<span>Do I need an account?</span>
+<svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="20"><path d="M19 9l-7 7-7-7"></path></svg>
+</button>
+</div>
+</div>
+</section>
+<!-- RESTORATION SECTION: Make this week's chart -->
+<section class="px-margin-mobile text-center">
+<div class="paper-card border-on-surface p-10 space-y-6">
+<h2 class="font-display-lg text-on-surface">Make this week’s chore chart</h2>
+<p class="font-body-lg text-on-surface-variant">Create your first chart today. It takes less than a minute and your printer is waiting.</p>
+<div class="flex flex-col gap-3">
+<button class="bg-secondary text-white font-label-md h-14 uppercase hard-shadow hard-shadow-active transition-all">Make my free chart</button>
+<button class="bg-surface border border-outline text-on-surface font-label-md h-14 uppercase">Start with a blank chart</button>
+</div>
+<p class="font-caption text-on-surface-variant">No sign-up required for the free chart maker.</p>
+</div>
+</section>
+<!-- RESTORATION SECTION: Paper Routine Note -->
+<section class="px-margin-mobile">
+<div class="border border-outline p-6 bg-surface">
+<h3 class="font-label-md uppercase mb-3">Designed for adults, built around a paper routine</h3>
+<p class="font-body-md text-on-surface-variant mb-4">We believe consistency happens on the fridge, not on a screen. This tool helps you create the physical prompts your family needs.</p>
+<div class="flex flex-col gap-2 font-caption underline text-primary">
+<a href="#">Privacy Policy</a>
+<a href="#">Clear local data</a>
+<a href="#">Cookie settings</a>
+</div>
+</div>
+</section>
+<!-- GUIDE LINKS -->
+<section class="px-margin-mobile grid grid-cols-2 gap-y-4 gap-x-2 border-t border-outline pt-lg">
+<a class="font-caption underline text-on-surface-variant h-11 flex items-center" href="#">Ages 3-4 Guide</a>
+<a class="font-caption underline text-on-surface-variant h-11 flex items-center" href="#">Ages 5-6 Guide</a>
+<a class="font-caption underline text-on-surface-variant h-11 flex items-center" href="#">Ages 7-9 Guide</a>
+<a class="font-caption underline text-on-surface-variant h-11 flex items-center" href="#">Ages 10-12 Guide</a>
+</section>
+<!-- ANALYTICS CONSENT SPECIMEN -->
+<section class="px-margin-mobile border-t border-outline pt-xl">
+<div class="bg-on-surface text-white p-6 space-y-4">
+<p class="font-body-md text-sm">We use essential storage to run the chart maker. With your permission, we use analytics to understand site usage. Analytics is off until you choose.</p>
+<div class="flex flex-col gap-2">
+<button class="w-full bg-primary text-white h-11 font-label-md uppercase text-[12px]">Accept analytics</button>
+<button class="w-full bg-white/10 text-white h-11 font-label-md uppercase text-[12px]">Reject non-essential</button>
+<button class="w-full bg-white/10 text-white h-11 font-label-md uppercase text-[12px]">Cookie settings</button>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="bg-surface border-t border-outline px-margin-mobile py-lg text-center">
+<div class="font-label-md text-on-surface-variant uppercase tracking-widest text-[12px] mb-6">ChoreChartEasy</div>
+<div class="grid grid-cols-2 gap-x-4 gap-y-2 mb-8 font-caption text-on-surface-variant">
+<a class="hover:text-primary underline h-11 flex items-center justify-center" href="#">Privacy</a>
+<a class="hover:text-primary underline h-11 flex items-center justify-center" href="#">Terms</a>
+<a class="hover:text-primary underline h-11 flex items-center justify-center" href="#">Cookies</a>
+<a class="hover:text-primary underline h-11 flex items-center justify-center" href="#">Refunds</a>
+<a class="hover:text-primary underline h-11 flex items-center justify-center" href="#">Contact</a>
+<a class="hover:text-primary underline h-11 flex items-center justify-center" href="#">Cookie settings</a>
+</div>
+<p class="font-caption text-on-surface-variant opacity-60">© 2024 ChoreChartEasy. Kitchen Table Utility for Modern Parents.</p>
+</footer>
+<script>
+        document.querySelectorAll('.divide-y button').forEach(button => {
+            button.addEventListener('click', () => {
+                const svg = button.querySelector('svg');
+                svg.style.transform = svg.style.transform === 'rotate(180deg)' ? 'rotate(0deg)' : 'rotate(180deg)';
+            });
+        });
+    </script>
+</body></html>

@@ -90,8 +90,12 @@
       window.gtag("consent", "update", { analytics_storage: "denied" });
     }
     deleteAnalyticsCookies();
-    window.setTimeout(deleteAnalyticsCookies, 0);
-    window.setTimeout(deleteAnalyticsCookies, 250);
+    window.setTimeout(() => {
+      if (!currentPreference?.analytics || gpcEnabled()) deleteAnalyticsCookies();
+    }, 0);
+    window.setTimeout(() => {
+      if (!currentPreference?.analytics || gpcEnabled()) deleteAnalyticsCookies();
+    }, 250);
   }
 
   function loadAnalytics() {

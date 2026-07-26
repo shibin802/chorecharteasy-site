@@ -7,9 +7,11 @@
 - 当前阶段：`09-qa`
 - 目标市场：US / English
 - 执行日期：2026-07-26
-- 当前状态：`BLOCKED`
-- Release verdict：`NO_GO`
-- 一句话结论：**候选代码的本地技术 QA 已通过，且 QA 中发现的两项可访问性 P1 已修复并复验；但 Compliance/Legal Gate 仍为 BLOCKED，新版本没有 Cloudflare Preview/Production release candidate，因此不能上线。**
+- 当前状态：`PRODUCTION_PASS_WITH_LIGHTHOUSE_EXCEPTION`
+- Release verdict：`LAUNCHED`
+- 一句话结论：**本报告最初给出 NO_GO；随后 Preview 通过、Owner 明确接受剩余风险并授权 Production，正式域名浏览器/技术/API QA 已通过。法律、邮箱、内容与实机打印仍待 Owner 闭环，不代表专业合规完成。**
+
+> Sections 2–15 保留上线前 Gate 快照与问题发现过程；当前发布事实以 Section 17、`docs/project-control.md` 和 `docs/PRODUCTION-LAUNCH-2026-07-26.md` 为准。
 
 ## 2. 上游输入与准入
 
@@ -455,12 +457,17 @@ Auth、Early Access、Production D1、R2、Creem 和 payments 保持 dormant，�
 - Consent 远端最终结果：Accept `_ga` cookies=2；Withdraw=0。
 - 远端 Lighthouse 因执行安全层持续误判 `pages.dev` 而未运行；本地 Lighthouse 记录保持 mobile 98、desktop 100、A11y/BP/SEO 100、CLS 0。未伪造远端分数。
 
-## 17. 下游交接
+## 17. Production 上线增补
 
-- 下一阶段：`Owner 法律/邮箱/内容/视觉签字 → Production Launch Review`。
-- 必须读取：本报告、`docs/QA-REPAIR-2026-07-26.md`、`docs/project-control.md`、Compliance、Frontend/Backend Handoff。
-- 不能假设：Production 已更新、法律已批准、support 邮箱已验证、Production D1/email/payment 已可用。
-- 下游不能改动：免费 Maker 无账号、active draft 本地保存、Analytics 默认关闭、payment disabled、儿童数据不进后端。
-- 禁止动作：当前不得 merge `main` 或部署 Production；不得启用 Early Access/Auth/payment；不得收集真实邮箱。
+- Production：`https://chorecharteasy.com`，commit `fb6ad171415b78bb640519863c42728c535122bc`。
+- CI 与 Cloudflare deployment：success。
+- 9 viewport browser QA：PASS；12-page technical smoke：failures=[] / warnings=[]。
+- Production D1：ready；Auth、Early Access、Payments 全 false。
+- Consent/GPC：PASS；Accept 后 GA cookies=2，Withdraw 后=0。
+- Cloudflare RUM 与 Email Obfuscation 已通过全站 Configuration Rule 关闭。
+- 远端 Lighthouse 沿用 Owner 已批准的执行环境例外，未伪造分数。
+- 下游不能改动：免费 Maker 无账号、active draft 本地保存、Analytics 默认关闭、payment disabled、儿童 chart 数据不进后端。
+- 不得假设：法律已专业批准、support 邮箱已验证、Auth/Early Access/payment 已上线。
+- 完整证据：`docs/PRODUCTION-LAUNCH-2026-07-26.md`。
 
-[BLOCKED]
+[PRODUCTION_PASS]

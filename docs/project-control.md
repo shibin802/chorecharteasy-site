@@ -1,18 +1,20 @@
 # ChoreChartEasy 项目控制板
 
-更新时间：2026-07-26 22:44 CST
+更新时间：2026-07-26 23:23 CST
 事实源：本文件用于阶段 Gate、返修、Preview 和上线状态；聊天不是发布状态真源。
 
 ## 当前发布状态
 
-- Production release verdict：`NO_GO`
+- Production release verdict：`LAUNCHED / QA_PASS_WITH_LIGHTHOUSE_EXCEPTION`
 - Preview QA：`PASS_WITH_LIGHTHOUSE_EXCEPTION`
 - Preview branch：`preview-lean-v2-20260726`
 - Preview candidate commit：`4121b60159b2298b066a0bc2c2626e83e90ad1c6`
 - Preview direct URL：`https://22ec0c2d.chorecharteasy.pages.dev`
 - Preview alias：`https://preview-lean-v2-20260726.chorecharteasy.pages.dev`
-- Production：旧版本仍在线；本轮候选未部署到 `main` / Production。
-- Open production severity：P0=2，P1=2，P2=0。
+- Production：`https://chorecharteasy.com` 已部署，commit `fb6ad171415b78bb640519863c42728c535122bc`。
+- Production fixed deployment：`https://790990e5.chorecharteasy.pages.dev`，Cloudflare status=`success`。
+- GitHub Actions：`https://github.com/shibin802/chorecharteasy-site/actions/runs/30207465864`，conclusion=`success`。
+- Blocking production severity：P0=0，P1=0；仍有 Owner follow-up risks P0=2、P1=2，不代表法律/邮箱/内容/实机验收已完成。
 
 ## Preview 部署事实
 
@@ -22,7 +24,7 @@
 - Cloudflare status：`success`
 - Preview D1：`chorecharteasy-preview`
 - D1 binding：仅 `deployment_configs.preview.DB`
-- Production D1 binding：未修改、仍为空。
+- Production D1 binding：上线阶段已单独绑定 `chorecharteasy-production`；Preview 仍使用独立 Preview D1。
 - Feature flags：Auth / Early Access / Payments 默认关闭；免费 Maker 不调用会员 API。
 
 ## Preview Re-QA
@@ -40,6 +42,18 @@
 - strict CSP、OG image、404：PASS。
 - 本地 Lighthouse：Home mobile 98/100/100/100；desktop 100/100/100/100；CLS=0。
 - 远端 Lighthouse：执行安全层持续误判 `pages.dev` 并阻断；未执行、未伪造结果。由远端真实浏览器与技术 smoke 覆盖核心验收。
+
+## Production 部署与验收事实
+
+- Production D1：`chorecharteasy-production`，仅绑定 `deployment_configs.production.DB`。
+- Migration：7 张业务表；建库时验证初始数据为空、禁止字段为 0。
+- Feature flags：`AUTH_ENABLED=false`、`EARLY_ACCESS_ENABLED=false`、`PAYMENTS_ENABLED=false`。
+- Production 9 viewport browser QA：PASS。
+- Production technical smoke：12 pages / 12 links / 7 assets / 7 sitemap URLs；failures=[]，warnings=[]。
+- Production API：health=200/database ready；membership 全部 disabled；写入口 fail-closed。
+- Consent：Reject/Accept/Withdraw/GPC PASS；Accept 后 GA cookies=2，Withdraw 后=0。
+- Cloudflare Configuration Rule：全站禁用未获 consent 的 RUM，并关闭 Email Address Obfuscation；状态 Active。
+- 完整证据：`docs/PRODUCTION-LAUNCH-2026-07-26.md`。
 
 ## Preview 中发现并关闭的问题
 
@@ -64,13 +78,13 @@
 | Compliance / Legal | NEEDS_OWNER_REVIEW | 当前免费版本法律页无占位；需确认 operator-neutral 文本并验证 support 邮箱收发 |
 | SEO / Copy | NEEDS_OWNER_REVIEW | starter chores 已完成来源化安全审查，待 Owner 签字 |
 | Design | NEEDS_OWNER_REVIEW | 共享设计系统和打印已 QA，待 Owner 视觉签字 |
-| Frontend | PREVIEW_PASS | Preview 真实浏览器与技术 smoke 通过 |
-| Backend | PREVIEW_PASS / PRODUCTION_DISABLED | Preview D1 ready；Production D1/email/payment 未启用 |
-| QA | PASS_WITH_EXCEPTION | 远端主流程通过；远端 Lighthouse 被工具安全层阻断 |
-| Owner Review | PENDING | 法律、邮箱、内容、视觉/打印 |
-| Production Launch | BLOCKED | 不得 merge/push `main` |
+| Frontend | PRODUCTION_PASS | Production 9 viewport 与技术 smoke 通过 |
+| Backend | PRODUCTION_READY / WRITE_FEATURES_DISABLED | Production D1 ready；Auth/Early Access/Payments 继续关闭 |
+| QA | PRODUCTION_PASS_WITH_EXCEPTION | 正式域名主流程通过；远端 Lighthouse 沿用已批准例外 |
+| Owner Review | RISK_ACCEPTED_FOR_LAUNCH / FOLLOW_UP_OPEN | 法律、邮箱、内容、视觉/实机打印仍待闭环 |
+| Production Launch | LAUNCHED | `main` 已部署，CI 与 Cloudflare 均 success |
 
-## 剩余 Gate DAG
+## 上线后剩余 Follow-up
 
 1. **P0 Legal / Owner**
    - 审阅 `privacy/terms/cookies/refund/contact`。
@@ -79,15 +93,14 @@
 2. **P1 Content / Visual**
    - 签字 `docs/content/STARTER-CHORES-SAFETY-REVIEW-2026-07-26.md`。
    - 查看 Preview 与 Letter/A4 PDF，确认视觉、字号、Logo 和纸面可读性。
-3. **Production Launch**
-   - Owner 明确接受后方可 merge PR。
-   - Production D1 binding/feature flags 必须按 Lean P0 决策；默认继续全部关闭。
-   - 上线后执行 production smoke + GA/GSC/Cloudflare 数据链路复验。
+3. **运营与数据链路**
+   - 实际运营流量进入后复验 GA4 / GSC / Cloudflare 数据链路。
+   - Auth / Early Access / Payments 在各自 Gate 完成前继续关闭。
 
 ## 禁止假设
 
-- 不得把 Preview 成功描述为 Production 已更新。
+- 不得把旧 Preview 状态当作当前 Production 状态；正式发布事实以本文件和 Production launch 记录为准。
 - 不得把未获 Owner/专业复核的法律文本声明为“法律合规完成”。
 - 不得假设 `support@chorecharteasy.com` 已端到端验证。
-- 不得启用 Early Access、Auth、Production D1 或 Payments。
-- 不得因 Preview 技术 QA 通过而自动 merge `main`。
+- 不得启用 Early Access、Auth 或 Payments；Production D1 已绑定，但公开写能力保持关闭。
+- 不得把本次 Owner 风险接受描述为专业法律审查完成。

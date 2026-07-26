@@ -3,8 +3,8 @@
 日期：2026-07-26
 项目：ChoreChartEasy
 阶段：`08-backend`
-状态：`PREVIEW_PASS / PRODUCTION_DISABLED`
-生产状态：`NOT_DEPLOYED · ALL WRITE FEATURES DISABLED`
+状态：`PRODUCTION_READY / WRITE_FEATURES_DISABLED`
+生产状态：`DEPLOYED · ALL PUBLIC WRITE FEATURES DISABLED`
 
 ## Preview 增补
 
@@ -12,11 +12,13 @@
 - Migration：17 queries；7 张业务表。
 - `/api/health`：200，database=`ready`。
 - `/api/membership`：200；Auth、Early Access、Payments 均 disabled。
-- Production D1 binding 未修改，仍为空。
+- Production D1：`chorecharteasy-production`，仅绑定 Production；migration 已应用。
+- Production `/api/health`：200，database=`ready`。
+- Production flags：Auth、Early Access、Payments 均 disabled。
 
 ## 当前结论
 
-Cloudflare Pages Functions + D1 的会员基础已在本地真实跑通；免费 Maker 继续无需账号，首页不自动访问 `/api/me`。由于 Lean PRD、法律、邮件服务商和付费 Gate 尚未解锁，生产 Auth、Early Access 和支付全部保持关闭。
+Cloudflare Pages Functions + 独立 Production D1 已部署并通过正式域名 smoke；免费 Maker 继续无需账号，首页不自动访问 `/api/me`。由于法律、邮件服务商和付费 Gate 尚未解锁，生产 Auth、Early Access 和支付全部保持关闭。
 
 ## 关键输入
 
@@ -219,26 +221,24 @@ Wrangler runtime 浏览器验证：
 ## 风险
 
 - **P0**：在法律、邮件服务商、退订/删除和 Owner 范围确认前启用 Auth 或 Early Access，会造成实际个人数据收集与披露不一致。
-- **P1**：Preview/Production D1 尚未创建或迁移；若直接部署 Functions，写接口会 fail-closed，但不能宣称会员能力上线。
+- **P1**：Preview/Production D1 已独立创建并迁移；在 Auth/Early Access Gate 解锁前仍不能启用写接口或宣称会员能力上线。
 - **P2**：R2、Family Pack 资产和支付生命周期尚未实现；当前不影响免费 Maker，只影响未来商业化。
 
-## Preflight 与生产阻塞
+## Production Preflight 与未来功能阻塞
 
 ### 已确认
 
-- 本地 Cloudflare Token 存在，但本阶段未调用远端资源。
+- Cloudflare Preview/Production D1 均已独立创建、迁移并绑定对应环境。
 - Node/Wrangler 可用。
-- Pages Functions + Miniflare D1 可真实运行。
+- Pages Functions + Production D1 已在正式域名真实运行，`/api/health`=200/ready。
 
-### `[BLOCKED]`
+### `[FUTURE_FEATURE_BLOCKED]`
 
-1. `CLOUDFLARE_ACCOUNT_ID` 未注入；未创建 production/preview D1。
-2. 未获 Owner 对生产资源、migration、push/deploy 的确认。
-3. PRD 仍明确不做 `/account` 和云端计划；启用账号属于范围变更。
-4. 没有生产邮件 provider，也未冻结其数据处理条款。
-5. Early Access 的营销 consent、退订、删除和保留期未获法律/Owner 批准。
-6. Family Pack 内容、R2 资产、许可、退款和 Creem 模式未冻结。
-7. 付费兴趣 Gate 尚未达到；不能创建生产 checkout。
+1. PRD 仍明确不做 `/account` 和云端计划；启用账号属于范围变更。
+2. 没有生产邮件 provider，也未冻结其数据处理条款。
+3. Early Access 的营销 consent、退订、删除和保留期未获法律/Owner 批准。
+4. Family Pack 内容、R2 资产、许可、退款和 Creem 模式未冻结。
+5. 付费兴趣 Gate 尚未达到；不能创建生产 checkout。
 
 ## 质量门槛自检
 
@@ -249,8 +249,8 @@ Wrangler runtime 浏览器验证：
 - [x] Source 中无生产 secret。
 - [x] 免费工具无需账号且不自动触发 API。
 - [x] Payments fail-closed。
-- [ ] 远端 migration 与本地 schema 对齐：未执行。
-- [ ] 合规披露与生产数据流一致：生产功能未启用。
+- [x] 远端 migration 与本地 schema 对齐。
+- [x] 当前免费 Maker 披露与生产数据流一致；账号/收集/支付功能未启用。
 - [ ] 生产 email delivery：未接。
 - [ ] 生产支付/webhook/退款撤权：不在当前解锁范围。
 
@@ -260,16 +260,16 @@ Wrangler runtime 浏览器验证：
 2. 是否批准先开 Early Access email collection。
 3. 确认邮件服务商、from address、unsubscribe 和 deletion 流程。
 4. 确认 early-access retention period。
-5. 确认是否创建 preview/production 独立 D1。
+5. 未来 D1 schema 变更继续要求 migration、数据最小化和独立 Preview 验证。
 6. 在任何 payment 实施前重新确认 paid-interest Gate。
 
 ## 给下游的最小必要信息
 
-- 下一阶段：Owner Review → Preview 环境绑定/远端 QA；不是直接 Production Launch。
+- 下一阶段：运营监控，以及 Auth/Early Access/Payment 各自独立 Owner Review。
 - 必须读取：本文件、`backend/README.md`、`backend/contracts/*.json`、最新 PRD/Compliance。
-- 不能假设：账号已获批准、Early Access 可收集、邮件已能发送、Family Pack 可售、D1 已创建、生产已部署。
+- 已确认：Production D1 已创建且生产已部署；不能假设账号已获批准、Early Access 可收集、邮件已能发送或 Family Pack 可售。
 - 生产初始 flags 必须全 false；`AUTH_DEV_BYPASS` 永远不能在非 loopback 环境启用。
 
-本轮未 commit、未 push、未创建远端 D1、未 apply 远端 migration、未部署。
+本轮已 commit、push、创建并迁移远端 Production D1，且完成 Production 部署与正式域名 QA。
 
-[NEEDS_REVIEW]
+[PRODUCTION_READY / FUTURE_FEATURES_BLOCKED]

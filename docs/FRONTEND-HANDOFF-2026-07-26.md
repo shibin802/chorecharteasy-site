@@ -2,10 +2,10 @@
 
 日期：2026-07-26
 阶段：`06-frontend-implementation`
-状态：`PREVIEW_PASS / NEEDS_OWNER_REVIEW`
-部署状态：`PREVIEW_DEPLOYED / PRODUCTION_NOT_DEPLOYED`
+状态：`PRODUCTION_PASS / OWNER_FOLLOW_UP_OPEN`
+部署状态：`PRODUCTION_DEPLOYED`
 
-> Preview：`https://preview-lean-v2-20260726.chorecharteasy.pages.dev`，candidate commit `4121b60`。远端 9 viewport、Maker、Consent/GPC 和 12-page technical smoke 已通过；Production 仍是旧版本，禁止把 Preview 描述为已上线。
+> Production：`https://chorecharteasy.com`，commit `fb6ad17`。正式域名 9 viewport、Maker、Consent/GPC 和 12-page technical smoke 已通过。法律、邮箱、内容与实机打印仍是 Owner follow-up，详见 `docs/PRODUCTION-LAUNCH-2026-07-26.md`。
 
 ## 1. 实现范围
 

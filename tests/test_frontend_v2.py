@@ -213,6 +213,11 @@ class FrontendV2Contract(unittest.TestCase):
         self.assertRegex(css, re.compile(r"@media\(max-width:480px\).*?\.paper-note\{[^}]*position:static", re.S))
         self.assertRegex(css, re.compile(r"@media\(max-width:480px\).*?h1\{font-size:clamp\([^)]*2\.75rem", re.S))
 
+    def test_hero_example_uses_square_checkbox_inside_grid_cell(self):
+        css = self.text("assets/site.css")
+        self.assertIn(".mini-check{width:auto;height:auto", css)
+        self.assertRegex(css, r"\.mini-check::after\{[^}]*width:12px;height:12px")
+
     def test_launch_legal_pages_match_current_free_product(self):
         legal_pages = ["privacy.html", "terms.html", "cookies.html", "refund.html", "contact.html"]
         forbidden = [

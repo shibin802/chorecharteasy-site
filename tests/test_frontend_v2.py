@@ -205,6 +205,14 @@ class FrontendV2Contract(unittest.TestCase):
         self.assertNotIn("chorecharteasy-worker", headers)
         self.assertNotIn("googleusercontent.com", headers)
 
+    def test_mobile_layout_guards_common_393px_iphones(self):
+        css = self.text("assets/site.css")
+        self.assertRegex(css, r"\.editor-panel\{[^}]*min-width:0")
+        self.assertIn(".maker-shell{grid-template-columns:minmax(0,1fr)}", css)
+        self.assertIn("@media(max-width:480px)", css)
+        self.assertRegex(css, re.compile(r"@media\(max-width:480px\).*?\.paper-note\{[^}]*position:static", re.S))
+        self.assertRegex(css, re.compile(r"@media\(max-width:480px\).*?h1\{font-size:clamp\([^)]*2\.75rem", re.S))
+
     def test_launch_legal_pages_match_current_free_product(self):
         legal_pages = ["privacy.html", "terms.html", "cookies.html", "refund.html", "contact.html"]
         forbidden = [

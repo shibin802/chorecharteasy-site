@@ -1,0 +1,417 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$description": "Warm paper-first family utility with a dominant editable chart and restrained print-workbook details.",
+  "color": {
+    "$type": "color",
+    "canvas": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.965,
+          0.945,
+          0.906
+        ],
+        "hex": "#f6f1e7"
+      }
+    },
+    "paper": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          0.992,
+          0.973
+        ],
+        "hex": "#fffdf8"
+      }
+    },
+    "ink": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.09,
+          0.192,
+          0.227
+        ],
+        "hex": "#17313a"
+      }
+    },
+    "muted": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.357,
+          0.42,
+          0.439
+        ],
+        "hex": "#5b6b70"
+      }
+    },
+    "primary": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.122,
+          0.427,
+          0.384
+        ],
+        "hex": "#1f6d62"
+      }
+    },
+    "primary-hover": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.09,
+          0.341,
+          0.31
+        ],
+        "hex": "#17574f"
+      }
+    },
+    "action": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.788,
+          0.263,
+          0.169
+        ],
+        "hex": "#c9432b"
+      }
+    },
+    "action-hover": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.722,
+          0.227,
+          0.145
+        ],
+        "hex": "#b83a25"
+      }
+    },
+    "highlight": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.914,
+          0.725,
+          0.286
+        ],
+        "hex": "#e9b949"
+      }
+    },
+    "border": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.788,
+          0.843,
+          0.82
+        ],
+        "hex": "#c9d7d1"
+      }
+    },
+    "border-strong": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.561,
+          0.663,
+          0.627
+        ],
+        "hex": "#8fa9a0"
+      }
+    },
+    "info-bg": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.91,
+          0.949,
+          0.937
+        ],
+        "hex": "#e8f2ef"
+      }
+    },
+    "warning-bg": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          0.957,
+          0.839
+        ],
+        "hex": "#fff4d6"
+      }
+    },
+    "error": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.651,
+          0.184,
+          0.157
+        ],
+        "hex": "#a62f28"
+      }
+    },
+    "error-bg": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.984,
+          0.918,
+          0.906
+        ],
+        "hex": "#fbeae7"
+      }
+    },
+    "success": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.137,
+          0.42,
+          0.294
+        ],
+        "hex": "#236b4b"
+      }
+    },
+    "success-bg": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.894,
+          0.953,
+          0.918
+        ],
+        "hex": "#e4f3ea"
+      }
+    },
+    "white": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "hex": "#ffffff"
+      }
+    }
+  },
+  "spacing": {
+    "1": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "2": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "3": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "4": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "6": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "8": {
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      }
+    },
+    "12": {
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      }
+    },
+    "16": {
+      "$value": {
+        "value": 64,
+        "unit": "px"
+      }
+    },
+    "24": {
+      "$value": {
+        "value": 96,
+        "unit": "px"
+      }
+    },
+    "$type": "dimension"
+  },
+  "rounded": {
+    "$type": "dimension",
+    "xs": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "sm": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "md": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "lg": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "pill": {
+      "$value": {
+        "value": 999,
+        "unit": "px"
+      }
+    }
+  },
+  "typography": {
+    "display-xl": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Bricolage Grotesque",
+        "fontSize": {
+          "value": 4,
+          "unit": "rem"
+        },
+        "fontWeight": 700,
+        "letterSpacing": {
+          "value": -0.04,
+          "unit": "em"
+        }
+      }
+    },
+    "display-mobile": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Bricolage Grotesque",
+        "fontSize": {
+          "value": 2.5,
+          "unit": "rem"
+        },
+        "fontWeight": 700,
+        "letterSpacing": {
+          "value": -0.035,
+          "unit": "em"
+        }
+      }
+    },
+    "h2": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Bricolage Grotesque",
+        "fontSize": {
+          "value": 2.5,
+          "unit": "rem"
+        },
+        "fontWeight": 650,
+        "letterSpacing": {
+          "value": -0.025,
+          "unit": "em"
+        }
+      }
+    },
+    "h3": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Bricolage Grotesque",
+        "fontSize": {
+          "value": 1.5,
+          "unit": "rem"
+        },
+        "fontWeight": 650,
+        "letterSpacing": {
+          "value": -0.015,
+          "unit": "em"
+        }
+      }
+    },
+    "body-lg": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Atkinson Hyperlegible",
+        "fontSize": {
+          "value": 1.125,
+          "unit": "rem"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0,
+          "unit": "em"
+        }
+      }
+    },
+    "body-md": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Atkinson Hyperlegible",
+        "fontSize": {
+          "value": 1,
+          "unit": "rem"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0,
+          "unit": "em"
+        }
+      }
+    },
+    "body-sm": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Atkinson Hyperlegible",
+        "fontSize": {
+          "value": 0.875,
+          "unit": "rem"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0,
+          "unit": "em"
+        }
+      }
+    },
+    "label": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "Atkinson Hyperlegible",
+        "fontSize": {
+          "value": 0.875,
+          "unit": "rem"
+        },
+        "fontWeight": 700,
+        "letterSpacing": {
+          "value": 0.015,
+          "unit": "em"
+        }
+      }
+    }
+  }
+}

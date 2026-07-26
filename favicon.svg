@@ -1,1 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#1d4ed8"/><path d="M17 33l10 10 21-24" fill="none" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">ChoreChartEasy</title>
+  <desc id="desc">A paper sheet with a folded corner and a checked task</desc>
+  <rect x="3" y="3" width="58" height="58" rx="14" fill="#1F6D62"/>
+  <path d="M17 12h21l10 10v30H17z" fill="#FFFDF8" stroke="#17313A" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M38 12v10h10" fill="#E9B949" stroke="#17313A" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="m23 34 5 5 12-13" fill="none" stroke="#C9432B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M23 46h17" stroke="#17313A" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

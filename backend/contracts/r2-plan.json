@@ -1,0 +1,17 @@
+{
+  "version": "v1",
+  "requiredForCurrentP0": false,
+  "buckets": [],
+  "reason": "The free maker stores one active draft in browser localStorage and prints client-side. The planned Family Pack has no approved downloadable asset set or entitlement delivery contract yet.",
+  "futureGate": {
+    "status": "blocked",
+    "requirements": [
+      "approved Family Pack asset inventory and license ledger",
+      "one-time purchase decision and verified entitlement lifecycle",
+      "private R2 bucket",
+      "short-lived signed download endpoint",
+      "download audit without child or chart content",
+      "retention and deletion policy"
+    ]
+  }
+}

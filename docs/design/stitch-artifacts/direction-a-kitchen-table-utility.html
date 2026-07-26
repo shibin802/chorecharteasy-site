@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ChoreChartEasy | Kitchen Table Utility for Modern Parents</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&amp;family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --bg-paper: #F6F1E7;
+            --surface-white: #FFFDF8;
+            --ink: #17313A;
+            --teal: #1F6D62;
+            --coral: #E85D3F;
+            --mustard: #E9B949;
+            --border: #C9D7D1;
+        }
+
+        body {
+            background-color: var(--bg-paper);
+            color: var(--ink);
+            font-family: 'Atkinson Hyperlegible', sans-serif;
+            background-image:
+                radial-gradient(circle at 2px 2px, rgba(23, 49, 58, 0.03) 1px, transparent 0);
+            background-size: 32px 32px;
+        }
+
+        .font-headline { font-family: 'Bricolage Grotesque', sans-serif; }
+        .font-body { font-family: 'Atkinson Hyperlegible', sans-serif; }
+
+        .clipped-corner {
+            clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+        }
+
+        .registration-mark {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .hard-shadow {
+            box-shadow: 3px 3px 0px 0px var(--ink);
+        }
+
+        .hard-shadow-sm {
+            box-shadow: 2px 2px 0px 0px var(--ink);
+        }
+
+        .btn-primary:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px 0px var(--ink);
+        }
+
+        .paper-sheet {
+            background-color: var(--surface-white);
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 12px rgba(23, 49, 58, 0.05);
+        }
+
+        .ink-line {
+            height: 1px;
+            background-color: var(--border);
+            position: relative;
+        }
+
+        .ink-line::before, .ink-line::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 1px solid var(--border);
+            top: -4px;
+        }
+        .ink-line::before { left: -8px; }
+        .ink-line::after { right: -8px; }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1F6D62",
+                        "on-primary": "#ffffff",
+                        "secondary": "#E85D3F",
+                        "on-secondary": "#ffffff",
+                        "surface": "#FFFDF8",
+                        "on-surface": "#17313A",
+                        "outline": "#C9D7D1",
+                        "background": "#F6F1E7",
+                        "tertiary": "#E9B949",
+                        "surface-variant": "#F2EDE4"
+                    },
+                    spacing: {
+                        "gutter": "20px",
+                        "margin-desktop": "64px"
+                    },
+                    fontFamily: {
+                        "display-lg": ["Bricolage Grotesque"],
+                        "headline-lg": ["Bricolage Grotesque"],
+                        "headline-md": ["Bricolage Grotesque"],
+                        "body-lg": ["Atkinson Hyperlegible"],
+                        "body-md": ["Atkinson Hyperlegible"],
+                        "label-md": ["Atkinson Hyperlegible"],
+                        "caption": ["Atkinson Hyperlegible"]
+                    },
+                    fontSize: {
+                        "display-lg": ["48px", { lineHeight: "1.1", fontWeight: "800" }],
+                        "headline-lg": ["32px", { lineHeight: "1.2", fontWeight: "700" }],
+                        "headline-md": ["24px", { lineHeight: "1.3", fontWeight: "600" }],
+                        "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+                        "body-md": ["16px", { lineHeight: "1.5", fontWeight: "400" }],
+                        "label-md": ["14px", { lineHeight: "1.2", letterSpacing: "0.05em", fontWeight: "700" }],
+                        "caption": ["13px", { lineHeight: "1.4", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen">
+<!-- HEADER -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface border-b border-outline h-[72px] flex items-center px-margin-desktop justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 border-2 border-on-surface flex items-center justify-center bg-white">
+<span class="material-symbols-outlined text-[20px] text-primary" style="font-variation-settings: 'FILL' 1;">check_box</span>
+</div>
+<span class="font-headline-md text-headline-md font-bold tracking-tight text-on-surface">ChoreChartEasy</span>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">How it works</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Print examples</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Age guides</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">FAQ</a>
+</nav>
+<button class="bg-secondary text-white px-6 py-2.5 font-bold border border-on-surface hard-shadow-sm btn-primary transition-all">
+            Make a chart
+        </button>
+</header>
+<main class="pt-[72px] max-w-[1100px] mx-auto px-gutter md:px-0">
+<!-- HERO SECTION -->
+<section class="py-xl grid grid-cols-1 md:grid-cols-12 gap-xl items-center mt-12">
+<div class="md:col-span-6 flex flex-col gap-6">
+<div class="flex items-center gap-2">
+<span class="bg-tertiary/20 text-on-surface px-3 py-1 text-label-md font-bold uppercase tracking-wider border border-tertiary/40">Free printable tool</span>
+<span class="text-on-surface-variant text-caption">• No sign-up • Ages 3–12</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface">Make a printable chore chart that fits your child’s age</h1>
+<p class="text-body-lg text-on-surface-variant max-w-lg">
+                    Choose an age group, start with practical chore ideas, edit every task, and print a clear weekly chart on US Letter or A4.
+                </p>
+<div class="flex flex-wrap gap-4 mt-2">
+<button class="bg-secondary text-white px-8 py-4 text-body-lg font-bold border border-on-surface hard-shadow btn-primary">
+                        Make my free chart
+                    </button>
+<button class="bg-transparent text-on-surface px-8 py-4 text-body-lg font-bold border border-outline hover:bg-surface-variant transition-colors">
+                        Start with a blank chart
+                    </button>
+</div>
+<p class="text-caption text-on-surface-variant/60 italic">For parents and caregivers. No child account required.</p>
+<div class="grid grid-cols-2 gap-y-4 gap-x-8 mt-8 border-t border-outline pt-8">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">child_care</span>
+<span class="text-label-md">Age-based starters</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">edit_note</span>
+<span class="text-label-md">Edit every task</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">print</span>
+<span class="text-label-md">US Letter &amp; A4</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">save</span>
+<span class="text-label-md">One draft saved in this browser</span>
+</div>
+</div>
+</div>
+<!-- LIVE PREVIEW AREA -->
+<div class="md:col-span-6 relative flex justify-center py-12">
+<div class="paper-sheet w-full max-w-[440px] aspect-[1/1.29] p-8 relative flex flex-col">
+<!-- Crop marks -->
+<div class="absolute -top-4 -left-4 w-8 h-8 border-l border-t border-ink/20"></div>
+<div class="absolute -top-4 -right-4 w-8 h-8 border-r border-t border-ink/20"></div>
+<div class="absolute -bottom-4 -left-4 w-8 h-8 border-l border-b border-ink/20"></div>
+<div class="absolute -bottom-4 -right-4 w-8 h-8 border-r border-b border-ink/20"></div>
+<div class="border-b-2 border-ink pb-4 mb-8">
+<h3 class="font-headline-md text-ink text-center">Our Weekly Chore Chart</h3>
+</div>
+<div class="flex-1 flex flex-col gap-4">
+<div class="grid grid-cols-8 gap-1 mb-2">
+<div class="col-span-1"></div>
+<div class="text-[10px] text-center font-bold">M</div>
+<div class="text-[10px] text-center font-bold">T</div>
+<div class="text-[10px] text-center font-bold">W</div>
+<div class="text-[10px] text-center font-bold">T</div>
+<div class="text-[10px] text-center font-bold">F</div>
+<div class="text-[10px] text-center font-bold">S</div>
+<div class="text-[10px] text-center font-bold">S</div>
+</div>
+<!-- Row 1 Focus -->
+<div class="grid grid-cols-8 gap-1 items-center bg-primary/5 p-1 rounded -mx-1 border border-primary/20">
+<div class="text-[12px] font-bold text-primary truncate pr-1">Brush Teeth</div>
+<div class="aspect-square border border-primary/30 rounded-sm"></div>
+<div class="aspect-square border border-primary/30 rounded-sm"></div>
+<div class="aspect-square border border-primary/30 rounded-sm"></div>
+<div class="aspect-square border border-primary/30 rounded-sm"></div>
+<div class="aspect-square border border-primary/30 rounded-sm"></div>
+<div class="aspect-square border border-primary/30 rounded-sm"></div>
+<div class="aspect-square border border-primary/30 rounded-sm"></div>
+</div>
+<!-- Other Rows -->
+<div class="grid grid-cols-8 gap-1 items-center">
+<div class="text-[12px] text-ink/40 truncate pr-1">Make Bed</div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+</div>
+<div class="grid grid-cols-8 gap-1 items-center">
+<div class="text-[12px] text-ink/40 truncate pr-1">Put away toys</div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+</div>
+<div class="grid grid-cols-8 gap-1 items-center">
+<div class="text-[12px] text-ink/40 truncate pr-1">Feed pet</div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+</div>
+<div class="grid grid-cols-8 gap-1 items-center">
+<div class="text-[12px] text-ink/40 truncate pr-1">Ready for school</div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+<div class="aspect-square border border-outline rounded-sm"></div>
+</div>
+</div>
+</div>
+<!-- Decorative background elements -->
+<div class="absolute -z-10 top-20 -right-8 w-64 h-64 border border-outline opacity-20 rotate-12"></div>
+<div class="absolute -z-10 bottom-10 -left-12 w-48 h-48 border border-outline opacity-20 -rotate-6"></div>
+</div>
+</section>
+<!-- MAKER TOOL PANEL -->
+<section class="my-xl py-16 bg-surface-variant border border-outline clipped-corner relative">
+<div class="max-w-3xl mx-auto px-8">
+<h2 class="font-headline-lg text-headline-lg mb-4 text-center">1. Choose your starting point</h2>
+<p class="text-body-md text-center mb-10 text-on-surface-variant px-12">
+                    Choose an age group or a ready-made routine. You can change every suggestion before you print.
+                </p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+<button class="bg-surface border border-outline p-4 flex flex-col items-center gap-2 hover:border-primary hover:bg-primary/5 transition-all group">
+<span class="text-caption font-bold text-on-surface-variant group-hover:text-primary">Age group</span>
+<span class="font-headline-md">Ages 3–4</span>
+</button>
+<button class="bg-surface border border-outline p-4 flex flex-col items-center gap-2 hover:border-primary hover:bg-primary/5 transition-all group">
+<span class="text-caption font-bold text-on-surface-variant group-hover:text-primary">Age group</span>
+<span class="font-headline-md">Ages 5–6</span>
+</button>
+<button class="bg-surface border-2 border-primary p-4 flex flex-col items-center gap-2 bg-primary/5 relative">
+<div class="absolute -top-3 -right-3 bg-primary text-white p-1 rounded-full"><span class="material-symbols-outlined text-[14px]">check</span></div>
+<span class="text-caption font-bold text-primary">Age group</span>
+<span class="font-headline-md">Ages 7–9</span>
+</button>
+<button class="bg-surface border border-outline p-4 flex flex-col items-center gap-2 hover:border-primary hover:bg-primary/5 transition-all group">
+<span class="text-caption font-bold text-on-surface-variant group-hover:text-primary">Age group</span>
+<span class="font-headline-md">Ages 10–12</span>
+</button>
+</div>
+<div class="flex flex-col gap-6 max-w-lg mx-auto">
+<div>
+<label class="block font-label-md text-on-surface mb-2">Nickname or initials (optional)</label>
+<input class="w-full border-b-2 border-outline bg-transparent py-3 px-4 focus:border-primary focus:ring-0 text-body-md placeholder:text-on-surface-variant/40" placeholder="For example, Sam or S." type="text"/>
+<p class="text-caption text-on-surface-variant mt-2 italic">Avoid full names to protect your privacy online.</p>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<button class="border border-outline bg-white py-3 font-bold text-body-md hover:bg-surface-variant">Weekly chores</button>
+<button class="border border-outline bg-white py-3 font-bold text-body-md hover:bg-surface-variant">Morning routine</button>
+<button class="border border-outline bg-white py-3 font-bold text-body-md hover:bg-surface-variant">Blank chart</button>
+<button class="border border-outline bg-white py-3 font-bold text-body-md hover:bg-surface-variant relative">
+                            Multiple kids <span class="text-[10px] bg-mustard text-on-surface px-1 ml-1 rounded">BETA</span>
+</button>
+</div>
+<button class="bg-primary text-white py-4 font-bold text-body-lg border border-on-surface hard-shadow-sm mt-4 btn-primary">
+                        Create my starting chart
+                    </button>
+<div class="flex gap-3 bg-white/50 border border-outline p-4 mt-4">
+<span class="material-symbols-outlined text-mustard">info</span>
+<p class="text-caption text-on-surface-variant">
+                            Chore ideas are starting points based on motor skills and developmental milestones. Use your best judgment for your individual child's safety and ability.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- EDITOR SECTION -->
+<section class="py-xl mb-12">
+<div class="flex items-end justify-between mb-8 border-b border-outline pb-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg">2. Edit your chart</h2>
+<p class="text-body-md text-on-surface-variant">Modify tasks, change the title, and pick your print size.</p>
+</div>
+<div class="flex gap-2">
+<span class="text-label-md font-bold text-primary">DRAFT SAVED</span>
+<span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+<div class="paper-sheet p-10 relative">
+<div class="registration-mark -top-2 -left-2 border-t-2 border-l-2"></div>
+<div class="registration-mark -top-2 -right-2 border-t-2 border-r-2"></div>
+<div class="max-w-2xl mx-auto">
+<input class="text-center w-full font-headline-lg text-headline-lg border-none focus:ring-0 bg-transparent mb-12" type="text" value="Our Weekly Chore Chart"/>
+<div class="flex flex-col gap-1">
+<!-- Table Header -->
+<div class="grid grid-cols-12 gap-2 mb-2 px-2">
+<div class="col-span-5 text-label-md text-on-surface-variant">CHORE / TASK</div>
+<div class="col-span-1 text-center font-bold text-[10px]">MON</div>
+<div class="col-span-1 text-center font-bold text-[10px]">TUE</div>
+<div class="col-span-1 text-center font-bold text-[10px]">WED</div>
+<div class="col-span-1 text-center font-bold text-[10px]">THU</div>
+<div class="col-span-1 text-center font-bold text-[10px]">FRI</div>
+<div class="col-span-1 text-center font-bold text-[10px]">SAT</div>
+<div class="col-span-1 text-center font-bold text-[10px]">SUN</div>
+</div>
+<!-- Rows -->
+<div class="grid grid-cols-12 gap-2 p-2 border-b border-outline hover:bg-surface-variant transition-colors group">
+<div class="col-span-5 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline group-hover:text-ink cursor-grab">drag_indicator</span>
+<input class="w-full border-none focus:ring-0 bg-transparent text-body-md font-bold" type="text" value="Brush teeth (Morning &amp; Night)"/>
+</div>
+<div class="col-span-7 grid grid-cols-7 gap-2">
+<div class="aspect-square border border-outline bg-background/50"></div>
+<div class="aspect-square border border-outline bg-background/50"></div>
+<div class="aspect-square border border-outline bg-background/50"></div>
+<div class="aspect-square border border-outline bg-background/50"></div>
+<div class="aspect-square border border-outline bg-background/50"></div>
+<div class="aspect-square border border-outline bg-background/50"></div>
+<div class="aspect-square border border-outline bg-background/50"></div>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-2 p-2 border-b border-outline hover:bg-surface-variant transition-colors group">
+<div class="col-span-5 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline group-hover:text-ink cursor-grab">drag_indicator</span>
+<input class="w-full border-none focus:ring-0 bg-transparent text-body-md" type="text" value="Put away clean clothes"/>
+</div>
+<div class="col-span-7 grid grid-cols-7 gap-2">
+<div class="aspect-square border border-outline bg-background/50"></div>
+<div class="aspect-square border border-outline bg-background/50"></div>
+<div class="aspect-square border border-outline bg-background/50"></div>
+<div class="aspect-square border border-outline bg-background/50"></div>
+<div class="aspect-square border border-outline bg-background/50"></div>
+<div class="aspect-square border border-outline bg-background/50"></div>
+<div class="aspect-square border border-outline bg-background/50"></div>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-2 p-2 border-b border-outline hover:bg-surface-variant transition-colors group">
+<div class="col-span-5 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline group-hover:text-ink cursor-grab">drag_indicator</span>
+<input class="w-full border-none focus:ring-0 bg-transparent text-body-md" type="text" value="Feed the dog"/>
+</div>
+<div class="col-span-7 grid grid-cols-7 gap-2">
+<div class="aspect-square border border-outline bg-background/50"></div>
+<div class="aspect-square border border-outline bg-background/50"></div>
+<div class="aspect-square border border-outline bg-background/50"></div>
+<div class="aspect-square border border-outline bg-background/50"></div>
+<div class="aspect-square border border-outline bg-background/50"></div>
+<div class="aspect-square border border-outline bg-background/50"></div>
+<div class="aspect-square border border-outline bg-background/50"></div>
+</div>
+</div>
+<!-- Add Task Row -->
+<div class="mt-8 flex gap-4">
+<input class="flex-1 border border-outline bg-background/30 px-4 py-2 focus:ring-1 focus:ring-primary focus:border-primary" placeholder="Type a new task..." type="text"/>
+<button class="bg-primary text-white px-6 font-bold flex items-center gap-2 hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                                Add a task
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Editor Controls -->
+<div class="mt-12 flex flex-col md:flex-row items-center justify-between gap-8 border-t border-outline pt-8">
+<div class="flex flex-col gap-2">
+<label class="font-label-md">PAPER SIZE</label>
+<div class="flex gap-4">
+<label class="flex items-center gap-2 cursor-pointer">
+<input checked="" class="text-primary focus:ring-primary" name="paper_size" type="radio"/>
+<span class="text-body-md">US Letter</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="text-primary focus:ring-primary" name="paper_size" type="radio"/>
+<span class="text-body-md">A4</span>
+</label>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="text-right hidden md:block">
+<p class="text-caption text-on-surface-variant">This browser keeps one active draft</p>
+<button class="text-caption text-secondary font-bold hover:underline">Clear local data</button>
+</div>
+<button class="bg-secondary text-white px-12 py-5 text-headline-md font-bold border border-on-surface hard-shadow btn-primary flex items-center gap-4">
+<span class="material-symbols-outlined">print</span>
+                        Preview and print
+                    </button>
+</div>
+</div>
+</section>
+<!-- PRINT EXAMPLES -->
+<section class="py-xl">
+<h2 class="font-headline-lg text-headline-lg mb-4">See what you’ll print</h2>
+<p class="text-body-lg text-on-surface-variant mb-12 max-w-2xl">
+                Check the layout before opening your browser’s print or PDF controls. Our charts are designed to be legible, clean, and ink-efficient.
+            </p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="flex flex-col gap-6">
+<div class="paper-sheet aspect-[1/1.4] p-4 relative overflow-hidden group cursor-zoom-in">
+<div class="w-full h-full bg-background border border-outline border-dashed flex flex-col items-center justify-center p-4">
+<div class="w-full h-4 border-b border-ink mb-4"></div>
+<div class="w-full space-y-2">
+<div class="h-2 bg-ink/10 w-3/4"></div>
+<div class="h-2 bg-ink/10 w-full"></div>
+<div class="h-2 bg-ink/10 w-2/3"></div>
+</div>
+</div>
+<div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="bg-white px-4 py-2 text-label-md font-bold border border-ink shadow-sm">View Sample</span>
+</div>
+</div>
+<div>
+<span class="bg-mustard text-ink px-2 py-0.5 text-caption font-bold mb-2 inline-block">MOST POPULAR</span>
+<h4 class="font-headline-md">Weekly chore chart</h4>
+<p class="text-body-md text-on-surface-variant">Standard landscape layout with name, date, and task grid.</p>
+</div>
+</div>
+<div class="flex flex-col gap-6">
+<div class="paper-sheet aspect-[1/1.4] p-4 relative overflow-hidden group cursor-zoom-in">
+<div class="w-full h-full bg-white border border-outline flex flex-col items-center justify-center p-4">
+<div class="w-full h-1 border-b border-ink mb-10"></div>
+<div class="w-full space-y-4">
+<div class="flex gap-2"><div class="w-4 h-4 border border-ink"></div><div class="h-2 bg-ink/5 flex-1"></div></div>
+<div class="flex gap-2"><div class="w-4 h-4 border border-ink"></div><div class="h-2 bg-ink/5 flex-1"></div></div>
+<div class="flex gap-2"><div class="w-4 h-4 border border-ink"></div><div class="h-2 bg-ink/5 flex-1"></div></div>
+</div>
+</div>
+<div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="bg-white px-4 py-2 text-label-md font-bold border border-ink shadow-sm">View Sample</span>
+</div>
+</div>
+<div>
+<span class="bg-teal/10 text-teal px-2 py-0.5 text-caption font-bold mb-2 inline-block">LOW INK</span>
+<h4 class="font-headline-md">Ink-friendly weekly chart</h4>
+<p class="text-body-md text-on-surface-variant">Zero background fills, just clean lines for maximum printer savings.</p>
+</div>
+</div>
+<div class="flex flex-col gap-6">
+<div class="paper-sheet aspect-[1/1.4] p-4 relative overflow-hidden group cursor-zoom-in">
+<div class="w-full h-full bg-background/30 border border-outline flex flex-col items-center justify-center p-4">
+<div class="grid grid-cols-2 gap-4 w-full">
+<div class="space-y-2">
+<div class="w-full h-20 border border-ink/20"></div>
+<div class="w-full h-2 bg-ink/10"></div>
+</div>
+<div class="space-y-2">
+<div class="w-full h-20 border border-ink/20"></div>
+<div class="w-full h-2 bg-ink/10"></div>
+</div>
+</div>
+</div>
+<div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="bg-white px-4 py-2 text-label-md font-bold border border-ink shadow-sm">View Sample</span>
+</div>
+</div>
+<div>
+<span class="bg-secondary/10 text-secondary px-2 py-0.5 text-caption font-bold mb-2 inline-block">PORTRAIT</span>
+<h4 class="font-headline-md">Morning routine</h4>
+<p class="text-body-md text-on-surface-variant">Large visual blocks focused on the first hour of the day.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- HOW IT WORKS STEPPER -->
+<section class="py-xl my-12">
+<div class="ink-line mb-16"></div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="flex flex-col gap-6">
+<span class="font-display-lg text-primary/20 text-[80px] leading-none select-none">01</span>
+<h3 class="font-headline-md text-headline-md -mt-12 ml-4 relative">Choose a starting point</h3>
+<p class="text-body-md text-on-surface-variant ml-4 border-l border-primary/20 pl-6">
+                        Don't stare at a blank page. We provide chore ideas tailored to developmental ages (3–12) to help you get started in seconds.
+                    </p>
+</div>
+<div class="flex flex-col gap-6">
+<span class="font-display-lg text-primary/20 text-[80px] leading-none select-none">02</span>
+<h3 class="font-headline-md text-headline-md -mt-12 ml-4 relative">Edit every row</h3>
+<p class="text-body-md text-on-surface-variant ml-4 border-l border-primary/20 pl-6">
+                        Your house, your rules. Add custom chores, reword suggestions, and arrange tasks in the order that fits your family flow.
+                    </p>
+</div>
+<div class="flex flex-col gap-6">
+<span class="font-display-lg text-primary/20 text-[80px] leading-none select-none">03</span>
+<h3 class="font-headline-md text-headline-md -mt-12 ml-4 relative">Preview, then print</h3>
+<p class="text-body-md text-on-surface-variant ml-4 border-l border-primary/20 pl-6">
+                        Everything is formatted perfectly for your home printer. No weird cutoffs, no signing up for accounts, just high-quality PDFs.
+                    </p>
+</div>
+</div>
+<div class="ink-line mt-16"></div>
+</section>
+<!-- PLANNED FAMILY PACK -->
+<section class="my-xl p-12 bg-surface border border-outline relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4">
+<span class="bg-ink text-white px-4 py-1 text-label-md font-bold border border-white uppercase tracking-widest rotate-2 block">PLANNED · NO CHARGE TODAY</span>
+</div>
+<div class="max-w-2xl">
+<h2 class="font-headline-lg text-headline-lg mb-4">Want more ready-to-print layouts?</h2>
+<p class="text-body-lg text-on-surface-variant mb-8">
+                    We’re planning a Printable Family Pack featuring meal planners, screen-time contracts, and seasonal goal sheets that match this aesthetic.
+                </p>
+<div class="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
+<div class="flex-1 w-full">
+<label class="block font-label-md mb-2">JOIN THE WAITLIST</label>
+<div class="flex">
+<input class="flex-1 border border-outline bg-background/50 px-4 py-3 focus:ring-1 focus:ring-primary focus:border-primary" placeholder="your@email.com" type="email"/>
+<button class="bg-ink text-white px-6 font-bold hover:bg-on-surface-variant transition-colors">Join early access</button>
+</div>
+</div>
+<div class="bg-mustard/20 border border-mustard/40 p-4">
+<p class="text-caption text-on-surface-variant font-bold">Planned pilot price:</p>
+<p class="text-headline-md text-ink">$9.99 <span class="text-caption font-normal">one-time</span></p>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ SECTION -->
+<section class="py-xl pb-24">
+<h2 class="font-headline-lg text-headline-lg mb-12 text-center">Frequently Asked Questions</h2>
+<div class="max-w-3xl mx-auto space-y-px bg-outline">
+<!-- Accordion 1 -->
+<div class="bg-surface p-6 group cursor-pointer border-t border-outline">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-md text-body-lg font-bold">Is this really free?</h4>
+<span class="material-symbols-outlined text-outline group-hover:text-ink">expand_more</span>
+</div>
+<div class="mt-4 text-body-md text-on-surface-variant hidden">
+                        Yes. The core chore chart builder is free to use, and we don't even ask for an email address to print. We sustain the site through future digital pack sales and optional support.
+                    </div>
+</div>
+<!-- Accordion 2 -->
+<div class="bg-surface p-6 group cursor-pointer">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-md text-body-lg font-bold">What age range is this for?</h4>
+<span class="material-symbols-outlined text-outline">expand_more</span>
+</div>
+</div>
+<!-- Accordion 3 -->
+<div class="bg-surface p-6 group cursor-pointer">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-md text-body-lg font-bold">Do I need to create an account?</h4>
+<span class="material-symbols-outlined text-outline">expand_more</span>
+</div>
+</div>
+<!-- Accordion 4 -->
+<div class="bg-surface p-6 group cursor-pointer">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-md text-body-lg font-bold">Can I save my chart for later?</h4>
+<span class="material-symbols-outlined text-outline">expand_more</span>
+</div>
+</div>
+<!-- Accordion 5 -->
+<div class="bg-surface p-6 group cursor-pointer">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-md text-body-lg font-bold">Will it work on my A4 printer?</h4>
+<span class="material-symbols-outlined text-outline">expand_more</span>
+</div>
+</div>
+<!-- Accordion 6 -->
+<div class="bg-surface p-6 group cursor-pointer">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-md text-body-lg font-bold">How many tasks can I add?</h4>
+<span class="material-symbols-outlined text-outline">expand_more</span>
+</div>
+</div>
+<!-- Accordion 7 -->
+<div class="bg-surface p-6 group cursor-pointer border-b border-outline">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-md text-body-lg font-bold">Is my child's data safe?</h4>
+<span class="material-symbols-outlined text-outline">expand_more</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="w-full py-lg px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-md bg-surface-variant border-t border-outline">
+<div class="flex items-center gap-6">
+<span class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant">ChoreChartEasy</span>
+<span class="text-caption text-on-surface-variant/60 hidden md:block">Kitchen Table Utility for Modern Parents.</span>
+</div>
+<div class="flex gap-8 items-center">
+<a class="font-caption text-caption text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-caption text-caption text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-caption text-caption text-on-surface-variant hover:text-primary transition-colors" href="#">Contact</a>
+<span class="font-caption text-caption text-on-surface-variant/40">© 2026 ChoreChartEasy</span>
+</div>
+</footer>
+<script>
+        // Simple micro-interaction for FAQ
+        document.querySelectorAll('.group.cursor-pointer').forEach(faq => {
+            faq.addEventListener('click', () => {
+                const content = faq.querySelector('.mt-4');
+                const icon = faq.querySelector('.material-symbols-outlined');
+                if (content.classList.contains('hidden')) {
+                    content.classList.remove('hidden');
+                    icon.style.transform = 'rotate(180deg)';
+                } else {
+                    content.classList.add('hidden');
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            });
+        });
+
+        // Toggle paper size visuals (mock logic)
+        const paperRadios = document.querySelectorAll('input[name="paper_size"]');
+        paperRadios.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                console.log('Paper size changed to:', e.target.nextElementSibling.innerText);
+            });
+        });
+    </script>
+</body></html>

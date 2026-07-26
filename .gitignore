@@ -1,5 +1,11 @@
 # Wrangler cache / logs
 .wrangler/
+dist/
+
+# Local environment and secrets
+.dev.vars
+.dev.vars.*
+*.local
 
 # Python
 __pycache__/
@@ -14,3 +20,7 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Local QA and design render evidence (not production source)
+docs/qa/
+docs/design/browser-renders/

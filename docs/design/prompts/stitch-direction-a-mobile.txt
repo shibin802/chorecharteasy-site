@@ -1,0 +1,72 @@
+Create a MOBILE screen for the approved ChoreChartEasy “Kitchen Table Utility” desktop direction.
+
+Use the same exact design system:
+- Warm paper canvas #F6F1E7
+- Paper #FFFDF8
+- Ink #17313A
+- Primary teal #1F6D62
+- Main CTA #C9432B with white text
+- Highlight #E9B949 with ink text
+- Borders #C9D7D1
+- Bricolage Grotesque headings and Atkinson Hyperlegible body/UI
+- Custom inline SVG line icons only; no Material Symbols, emoji, stock photos, cartoons, gradients, purple, or generic SaaS cards.
+
+DEVICE
+- Design for 390px width, while remaining valid down to 320px.
+- Single-column page; 16px side gutters.
+- 44px minimum touch targets.
+- No page-level horizontal overflow.
+- The weekly chart table itself may scroll horizontally inside a bordered region. Show a visible “Swipe sideways to see all days” affordance.
+- Use a compact header with check-in-paper logo, wordmark, one “Make a chart” CTA, and an accessible menu button for the four navigation links.
+- Do not let a sticky CTA cover chart rows, cookie controls, or browser UI.
+
+CONTENT AND PRIORITY
+Preserve the exact frozen desktop content and section order. Do not shorten, rewrite, invent, or remove SEO, FAQ, safety, privacy, or legal text.
+
+ABOVE THE FOLD
+Eyebrow: “Free printable tool · No sign-up · Ages 3–12”
+H1: “Make a printable chore chart that fits your child’s age”
+Subhead: “Choose an age group, start with practical chore ideas, edit every task, and print a clear weekly chart on US Letter or A4.”
+Primary CTA: “Make my free chart”
+Secondary: “Start with a blank chart”
+Microcopy: “For parents and caregivers. No child account required.”
+Show one compact real paper preview below the CTAs. Do not place four proof chips in one crowded row; use a two-column factual list.
+
+MAKER
+Heading: “Start with a useful first draft”
+Age choices in a 2x2 segmented layout: Ages 3–4, Ages 5–6, Ages 7–9, Ages 10–12.
+Optional “Nickname or initials (optional)” field with full privacy helper.
+Starter choices as four full-width rows: Weekly chores; Morning routine; Blank chart; Multiple kids (Beta).
+CTA: “Create my starting chart”.
+Adult-review helper must remain visible.
+
+EDITOR
+Heading: “Edit your chart”.
+Put title and print settings above the table.
+Table uses a horizontally scrollable container, sticky first task column if technically plausible, and 44px checkbox hit targets.
+Put “Add a task” below table.
+Primary “Preview and print” spans full width.
+Secondary “Clear local data” is visually quiet and separated.
+Do not turn the editor into a dashboard.
+
+REST OF PAGE
+- Stack and offset the three real print examples; each retains paper size and color-mode label.
+- Editorial vertical sequence for “Skip the blank design canvas”.
+- Three numbered How it works rows.
+- Four starting-point rows.
+- Adult/privacy note.
+- Six age guide/tool links.
+- Planned Family Pack section, visually secondary, with “PLANNED · NO CHARGE TODAY”, planned $9.99 one-time line, email field, “Join early access”, and no-charge microcopy.
+- Seven exact FAQ questions in accessible accordions.
+- Final CTA and full legal footer.
+
+STATES TO REPRESENT IN THE DESIGN
+- Focused input
+- Selected age
+- Selected starter
+- Horizontal chart scroll affordance
+- Inline safety/privacy helper
+- Print overflow warning placeholder
+- Analytics consent bottom sheet with equal “Accept analytics” and “Reject non-essential” buttons plus “Cookie settings”
+
+Do not show Pricing, Sign in, account, Pro, subscription, cloud sync, fake social proof, “safe”, “private”, “fair”, “popular”, or unverified claims.

@@ -1,0 +1,140 @@
+{
+  "version": "v1",
+  "basePath": "/api",
+  "architecture": "Cloudflare Pages Functions + same-origin D1",
+  "features": {
+    "freeMaker": {
+      "requiresAccount": false,
+      "storage": "browser_localStorage"
+    },
+    "auth": {
+      "enabledByDefault": false,
+      "method": "email_magic_link",
+      "productionDelivery": "blocked_until_provider_and_legal_review"
+    },
+    "earlyAccess": {
+      "enabledByDefault": false,
+      "purpose": "Printable Family Pack interest list"
+    },
+    "familyPack": {
+      "status": "planned",
+      "chargeToday": false,
+      "commercialModel": "one_time_pilot"
+    },
+    "payments": {
+      "enabled": false,
+      "checkoutEndpoint": null,
+      "webhookEndpoint": null
+    },
+    "cloudDrafts": {
+      "enabled": false
+    }
+  },
+  "session": {
+    "cookieName": "cce_session",
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "Lax",
+    "defaultTtlSeconds": 2592000,
+    "storedServerSide": "sha256_hmac_token_hash_only"
+  },
+  "dataClasses": [
+    {
+      "name": "account_email",
+      "classification": "personal",
+      "storedIn": ["users", "login_tokens"],
+      "analyticsAllowed": false,
+      "retention": "blocked_pending_legal_review"
+    },
+    {
+      "name": "early_access_email",
+      "classification": "personal_marketing",
+      "storedIn": ["early_access_signups"],
+      "analyticsAllowed": false,
+      "retention": "blocked_pending_legal_review"
+    },
+    {
+      "name": "session_token_hash",
+      "classification": "authentication",
+      "storedIn": ["sessions"],
+      "analyticsAllowed": false,
+      "retention": "30_days_or_logout"
+    }
+  ],
+  "neverAcceptedFields": [
+    "childName",
+    "childAge",
+    "chartTitle",
+    "choreText",
+    "completionStatus",
+    "schoolName",
+    "healthDetails"
+  ],
+  "errorShape": {
+    "ok": false,
+    "error": {
+      "code": "machine_readable_code",
+      "message": "safe_user_message",
+      "requestId": "uuid"
+    }
+  },
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "auth": "none",
+      "writes": false,
+      "success": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/membership",
+      "auth": "none",
+      "writes": false,
+      "success": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/early-access",
+      "auth": "none",
+      "writes": true,
+      "featureFlag": "EARLY_ACCESS_ENABLED",
+      "requestFields": ["email", "consent", "source", "company"],
+      "rateLimit": "10_per_hour_per_pseudonymous_ip_bucket",
+      "success": 202
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/request-link",
+      "auth": "none",
+      "writes": true,
+      "featureFlag": "AUTH_ENABLED",
+      "requestFields": ["email"],
+      "rateLimit": "5_per_15_minutes_per_email_and_ip",
+      "success": 202
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/verify",
+      "auth": "one_time_token",
+      "writes": true,
+      "featureFlag": "AUTH_ENABLED",
+      "queryFields": ["token"],
+      "success": 302
+    },
+    {
+      "method": "GET",
+      "path": "/api/me",
+      "auth": "optional_session",
+      "writes": false,
+      "success": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/logout",
+      "auth": "optional_session",
+      "writes": true,
+      "success": 204
+    }
+  ]
+}

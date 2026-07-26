@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ChoreChartEasy | Simple Printable Chore Charts for Kids</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: #EEF4EF;
+            font-family: 'IBM Plex Sans', sans-serif;
+            color: #153B3D;
+        }
+        .font-headline { font-family: 'Bricolage Grotesque', sans-serif; }
+
+        .hard-shadow {
+            box-shadow: 4px 4px 0px #B7CDC5;
+        }
+        .hard-shadow-primary {
+            box-shadow: 4px 4px 0px #153B3D;
+        }
+        .hard-shadow-coral {
+            box-shadow: 4px 4px 0px #872114;
+        }
+
+        .paper-stack {
+            position: relative;
+        }
+        .paper-stack::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #FFFDF8;
+            border: 2px solid #B7CDC5;
+            transform: rotate(-1deg);
+            z-index: -1;
+        }
+
+        .perforated-edge {
+            background-image: radial-gradient(circle, transparent 70%, #FFFDF8 70%);
+            background-size: 20px 20px;
+            background-position: 0 -10px;
+        }
+
+        .tab-clip {
+            clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 95% 100%, 0% 100%);
+        }
+
+        .active-press:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px #153B3D;
+        }
+
+        .dotted-border {
+            border-bottom: 2px dotted #B7CDC5;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00524d",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#176b65",
+                        "on-primary-container": "#9ee9e1",
+                        "secondary": "#3f646d",
+                        "tertiary": "#892215",
+                        "surface": "#FFFDF8",
+                        "background": "#EEF4EF",
+                        "coral": "#DE604D",
+                        "sun-yellow": "#F2C14E",
+                        "teal-dark": "#153B3D",
+                        "border-gray": "#B7CDC5"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem"
+                    },
+                    spacing: {
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "margin-page": "32px"
+                    },
+                    fontFamily: {
+                        "display-lg": ["Bricolage Grotesque"],
+                        "headline-md": ["Bricolage Grotesque"],
+                        "body-md": ["IBM Plex Sans"],
+                        "label-sm": ["IBM Plex Sans"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen">
+<!-- TopNavBar -->
+<nav class="bg-surface border-b-2 border-primary fixed top-0 w-full z-50">
+<div class="flex justify-between items-center w-full px-margin-page py-4 max-w-7xl mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">task_alt</span>
+<span class="font-headline text-headline-md text-primary font-extrabold tracking-tight">ChoreChartEasy</span>
+</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-body-md text-secondary hover:text-primary transition-colors" href="#">How it works</a>
+<a class="font-body-md text-secondary hover:text-primary transition-colors" href="#">Print examples</a>
+<a class="font-body-md text-secondary hover:text-primary transition-colors" href="#">Age guides</a>
+<a class="font-body-md text-secondary hover:text-primary transition-colors" href="#">FAQ</a>
+</div>
+<button class="bg-coral text-white px-6 py-2 border-2 border-teal-dark font-bold hard-shadow-primary active-press">
+                Make a chart
+            </button>
+</div>
+</nav>
+<main class="pt-24">
+<!-- Hero Section -->
+<section class="max-w-7xl mx-auto px-margin-page py-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div class="space-y-8">
+<div class="inline-block bg-sun-yellow/20 px-3 py-1 border-2 border-sun-yellow font-label-sm text-primary uppercase tracking-wider font-bold">
+                    Free printable tool · No sign-up · Ages 3–12
+                </div>
+<h1 class="font-headline text-display-lg leading-[1.1]">Make a printable chore chart that fits your child’s age</h1>
+<p class="font-body-lg text-secondary max-w-lg">
+                    Stop fighting over screen time. Create a custom chore routine in 60 seconds, print it for your fridge, and let the paper do the parenting.
+                </p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-coral text-white px-8 py-4 border-2 border-teal-dark font-bold text-lg hard-shadow-primary active-press">
+                        Make my free chart
+                    </button>
+<button class="bg-surface text-primary px-8 py-4 border-2 border-teal-dark font-bold text-lg hard-shadow-primary active-press">
+                        Start with a blank chart
+                    </button>
+</div>
+<ul class="grid grid-cols-2 gap-y-4 pt-4">
+<li class="flex items-center gap-2 font-label-md">
+<span class="material-symbols-outlined text-primary">child_care</span> Age-based starters
+                    </li>
+<li class="flex items-center gap-2 font-label-md">
+<span class="material-symbols-outlined text-primary">edit_note</span> Edit every task
+                    </li>
+<li class="flex items-center gap-2 font-label-md">
+<span class="material-symbols-outlined text-primary">print</span> US Letter &amp; A4
+                    </li>
+<li class="flex items-center gap-2 font-label-md">
+<span class="material-symbols-outlined text-primary">save</span> One draft saved
+                    </li>
+</ul>
+</div>
+<div class="relative">
+<div class="bg-surface border-2 border-border-gray p-8 hard-shadow rotate-2 paper-stack max-w-md mx-auto">
+<div class="border-b-2 border-teal-dark pb-4 mb-6">
+<h3 class="font-headline text-headline-md">Weekly Routine</h3>
+<p class="text-secondary text-sm">Draft Preview</p>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center dotted-border pb-2">
+<span class="font-medium">Make Bed</span>
+<div class="w-6 h-6 border-2 border-border-gray"></div>
+</div>
+<div class="flex justify-between items-center dotted-border pb-2">
+<span class="font-medium">Brush Teeth</span>
+<div class="w-6 h-6 border-2 border-border-gray"></div>
+</div>
+<div class="flex justify-between items-center dotted-border pb-2">
+<span class="font-medium">Pick up Toys</span>
+<div class="w-6 h-6 border-2 border-border-gray"></div>
+</div>
+<div class="flex justify-between items-center dotted-border pb-2">
+<span class="font-medium">Clear Plate</span>
+<div class="w-6 h-6 border-2 border-border-gray"></div>
+</div>
+</div>
+<div class="mt-8 pt-4 border-t-2 border-border-gray text-center text-xs text-secondary italic">
+                        "Great job today, Sam!"
+                    </div>
+</div>
+<!-- Accent decorative element -->
+<div class="absolute -top-4 -right-4 bg-sun-yellow w-12 h-12 border-2 border-teal-dark flex items-center justify-center -rotate-12 hard-shadow-primary">
+<span class="material-symbols-outlined">keep</span>
+</div>
+</div>
+</section>
+<!-- Maker Step -->
+<section class="bg-primary-container/10 border-y-2 border-border-gray py-20">
+<div class="max-w-4xl mx-auto px-margin-page">
+<div class="bg-surface border-2 border-teal-dark p-10 hard-shadow-primary">
+<h2 class="font-headline text-headline-lg mb-8 text-center">Start with a useful first draft</h2>
+<div class="space-y-8">
+<div>
+<label class="block font-label-md mb-3 text-secondary">CHOOSE AN AGE GROUP</label>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+<button class="py-3 border-2 border-teal-dark font-bold bg-sun-yellow active-press">3-4 years</button>
+<button class="py-3 border-2 border-border-gray font-bold hover:bg-background transition-colors active-press">5-6 years</button>
+<button class="py-3 border-2 border-border-gray font-bold hover:bg-background transition-colors active-press">7-9 years</button>
+<button class="py-3 border-2 border-border-gray font-bold hover:bg-background transition-colors active-press">10-12 years</button>
+</div>
+</div>
+<div class="grid md:grid-cols-2 gap-8">
+<div>
+<label class="block font-label-md mb-2 text-secondary">CHILD'S NICKNAME</label>
+<input class="w-full border-2 border-teal-dark p-3 focus:ring-0 focus:border-coral outline-none font-body-md" placeholder="e.g. Charlie" type="text"/>
+</div>
+<div>
+<label class="block font-label-md mb-2 text-secondary">CHART LAYOUT</label>
+<select class="w-full border-2 border-teal-dark p-3 focus:ring-0 focus:border-coral outline-none font-body-md bg-surface">
+<option>Weekly View (Mon-Sun)</option>
+<option>Morning Routine (Checklist)</option>
+<option>Blank Canvas</option>
+<option>Multiple Kids (Beta)</option>
+</select>
+</div>
+</div>
+<div class="text-center pt-4">
+<button class="bg-primary text-white px-12 py-4 border-2 border-teal-dark font-bold text-lg hard-shadow-primary active-press w-full md:w-auto">
+                                Create my starting chart
+                            </button>
+<p class="mt-4 text-sm text-secondary">
+                                No credit card required. Charts are designed for adult review before printing.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Chart Editor -->
+<section class="max-w-6xl mx-auto px-margin-page py-20">
+<div class="text-center mb-12">
+<h2 class="font-headline text-display-lg">Edit your chart</h2>
+<p class="text-secondary font-body-lg">Click any task to rename it or add your own.</p>
+</div>
+<div class="bg-surface border-2 border-border-gray p-8 md:p-12 paper-stack max-w-5xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-start mb-10 gap-4">
+<div>
+<h3 class="font-headline text-headline-lg underline decoration-sun-yellow decoration-4 underline-offset-8">Our Weekly Chore Chart</h3>
+<p class="text-secondary mt-2">Week of: ____________________</p>
+</div>
+<div class="flex gap-4 items-center bg-background p-2 border-2 border-border-gray">
+<span class="text-xs font-bold px-2">SIZE:</span>
+<button class="bg-primary text-white px-3 py-1 text-xs font-bold border-2 border-teal-dark">US LETTER</button>
+<button class="bg-surface text-primary px-3 py-1 text-xs font-bold border-2 border-border-gray hover:border-teal-dark">A4 PAPER</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse">
+<thead>
+<tr class="bg-background/50">
+<th class="p-4 text-left border-2 border-border-gray font-headline">TASKS</th>
+<th class="p-4 text-center border-2 border-border-gray font-label-sm">M</th>
+<th class="p-4 text-center border-2 border-border-gray font-label-sm">T</th>
+<th class="p-4 text-center border-2 border-border-gray font-label-sm">W</th>
+<th class="p-4 text-center border-2 border-border-gray font-label-sm">T</th>
+<th class="p-4 text-center border-2 border-border-gray font-label-sm">F</th>
+<th class="p-4 text-center border-2 border-border-gray font-label-sm text-tertiary">S</th>
+<th class="p-4 text-center border-2 border-border-gray font-label-sm text-tertiary">S</th>
+</tr>
+</thead>
+<tbody class="font-body-md">
+<tr>
+<td class="p-4 border-2 border-border-gray">Brush teeth (AM/PM)</td>
+<td class="p-4 border-2 border-border-gray text-center"><div class="w-6 h-6 border-2 border-border-gray mx-auto"></div></td>
+<td class="p-4 border-2 border-border-gray text-center"><div class="w-6 h-6 border-2 border-border-gray mx-auto"></div></td>
+<td class="p-4 border-2 border-border-gray text-center"><div class="w-6 h-6 border-2 border-border-gray mx-auto"></div></td>
+<td class="p-4 border-2 border-border-gray text-center"><div class="w-6 h-6 border-2 border-border-gray mx-auto"></div></td>
+<td class="p-4 border-2 border-border-gray text-center"><div class="w-6 h-6 border-2 border-border-gray mx-auto"></div></td>
+<td class="p-4 border-2 border-border-gray text-center"><div class="w-6 h-6 border-2 border-border-gray mx-auto"></div></td>
+<td class="p-4 border-2 border-border-gray text-center"><div class="w-6 h-6 border-2 border-border-gray mx-auto"></div></td>
+</tr>
+<tr>
+<td class="p-4 border-2 border-border-gray">Pick up toys in bedroom</td>
+<td class="p-4 border-2 border-border-gray text-center"><div class="w-6 h-6 border-2 border-border-gray mx-auto"></div></td>
+<td class="p-4 border-2 border-border-gray text-center"><div class="w-6 h-6 border-2 border-border-gray mx-auto"></div></td>
+<td class="p-4 border-2 border-border-gray text-center"><div class="w-6 h-6 border-2 border-border-gray mx-auto"></div></td>
+<td class="p-4 border-2 border-border-gray text-center"><div class="w-6 h-6 border-2 border-border-gray mx-auto"></div></td>
+<td class="p-4 border-2 border-border-gray text-center"><div class="w-6 h-6 border-2 border-border-gray mx-auto"></div></td>
+<td class="p-4 border-2 border-border-gray text-center"><div class="w-6 h-6 border-2 border-border-gray mx-auto"></div></td>
+<td class="p-4 border-2 border-border-gray text-center"><div class="w-6 h-6 border-2 border-border-gray mx-auto"></div></td>
+</tr>
+<tr>
+<td class="p-4 border-2 border-border-gray italic text-secondary">Click to add a task...</td>
+<td class="p-4 border-2 border-border-gray bg-background/20" colspan="7"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center mt-12 gap-6">
+<button class="flex items-center gap-2 font-bold text-primary hover:underline decoration-2">
+<span class="material-symbols-outlined">add_circle</span> Add another row
+                    </button>
+<button class="bg-coral text-white px-10 py-4 border-2 border-teal-dark font-bold text-xl hard-shadow-primary active-press flex items-center gap-3">
+<span class="material-symbols-outlined">print</span> Preview and print
+                    </button>
+</div>
+</div>
+</section>
+<!-- Print Examples (Bento-ish) -->
+<section class="bg-teal-dark py-24 text-surface overflow-hidden">
+<div class="max-w-7xl mx-auto px-margin-page">
+<h2 class="font-headline text-display-lg text-center mb-16">See what you’ll print</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-surface border-2 border-white/20 p-4 -rotate-2 hover:rotate-0 transition-transform cursor-pointer">
+<div class="aspect-[1/1.4] bg-cover bg-center mb-4" data-alt="A clean, minimalist child's chore chart printed on textured off-white paper, featuring a bright color palette with sun yellow and coral accents. The layout is a grid of tasks like 'Make Bed' and 'Brush Teeth' with empty checkboxes for every day of the week. Soft overhead lighting creates a tactile, physical paper feel." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAUVglx8slRaOH3V_Z8EAtWsUFZdNr_zkF6apBWGaODY1JngSzY1q33blTp1aRmwEv4tyRT2c27_Mr09cw_Hfjhn08wPsHYsCsjCAsuiFoY_OueiBRpC7EIvJ6I2ZxvMPAna3pA0TgP4t2rI8jH4zfzs-YewFA3eXlTg3e2a3Y7z73QYeYYNGQD31akbxMn5Jdu-Il8KHynP-g6VHTJ5r9QwV0FSWgtEOSXZmyQJb6Rx2U8iAGGR_I-6wPhFaqNB8_WRUMi6Ma3vg10')"></div>
+<p class="text-teal-dark font-bold text-center">Modern Color</p>
+</div>
+<div class="bg-surface border-2 border-white/20 p-4 rotate-1 hover:rotate-0 transition-transform cursor-pointer">
+<div class="aspect-[1/1.4] bg-cover bg-center mb-4" data-alt="A minimalist black and white ink-friendly chore chart layout for children. The design uses clean line art, dotted borders, and high-contrast typography on a crisp white paper background. It features a morning routine checklist with icons for a toothbrush and a pajama set. Professional, archival paper aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBfk8YdSPnlFhrcFhwRYAr0tJPV7IoQbPZsujpjgDydM_DTOVHx3goD2JcHRObcJHGOLWwT1BWUMmBVCfztkQORxrszOkX59CJPGjvrVbiaIlNHGZ0Y4Jyn29hEw_MdxSGpnaMibaDQsdosWQvaaOcRNBUFs7pzFmYMAPfhHsMuJyNGy8fXlSH6B3bbSd7yF3TdbwubToiyb7Sf-lz47ikVMrOWYOzvxA-rZvKOQW38aDEt_X94P5cDF4jDVaIo55YdwoV3T_Hsrm2x')"></div>
+<p class="text-teal-dark font-bold text-center">Ink-Friendly B&amp;W</p>
+</div>
+<div class="bg-surface border-2 border-white/20 p-4 -rotate-1 hover:rotate-0 transition-transform cursor-pointer">
+<div class="aspect-[1/1.4] bg-cover bg-center mb-4" data-alt="A vertical morning routine checklist for kids, printed on premium cardstock and clipped to a minimalist wooden clipboard. The chart includes whimsical but clear icons for dressing, breakfast, and school prep. Warm, natural home lighting illuminating the printed surface against a soft mint wall background." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAM5f9XYGZ8d1iXSPAtph6_I_3n96duKuKbenpqmTWpdK7dszEn_qIzh_AxYQD2c11TtOonsaysGQ1KlkTFofhQ3EMA1BldSy3cfRGmGxM60kTkdA4JJz2AuYFHt01AoPna526_Ps-t5XPzfsTP-d6TE-ij7lfN33V6rWp_gKBV07OYiyj8s6wbLWbYSq2k8wUuo7dKwaXvDiGrMJfT7jBpWfHJM3oM9JN4OSgsO_Sz5Jqu_3g37bjT3c7GR5JWFWesiJOUPLdVf7Bw')"></div>
+<p class="text-teal-dark font-bold text-center">Morning Checklist</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Benefits & How it Works -->
+<section class="max-w-7xl mx-auto px-margin-page py-24">
+<div class="grid md:grid-cols-3 gap-12 mb-24">
+<div class="bg-surface border-2 border-border-gray p-8 hard-shadow flex flex-col gap-4">
+<div class="w-12 h-12 bg-sun-yellow border-2 border-teal-dark flex items-center justify-center">
+<span class="material-symbols-outlined text-teal-dark">lightbulb</span>
+</div>
+<h3 class="font-headline text-headline-md">Start with age-based ideas</h3>
+<p class="text-secondary">We know what 4-year-olds can actually do. Skip the guesswork with our expert-curated task lists.</p>
+</div>
+<div class="bg-surface border-2 border-border-gray p-8 hard-shadow flex flex-col gap-4">
+<div class="w-12 h-12 bg-coral border-2 border-teal-dark flex items-center justify-center">
+<span class="material-symbols-outlined text-white">tune</span>
+</div>
+<h3 class="font-headline text-headline-md">Change the plan to fit your home</h3>
+<p class="text-secondary">Every family is unique. Edit every word, add custom tasks, and change layouts in seconds.</p>
+</div>
+<div class="bg-surface border-2 border-border-gray p-8 hard-shadow flex flex-col gap-4">
+<div class="w-12 h-12 bg-primary border-2 border-teal-dark flex items-center justify-center">
+<span class="material-symbols-outlined text-white">picture_as_pdf</span>
+</div>
+<h3 class="font-headline text-headline-md">Print for Letter or A4</h3>
+<p class="text-secondary">Formatted perfectly for your home printer. No awkward cropping or tiny text.</p>
+</div>
+</div>
+<h2 class="font-headline text-display-lg text-center mb-16">How it works</h2>
+<div class="grid md:grid-cols-3 gap-0 relative">
+<!-- Step 1 -->
+<div class="p-8 border-2 border-border-gray bg-surface z-10">
+<span class="text-4xl font-headline text-sun-yellow opacity-50">01</span>
+<h4 class="font-headline text-headline-md mt-4">Pick a Starting Point</h4>
+<p class="mt-2 text-secondary">Select an age range or routine type to get a pre-filled draft.</p>
+</div>
+<!-- Step 2 -->
+<div class="p-8 border-2 border-border-gray bg-surface translate-y-4 md:translate-y-8 z-20">
+<span class="text-4xl font-headline text-coral opacity-50">02</span>
+<h4 class="font-headline text-headline-md mt-4">Customize Layout</h4>
+<p class="mt-2 text-secondary">Add chores, change names, and pick your favorite paper style.</p>
+</div>
+<!-- Step 3 -->
+<div class="p-8 border-2 border-border-gray bg-surface translate-y-8 md:translate-y-16 z-30">
+<span class="text-4xl font-headline text-primary opacity-50">03</span>
+<h4 class="font-headline text-headline-md mt-4">Print &amp; Fridge It</h4>
+<p class="mt-2 text-secondary">Download your PDF and stick it on the fridge with a magnet.</p>
+</div>
+</div>
+</section>
+<!-- Privacy & Planned Product -->
+<section class="bg-background border-t-2 border-border-gray py-24">
+<div class="max-w-7xl mx-auto px-margin-page">
+<div class="grid lg:grid-cols-2 gap-16 items-center">
+<div class="space-y-6">
+<h2 class="font-headline text-headline-lg">Designed for adults, built around a paper routine</h2>
+<p class="text-body-lg text-secondary">We don't believe in putting more screens in front of kids. Our tool helps you move the "management" to paper, where it's visible, tactile, and finite.</p>
+<div class="flex items-start gap-4 p-4 border-2 border-border-gray bg-white/50">
+<span class="material-symbols-outlined text-primary">lock</span>
+<div>
+<p class="font-bold">Privacy First</p>
+<p class="text-sm text-secondary">We don't store your child's data. Everything stays in your browser until you print.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary text-white p-8 md:p-12 hard-shadow-primary border-2 border-teal-dark">
+<h3 class="font-headline text-headline-md mb-4">Want more ready-to-print layouts?</h3>
+<p class="mb-8 opacity-80">We're building a collection of 50+ specialized charts for neurodivergent routines, travel checklists, and holiday helpers.</p>
+<div class="flex items-center gap-4 mb-8">
+<span class="text-4xl font-headline text-sun-yellow">$9.99</span>
+<span class="text-sm opacity-60">One-time payment<br/>Lifetime updates</span>
+</div>
+<div class="flex flex-col md:flex-row gap-2">
+<input class="flex-grow p-4 bg-primary-container border-2 border-teal-dark text-white placeholder:text-white/40 focus:outline-none" placeholder="Email address" type="email"/>
+<button class="bg-sun-yellow text-teal-dark px-8 py-4 font-bold active-press">Join early access</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="max-w-3xl mx-auto px-margin-page py-24">
+<h2 class="font-headline text-display-lg text-center mb-16">Frequently asked</h2>
+<div class="space-y-4">
+<details class="group border-2 border-border-gray bg-surface" open="">
+<summary class="list-none p-6 font-bold flex justify-between items-center cursor-pointer hover:bg-background transition-colors">
+                        Is it really free?
+                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="p-6 pt-0 text-secondary border-t-2 border-border-gray/50">
+                        Yes. The core chore chart maker is 100% free with no sign-up required. We make money through our premium template packs for power users.
+                    </div>
+</details>
+<details class="group border-2 border-border-gray bg-surface">
+<summary class="list-none p-6 font-bold flex justify-between items-center cursor-pointer hover:bg-background transition-colors">
+                        Which paper size should I use?
+                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="p-6 pt-0 text-secondary border-t-2 border-border-gray/50">
+                        Our tool supports both US Letter (standard in North America) and A4 (International standard). Choose the one that matches your printer paper.
+                    </div>
+</details>
+<details class="group border-2 border-border-gray bg-surface">
+<summary class="list-none p-6 font-bold flex justify-between items-center cursor-pointer hover:bg-background transition-colors">
+                        What if I have multiple kids?
+                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="p-6 pt-0 text-secondary border-t-2 border-border-gray/50">
+                        You can create separate charts for each child or use our "Multiple Kids" beta layout which puts them all on one page.
+                    </div>
+</details>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="bg-sun-yellow py-20 border-y-4 border-teal-dark">
+<div class="max-w-4xl mx-auto px-margin-page text-center">
+<h2 class="font-headline text-display-lg mb-8">Make this week’s chore chart</h2>
+<div class="flex flex-wrap justify-center gap-6">
+<button class="bg-coral text-white px-10 py-5 border-2 border-teal-dark font-bold text-xl hard-shadow-primary active-press">
+                        Create my free chart
+                    </button>
+<button class="bg-surface text-primary px-10 py-5 border-2 border-teal-dark font-bold text-xl hard-shadow-primary active-press">
+                        View age guides
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-primary dark:bg-primary-container border-t-2 border-on-primary">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-margin-page py-gutter max-w-7xl mx-auto gap-8">
+<div class="flex flex-col items-center md:items-start gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-primary text-3xl">task_alt</span>
+<span class="font-headline text-headline-md text-on-primary">ChoreChartEasy</span>
+</div>
+<p class="text-on-primary/80 font-label-sm max-w-xs text-center md:text-left">
+                    © 2024 ChoreChartEasy. Built for household utility. Simple tools for sanity-saving parenting.
+                </p>
+</div>
+<div class="flex flex-wrap justify-center gap-x-8 gap-y-4 font-label-sm text-on-primary/80">
+<a class="hover:text-on-primary-fixed transition-colors" href="#">Privacy</a>
+<a class="hover:text-on-primary-fixed transition-colors" href="#">Terms</a>
+<a class="hover:text-on-primary-fixed transition-colors" href="#">Cookies</a>
+<a class="hover:text-on-primary-fixed transition-colors" href="#">Refunds</a>
+<a class="hover:text-on-primary-fixed transition-colors" href="#">Contact</a>
+<a class="hover:text-on-primary-fixed transition-colors" href="#">Cookie settings</a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple micro-interaction for hard shadows on click
+        document.querySelectorAll('.active-press').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.style.transform = 'translate(2px, 2px)';
+                button.style.boxShadow = 'none';
+            });
+            button.addEventListener('mouseup', () => {
+                button.style.transform = '';
+                button.style.boxShadow = '';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = '';
+                button.style.boxShadow = '';
+            });
+        });
+    </script>
+</body></html>

@@ -4,432 +4,335 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Free Printable Chore Chart Maker for Kids | ChoreChartEasy</title>
-  <meta name="description" content="Create a free printable chore chart for kids ages 3–12. Add siblings, get age-appropriate chores, edit every task, and print in under a minute.">
+  <meta name="description" content="Make a free printable chore chart for kids ages 3–12. Start with age-based ideas, edit every task, and print on US Letter or A4—no sign-up.">
   <link rel="canonical" href="https://chorecharteasy.com/">
+  <meta name="theme-color" content="#F6F1E7">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Free printable chore chart maker for kids">
-  <meta property="og:description" content="Turn your children’s ages and family goals into a fair, printable weekly chore plan in under a minute.">
+  <meta property="og:title" content="Free Printable Chore Chart Maker for Kids | ChoreChartEasy">
+  <meta property="og:description" content="Start with age-based chore ideas, edit every task, and print on US Letter or A4—no sign-up.">
   <meta property="og:url" content="https://chorecharteasy.com/">
   <meta property="og:site_name" content="ChoreChartEasy">
-  <meta name="twitter:card" content="summary">
-  <meta name="theme-color" content="#1d4ed8">
+  <meta property="og:image" content="https://chorecharteasy.com/assets/social/chorecharteasy-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="ChoreChartEasy printable weekly chore chart maker">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://chorecharteasy.com/assets/social/chorecharteasy-og.png">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WZL9EYQM8E"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-WZL9EYQM8E');
-  </script>
-  <style>
-    :root {
-      --blue:#1d4ed8; --blue-dark:#1e40af; --blue-soft:#eff6ff; --ink:#172033;
-      --muted:#526174; --line:#dbe3ee; --surface:#fff; --bg:#f5f8fc; --green:#15803d;
-      --danger:#b91c1c; --shadow:0 12px 35px rgba(15,23,42,.08);
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-    button,input{font:inherit}
-    a{color:var(--blue)}
-    .container{width:min(1120px,calc(100% - 32px));margin:auto}
-    .site-header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0}
-    .brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:850;text-decoration:none;font-size:1.08rem}
-    .brand-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:var(--blue);color:#fff;box-shadow:0 6px 16px rgba(29,78,216,.24)}
-    .top-nav{display:flex;align-items:center;gap:18px}
-    .top-nav>a:not(.btn){color:#39485d;text-decoration:none;font-weight:650;font-size:.92rem}
-    .auth-user{display:flex;align-items:center;gap:9px}
-    .avatar{width:30px;height:30px;border-radius:50%;object-fit:cover;background:#e5e7eb}
-    .pro-pill{padding:2px 7px;border-radius:999px;background:#dcfce7;color:#166534;font-size:.72rem;font-weight:800}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:9px 16px;border:0;border-radius:10px;font-weight:750;text-decoration:none;cursor:pointer;transition:.18s ease}
-    .btn:hover{transform:translateY(-1px)}
-    .btn-primary{background:var(--blue);color:#fff;box-shadow:0 5px 14px rgba(29,78,216,.2)}
-    .btn-primary:hover{background:var(--blue-dark)}
-    .btn-secondary{background:#e8eef6;color:#26364c}
-    .btn-ghost{background:transparent;color:#43536a;border:1px solid var(--line)}
-    .btn-danger{min-width:44px;min-height:44px;padding:7px;background:#fee2e2;color:var(--danger)}
-    .btn-small{min-height:44px;padding:7px 12px;font-size:.86rem}
-    .hero{text-align:center;padding:30px 0 24px}
-    .eyebrow{display:inline-flex;padding:5px 10px;border-radius:999px;background:#dbeafe;color:#1e40af;font-weight:800;font-size:.78rem;letter-spacing:.02em}
-    .hero h1{max-width:760px;margin:12px auto 8px;font-size:clamp(2rem,5vw,3.25rem);line-height:1.08;letter-spacing:-.035em}
-    .hero p{max-width:650px;margin:0 auto;color:var(--muted);font-size:1.08rem}
-    .hero-proof{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 18px;margin-top:14px;color:#405067;font-size:.9rem;font-weight:650}
-    .family-builder{margin-bottom:18px;padding:20px;background:linear-gradient(135deg,#eff6ff,#fff);border:1px solid #bfdbfe;border-radius:16px;box-shadow:var(--shadow)}
-    .builder-head{display:flex;align-items:start;justify-content:space-between;gap:18px;margin-bottom:15px}.builder-head h2{margin:0;font-size:1.25rem}.builder-head p{margin:3px 0 0;color:var(--muted)}
-    .builder-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(210px,.7fr);gap:16px;align-items:end}.member-list{display:grid;gap:9px}.member-row{display:grid;grid-template-columns:minmax(130px,1fr) minmax(150px,.7fr) 44px;gap:8px}.member-row input,.member-row select,.goal-field select{width:100%;min-height:44px;padding:9px 11px;border:1px solid #b9c8dc;border-radius:10px;background:#fff;color:var(--ink)}
-    .builder-actions{display:flex;gap:9px;margin-top:10px;flex-wrap:wrap}.builder-side{display:grid;gap:10px}.goal-field{display:grid;gap:5px;font-weight:750}.goal-field span{font-size:.84rem}.builder-note{margin:0;color:var(--muted);font-size:.79rem}
-    .guide-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.guide-card{display:block;padding:17px;background:#fff;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none}.guide-card:hover{border-color:#93b4ff;transform:translateY(-1px)}.guide-card strong,.guide-card span{display:block}.guide-card span{margin-top:4px;color:var(--muted);font-size:.86rem}
-    .pro-toolkit{margin:22px 0 0;padding:22px;border:1px solid #c7d7fe;border-radius:18px;background:linear-gradient(145deg,#fff,#f5f8ff);box-shadow:var(--shadow)}
-    .pro-toolkit-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:16px}.pro-toolkit-head h2{margin:0 0 5px;font-size:1.3rem}.pro-toolkit-head p{margin:0;color:var(--muted)}.pro-badge{white-space:nowrap;padding:5px 10px;border-radius:999px;background:#e0e7ff;color:#3730a3;font-size:.76rem;font-weight:900}
-    .pro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.pro-tool{padding:15px;border:1px solid var(--line);border-radius:14px;background:#fff}.pro-tool h3{margin:0 0 5px;font-size:1rem}.pro-tool p{min-height:42px;margin:0 0 11px;color:var(--muted);font-size:.88rem}.theme-options{display:flex;gap:7px;flex-wrap:wrap}.theme-button{width:38px;height:38px;border:2px solid transparent;border-radius:10px;cursor:pointer}.theme-button[aria-pressed="true"]{border-color:#111827;box-shadow:0 0 0 2px #fff inset}.theme-classic{background:#1d4ed8}.theme-calm{background:#0f766e}.theme-warm{background:#c2410c}.theme-playful{background:#7c3aed}
-    .saved-plans{display:grid;gap:6px;max-height:130px;overflow:auto}.saved-plan{display:flex;align-items:center;gap:6px;padding:7px;border-radius:9px;background:#f8fafc}.saved-plan span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.82rem}.saved-plan button{min-height:32px;padding:4px 7px;border:0;border-radius:7px;cursor:pointer}#chart-editor[data-theme="calm"]{--blue:#0f766e;--blue-soft:#ecfdf5}#chart-editor[data-theme="warm"]{--blue:#c2410c;--blue-soft:#fff7ed}#chart-editor[data-theme="playful"]{--blue:#7c3aed;--blue-soft:#faf5ff}
-    .app-shell{display:grid;grid-template-columns:270px minmax(0,1fr);gap:18px;align-items:start}
-    .app-shell>*{min-width:0}
-    .panel,.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
-    .template-panel{padding:16px}
-    .section-kicker{margin:0 0 12px;font-size:.95rem}
-    .template-list{display:grid;gap:9px}
-    .template-button{width:100%;display:flex;align-items:center;gap:11px;padding:11px;border:2px solid #e3e9f1;border-radius:12px;background:#fff;color:var(--ink);text-align:left;cursor:pointer}
-    .template-button:hover,.template-button:focus-visible{border-color:#93b4ff;outline:none}
-    .template-button[aria-pressed="true"]{border-color:var(--blue);background:var(--blue-soft)}
-    .template-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:#f1f5f9;font-size:1.25rem}
-    .template-copy{min-width:0;flex:1}
-    .template-copy strong,.template-copy small{display:block}
-    .template-copy small{color:var(--muted);font-size:.77rem}
-    .badge{display:inline-block;margin-top:3px;padding:1px 6px;border-radius:999px;background:#dbeafe;color:#1e40af;font-size:.63rem;font-weight:850}
-    .badge.pro{background:#fef3c7;color:#854d0e}
-    .blank-button{width:100%;margin-top:11px}.blank-button[aria-pressed="true"]{outline:2px solid var(--blue);background:var(--blue-soft)}
-    .template-hint{display:none;margin:8px 0 0;color:var(--muted);font-size:.78rem;text-align:center}
-    .editor{position:relative;padding:20px;overflow:hidden}
-    .editor>*:not(.print-bg-watermark){position:relative;z-index:1}
-    .editor-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}
-    .title-wrap{flex:1;min-width:220px}
-    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-    .chart-title{width:min(100%,420px);padding:5px 2px;border:0;border-bottom:2px solid var(--line);background:transparent;color:var(--ink);font-size:1.4rem;font-weight:800}
-    .chart-title:focus{outline:none;border-color:var(--blue)}
-    .editor-actions{display:flex;gap:8px}
-    .table-scroll{width:100%;overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff;overscroll-behavior-inline:contain}
-    .chore-table{width:100%;min-width:690px;border-collapse:collapse}
-    .chore-table caption{padding:8px;text-align:left;font-weight:700}
-    .chore-table th,.chore-table td{padding:8px;border-bottom:1px solid #e6ebf2}
-    .chore-table thead th{background:#eef3f8;color:#334155;font-size:.8rem;text-align:left}
-    .chore-table tbody tr:last-child td,.chore-table tbody tr:last-child th{border-bottom:0}
-    .chore-name{width:35%;text-align:left;font-weight:400}
-    .chore-input{width:100%;min-width:155px;border:0;background:transparent;color:var(--ink);padding:6px;border-radius:6px}
-    .chore-input:focus{outline:2px solid #93b4ff;background:#f8fbff}
-    .print-chore-text{display:none}
-    .day-cell{text-align:center!important;width:7%;min-width:48px;padding:2px!important}
-    .check-hit{display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;cursor:pointer}
-    .day-cell input{width:24px;height:24px;accent-color:var(--blue);cursor:pointer}
-    .action-cell{text-align:center;width:48px}
-    .add-row{display:flex;gap:9px;margin-top:13px}
-    .add-input{min-width:0;flex:1;padding:10px 12px;border:2px solid var(--line);border-radius:10px}
-    .add-input:focus{outline:none;border-color:var(--blue)}
-    .print-bg-watermark{display:none}
-    .status{display:none;margin:0 0 14px;padding:11px 14px;border-radius:10px;font-weight:650}
-    .status.show{display:block}
-    .status.info{background:#dbeafe;color:#1e3a8a}.status.success{background:#dcfce7;color:#14532d}.status.error{background:#fee2e2;color:#7f1d1d}
-    .scroll-hint{display:none;margin:8px 0 0;color:var(--muted);font-size:.78rem;text-align:center}
-    .content-section{padding:62px 0 0}
-    .section-head{text-align:center;max-width:680px;margin:0 auto 22px}
-    .section-head h2{margin:0 0 7px;font-size:clamp(1.55rem,3vw,2.15rem)}
-    .section-head p{margin:0;color:var(--muted)}
-    .feature-grid,.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-    .feature-card,.step-card{padding:20px;background:#fff;border:1px solid var(--line);border-radius:14px}
-    .feature-card h3,.step-card h3{margin:8px 0 5px}.feature-card p,.step-card p{margin:0;color:var(--muted)}
-    .feature-icon,.step-number{display:grid;place-items:center;width:38px;height:38px;border-radius:11px;background:#dbeafe;color:#1e40af;font-weight:850}
-    .pricing{max-width:760px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .price-card{position:relative;padding:24px;background:#fff;border:2px solid var(--line);border-radius:16px}
-    .price-card.featured{border-color:var(--blue);box-shadow:0 14px 36px rgba(29,78,216,.13)}
-    .price-card h3{margin:0}.price{margin:9px 0;font-size:2.3rem;font-weight:900}.price span{font-size:.85rem;font-weight:500;color:var(--muted)}
-    .price-card ul{padding:0;margin:15px 0 20px;list-style:none}.price-card li{margin:8px 0;padding-left:23px;position:relative;color:#405067}.price-card li:before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:900}
-    .test-label{display:inline-block;margin-bottom:10px;padding:3px 8px;border-radius:999px;background:#fef3c7;color:#854d0e;font-size:.72rem;font-weight:850}
-    .billing-note{margin:10px 0 0;color:var(--muted);font-size:.78rem;text-align:center}
-    .faq{max-width:800px;margin:auto;display:grid;gap:10px}.faq details{padding:15px 17px;background:#fff;border:1px solid var(--line);border-radius:12px}.faq summary{cursor:pointer;font-weight:800}.faq p{margin:9px 0 0;color:var(--muted)}
-    footer{margin-top:62px;padding:28px 0;border-top:1px solid var(--line);color:#4b5b70;font-size:.86rem}
-    .footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.footer-links{display:flex;gap:15px;flex-wrap:wrap}.footer-links a{color:#405067}
-    .hidden{display:none!important}
-    @media(max-width:820px){
-      .top-nav>a:not(.btn){display:none}.app-shell{grid-template-columns:1fr}.template-list{grid-template-columns:repeat(4,minmax(145px,1fr));overflow-x:auto;padding-bottom:5px}.template-button{height:100%}.scroll-hint,.template-hint{display:block}.feature-grid,.steps-grid,.pro-grid{grid-template-columns:1fr}.pro-tool p{min-height:auto}.pricing{grid-template-columns:1fr}.hero{padding-top:20px}.builder-layout{grid-template-columns:1fr}.guide-grid{grid-template-columns:repeat(2,1fr)}
-    }
-    @media(max-width:560px){
-      .container{width:min(100% - 20px,1120px)}.site-header{padding:12px 0}.brand span:last-child{font-size:.94rem}.user-name{display:none}.hero{padding:18px 0}.hero h1{font-size:2rem}.hero p{font-size:.98rem}.editor{padding:13px}.editor-head{align-items:stretch;flex-direction:column}.editor-actions .btn{width:100%}.add-row{flex-direction:column}.add-row .btn{width:100%}.template-panel{padding:12px}.template-list{margin-inline:-2px}.content-section{padding-top:46px}.family-builder{padding:15px}.builder-head{display:block}.member-row{grid-template-columns:1fr 1fr 44px}.guide-grid{grid-template-columns:1fr}
-    }
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
-    @media print{
-      @page{size:auto;margin:14mm}
-      body{background:#fff;font-size:12pt}
-      .site-header,.hero,.family-builder,.pro-toolkit,.template-panel,.editor-actions,.add-row,.scroll-hint,.content-section,footer,.status,.action-col,.action-cell{display:none!important}
-      .container{width:100%;max-width:none}.app-shell{display:block}.editor{box-shadow:none;border:0;padding:0;overflow:visible}.editor-head{margin-bottom:14px}.chart-title{border:0;font-size:20pt;max-width:none}.table-scroll{overflow:visible;border:1px solid #aaa}.chore-table{min-width:0;table-layout:fixed}.chore-table th,.chore-table td{padding:7px 5px;break-inside:avoid}.chore-table thead{display:table-header-group}.chore-input{display:none}.print-chore-text{display:block;overflow-wrap:anywhere;font-weight:500}.day-cell input{width:17px;height:17px}.chore-name{width:38%}.print-bg-watermark{display:block;position:absolute;z-index:0!important;left:50%;top:48%;transform:translate(-50%,-50%) rotate(-28deg);color:rgba(15,23,42,.085);font-size:56pt;font-weight:900;letter-spacing:4px;white-space:nowrap;pointer-events:none}body.is-pro .print-bg-watermark{display:none!important}
-    }
-  </style>
+  <link rel="preload" href="/assets/fonts/bricolage-grotesque-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/atkinson-hyperlegible-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/atkinson-hyperlegible-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/site.css">
+  <script defer src="/assets/consent.js"></script>
+  <script defer src="/assets/site.js"></script>
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"ChoreChartEasy","url":"https://chorecharteasy.com/","applicationCategory":"LifestyleApplication","operatingSystem":"Any","description":"A privacy-friendly chore system generator that suggests age-appropriate responsibilities for children ages 3–12 and helps siblings share family jobs fairly.","offers":[{"@type":"Offer","price":"0","priceCurrency":"USD","name":"Free"},{"@type":"Offer","price":"4.99","priceCurrency":"USD","name":"Pro Monthly"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is ChoreChartEasy free?","acceptedAnswer":{"@type":"Answer","text":"Yes. You can generate an age-appropriate family plan, customize chores, and print for free. Free prints include a light ChoreChartEasy watermark."}},{"@type":"Question","name":"Do I need an account?","acceptedAnswer":{"@type":"Answer","text":"No account is required to generate or print a free chart. Google sign-in is only required when purchasing Pro."}},{"@type":"Question","name":"What ages are the charts for?","acceptedAnswer":{"@type":"Answer","text":"The family generator supports children ages 3 through 12. Every suggestion can be edited to match a child’s abilities and home."}},{"@type":"Question","name":"Can I make one chart for multiple children?","acceptedAnswer":{"@type":"Answer","text":"Yes. Add up to four children with different ages. The generator gives each child age-appropriate personal responsibilities and includes shared family jobs that can be rotated."}}]}]}
-  </script>
-
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xrwdgdqfju");
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"WebApplication",
+        "name":"ChoreChartEasy",
+        "url":"https://chorecharteasy.com/",
+        "applicationCategory":"LifestyleApplication",
+        "operatingSystem":"Any",
+        "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+        "description":"A free browser-based maker for editable printable chore charts for kids ages 3–12."
+      },
+      {
+        "@type":"FAQPage",
+        "mainEntity":[
+          {"@type":"Question","name":"Is ChoreChartEasy free?","acceptedAnswer":{"@type":"Answer","text":"Yes. You can choose a starter, edit the tasks, preview the chart, and print or save it as a PDF without creating an account. A separate Printable Family Pack is planned but is not currently available for purchase."}},
+          {"@type":"Question","name":"Do I need an account?","acceptedAnswer":{"@type":"Answer","text":"No. The free chart maker does not require an account, and children should not create one. One active draft is stored in this browser so you can return on the same device."}},
+          {"@type":"Question","name":"What ages does the chart maker support?","acceptedAnswer":{"@type":"Answer","text":"The starting library covers ages 3–12 in four groups: 3–4, 5–6, 7–9, and 10–12. The suggestions are starting points, so an adult should adjust every task to the child’s abilities and home environment."}},
+          {"@type":"Question","name":"Can I make one chart for multiple children?","acceptedAnswer":{"@type":"Answer","text":"Yes. The multiple-kids Beta can create an editable starting plan for up to four children. Review and adjust the assignments; the tool does not guarantee equal effort or suitability for every family."}},
+          {"@type":"Question","name":"Can I print on US Letter and A4 paper?","acceptedAnswer":{"@type":"Answer","text":"Yes. Preview the chart, choose US Letter or A4, and use your browser’s print controls to print or save as PDF. Check your printer’s scale and margin settings before printing."}},
+          {"@type":"Question","name":"Where is my chart saved?","acceptedAnswer":{"@type":"Answer","text":"The chart maker is designed to keep one active draft in this browser. It is not cloud backup and will not automatically appear on another device. Clearing this site’s browser data removes the draft."}},
+          {"@type":"Question","name":"Are the chore suggestions right for every child?","acceptedAnswer":{"@type":"Answer","text":"No. They are general age-based starting ideas, not professional child-development or safety advice. An adult should consider the child’s abilities, supervision needs, tools, products, pets, allergies, and home environment."}}
+        ]
+      }
+    ]
+  }
   </script>
 </head>
 <body>
-  <header class="container site-header">
-    <a class="brand" href="/" aria-label="ChoreChartEasy home"><span class="brand-mark" aria-hidden="true">✓</span><span>ChoreChartEasy</span></a>
-    <nav class="top-nav" aria-label="Main navigation">
-      <a href="#how-it-works">How it works</a><a href="#guides">Age guides</a><a href="#pricing">Pricing</a>
-      <a id="login-btn" class="btn btn-primary btn-small" href="https://chorecharteasy-worker.shibin802.workers.dev/auth/google">Sign in with Google</a>
-      <div id="user-info" class="auth-user hidden">
-        <img id="user-avatar" class="avatar" alt="" hidden><span id="user-name" class="user-name"></span><span id="pro-badge" class="pro-pill hidden">PRO</span>
-        <a class="btn btn-ghost btn-small" href="https://chorecharteasy-worker.shibin802.workers.dev/auth/logout">Log out</a>
-      </div>
-    </nav>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/" aria-label="ChoreChartEasy home">
+        <img src="/favicon.svg" alt="" width="38" height="38">
+        <span>ChoreChartEasy</span>
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="#how-it-works">How it works</a>
+        <a href="#print-examples">Print examples</a>
+        <a href="#guides">Age guides</a>
+        <a href="#faq">FAQ</a>
+        <a class="button button-primary" href="#chart-maker" data-track="header">Make a chart</a>
+      </nav>
+      <details class="mobile-nav">
+        <summary aria-label="Open navigation">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </summary>
+        <nav class="mobile-menu" aria-label="Mobile navigation">
+          <a href="#chart-maker">Make a chart</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#print-examples">Print examples</a>
+          <a href="#guides">Age guides</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+      </details>
+    </div>
   </header>
 
-  <main>
-    <section class="container hero">
-      <span class="eyebrow">Free · No sign-up · Kids ages 3–12</span>
-      <h1>Free printable chore chart maker your kids can actually follow</h1>
-      <p>Create an editable weekly chore chart from your children’s ages—not a blank design canvas. Balance siblings, customize every task, and print in under a minute.</p>
-      <div class="hero-proof"><span>✓ Age-aware suggestions</span><span>✓ Sibling-safe weekly rotation</span><span>✓ Private and print-first</span></div>
-    </section>
-
-    <section class="container" aria-label="Chore chart maker">
-      <div id="payment-status" class="status" role="status" aria-live="polite"></div>
-      <div class="family-builder" id="family-builder">
-        <div class="builder-head"><div><h2>Start with your family</h2><p>Add up to four children. We’ll suggest safe, realistic responsibilities for each age.</p></div><span class="badge">FREE</span></div>
-        <div class="builder-layout">
-          <div><div id="member-list" class="member-list" aria-label="Children"></div><div class="builder-actions"><button class="btn btn-secondary btn-small" id="add-child" type="button">+ Add another child</button></div></div>
-          <div class="builder-side"><label class="goal-field"><span>What are you working on?</span><select id="family-goal"><option value="independence">Build independence</option><option value="routine">Create calmer routines</option><option value="teamwork">Share family responsibilities</option><option value="consistency">Practice consistency</option></select></label><button class="btn btn-primary" id="generate-plan" type="button">Generate our family plan</button><p class="builder-note">Suggestions are a starting point. Edit anything to fit your child’s abilities and your home.</p></div>
-        </div>
-      </div>
-      <div class="app-shell">
-        <aside class="panel template-panel">
-          <h2 class="section-kicker">Or choose a starter template</h2>
-          <div id="template-list" class="template-list"></div>
-          <p class="template-hint">Swipe sideways to see more templates.</p>
-          <button class="btn btn-secondary btn-small blank-button" type="button" data-template="blank" aria-pressed="false">Start from blank</button>
-        </aside>
-
-        <div class="panel editor" id="chart-editor">
-          <div class="print-bg-watermark" aria-hidden="true">ChoreChartEasy</div>
-          <div class="editor-head">
-            <div class="title-wrap"><label class="sr-only" for="chart-title">Chart title</label><input id="chart-title" class="chart-title" value="My Weekly Chore Chart" maxlength="80"></div>
-            <div class="editor-actions"><button class="btn btn-primary" type="button" id="print-button">Print chart</button></div>
+  <main id="main-content">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">Free printable tool · No sign-up · Ages 3–12</p>
+          <h1>Make a printable chore chart that fits your child’s age</h1>
+          <p class="hero-copy">Choose an age group, start with practical chore ideas, edit every task, and print a clear weekly chart on US Letter or A4.</p>
+          <div class="cta-row">
+            <button class="button button-primary" type="button" data-start="weekly" data-track="hero_primary">Make my free chart</button>
+            <button class="button button-secondary" type="button" data-start="blank" data-track="hero_blank">Start with a blank chart</button>
           </div>
-          <div class="table-scroll" tabindex="0" aria-label="Weekly chore chart table. Scroll horizontally on small screens.">
-            <table class="chore-table">
-              <caption class="sr-only">Editable weekly chore chart</caption>
-              <thead><tr><th scope="col">Chore</th><th scope="col" class="day-cell">Mon</th><th scope="col" class="day-cell">Tue</th><th scope="col" class="day-cell">Wed</th><th scope="col" class="day-cell">Thu</th><th scope="col" class="day-cell">Fri</th><th scope="col" class="day-cell">Sat</th><th scope="col" class="day-cell">Sun</th><th scope="col" class="action-col"><span class="sr-only">Actions</span></th></tr></thead>
-              <tbody id="chore-rows"></tbody>
-            </table>
+          <p class="microcopy">For parents and caregivers. No child account required.</p>
+          <ul class="proof-list" aria-label="Tool features">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4 10-10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Age-based starters</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19h4L19 9l-4-4L5 15v4Z" fill="none" stroke="currentColor" stroke-width="2"/></svg>Edit every task</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4V9h16v9h-2M7 14h10v7H7z" fill="none" stroke="currentColor" stroke-width="2"/></svg>US Letter &amp; A4</li>
+          </ul>
+        </div>
+        <div class="paper-stack" aria-label="Example weekly chore chart">
+          <div class="mini-sheet">
+            <p class="mini-sheet-title">Our Weekly Chore Chart</p>
+            <div class="mini-sheet-meta"><span>Ages 5–6 starter</span><span>US Letter</span></div>
+            <div class="mini-grid" aria-hidden="true">
+              <strong>Task</strong><b>M</b><b>T</b><b>W</b><b>T</b><b>F</b><b>S</b><b>S</b>
+              <strong>Make the bed</strong><i class="mini-check"></i><i class="mini-check"></i><i class="mini-check"></i><i class="mini-check"></i><i class="mini-check"></i><i class="mini-check"></i><i class="mini-check"></i>
+              <strong>Help set the table</strong><i class="mini-check"></i><i class="mini-check"></i><i class="mini-check"></i><i class="mini-check"></i><i class="mini-check"></i><i class="mini-check"></i><i class="mini-check"></i>
+              <strong>Pack toys after play</strong><i class="mini-check"></i><i class="mini-check"></i><i class="mini-check"></i><i class="mini-check"></i><i class="mini-check"></i><i class="mini-check"></i><i class="mini-check"></i>
+            </div>
           </div>
-          <p class="scroll-hint">Swipe the chart sideways to see all days.</p>
-          <div class="add-row"><label class="sr-only" for="new-chore">New chore</label><input id="new-chore" class="add-input" placeholder="Add a new chore…" maxlength="100"><button id="add-button" class="btn btn-primary" type="button">Add chore</button></div>
-          <div id="editor-announcer" class="sr-only" aria-live="polite"></div>
+          <div class="paper-note">A useful first draft—not a locked template.</div>
         </div>
       </div>
-      <section class="pro-toolkit" aria-labelledby="pro-tools-title">
-        <div class="pro-toolkit-head"><div><h2 id="pro-tools-title">Keep the system working every week</h2><p>Pro turns a one-off printable into a reusable family routine.</p></div><span id="toolkit-badge" class="pro-badge">PRO PREVIEW</span></div>
-        <div class="pro-grid">
-          <article class="pro-tool"><h3>↻ Smart weekly rotation</h3><p>Create next week’s plan with fresh, age-appropriate jobs for each child.</p><button id="rotate-plan" class="btn btn-secondary btn-small" type="button">Create next week</button></article>
-          <article class="pro-tool"><h3>▣ Family plan library</h3><p>Keep up to 20 named plans on this device for school weeks, weekends, and routines.</p><button id="save-plan" class="btn btn-secondary btn-small" type="button">Save current plan</button><div id="saved-plans" class="saved-plans" aria-live="polite"></div></article>
-          <article class="pro-tool"><h3>◉ Print styles</h3><p>Choose a calmer, warmer, or more playful chart—and print without our watermark.</p><div class="theme-options" aria-label="Chart print style"><button class="theme-button theme-classic" data-theme="classic" aria-label="Classic blue" aria-pressed="true"></button><button class="theme-button theme-calm" data-theme="calm" aria-label="Calm green" aria-pressed="false"></button><button class="theme-button theme-warm" data-theme="warm" aria-label="Warm orange" aria-pressed="false"></button><button class="theme-button theme-playful" data-theme="playful" aria-label="Playful purple" aria-pressed="false"></button></div></article>
+    </section>
+
+    <section class="section" id="chart-maker">
+      <div class="wrap">
+        <div class="section-head">
+          <div><span class="kicker">Build your chart</span><h2>Start with a useful first draft</h2></div>
+          <p>Choose an age group or a ready-made routine. You can change every suggestion before you print.</p>
         </div>
-      </section>
-    </section>
+        <div class="maker-shell">
+          <aside class="maker-controls" aria-labelledby="maker-options-title">
+            <h3 id="maker-options-title">Choose a starting point</h3>
+            <p>Nothing here creates an account or uploads a family profile.</p>
 
-    <section id="how-it-works" class="container content-section">
-      <div class="section-head"><h2>From family goals to fridge in three steps</h2><p>Start with your children—not a blank design canvas.</p></div>
-      <div class="steps-grid"><article class="step-card"><span class="step-number">1</span><h3>Add names and ages</h3><p>Tell us who is participating so each child starts with realistic, age-appropriate jobs.</p></article><article class="step-card"><span class="step-number">2</span><h3>Make the plan yours</h3><p>Edit every suggestion, balance sibling responsibilities, and remove anything that does not fit your home.</p></article><article class="step-card"><span class="step-number">3</span><h3>Print, place, practice</h3><p>Put the chart where the routine happens and let children mark their own progress.</p></article></div>
-    </section>
+            <div class="field-group">
+              <span class="field-label">Age group</span>
+              <div class="segment-grid">
+                <button class="segment" type="button" data-age="3-4" aria-pressed="false">Ages 3–4</button>
+                <button class="segment" type="button" data-age="5-6" aria-pressed="true">Ages 5–6</button>
+                <button class="segment" type="button" data-age="7-9" aria-pressed="false">Ages 7–9</button>
+                <button class="segment" type="button" data-age="10-12" aria-pressed="false">Ages 10–12</button>
+              </div>
+            </div>
 
-    <section class="container content-section">
-      <div class="section-head"><h2>More than a prettier checklist</h2><p>A simple system designed around how families actually build responsibility.</p></div>
-      <div class="feature-grid"><article class="feature-card"><span class="feature-icon">3–12</span><h3>Age-aware by default</h3><p>A preschooler should not get the same job as a ten-year-old. Suggestions change with each child’s age.</p></article><article class="feature-card"><span class="feature-icon">↻</span><h3>Fair for siblings</h3><p>Each child gets personal responsibilities while shared family jobs stay visible and easy to rotate.</p></article><article class="feature-card"><span class="feature-icon">⌂</span><h3>Private and low-screen</h3><p>No child account and no family profile uploaded. Build locally, print it, and put the screen away.</p></article></div>
-    </section>
+            <label class="field-group" for="nickname">
+              <span class="field-label">Nickname or initials (optional)</span>
+              <input class="text-input" id="nickname" maxlength="30" autocomplete="off" placeholder="For example, Sam or S.">
+              <small class="field-help">Avoid full names, school names, addresses, health details, or other sensitive information.</small>
+            </label>
 
-    <section id="guides" class="container content-section">
-      <div class="section-head"><h2>Start with the right chores for your family</h2><p>Practical guides with editable starter plans—not generic lists.</p></div>
-      <div class="guide-grid"><a class="guide-card" href="/printable-chore-chart"><strong>Printable chore chart</strong><span>Start with a clean weekly chart and print it free.</span></a><a class="guide-card" href="/chore-randomizer"><strong>Chore randomizer</strong><span>Assign household jobs fairly in one click.</span></a><a class="guide-card" href="/chores-for-3-year-olds"><strong>Chores for 3-year-olds</strong><span>Tiny, visible jobs that build confidence.</span></a><a class="guide-card" href="/chores-for-5-year-olds"><strong>Chores for 5-year-olds</strong><span>Simple routines for growing independence.</span></a><a class="guide-card" href="/chore-chart-for-multiple-kids"><strong>Charts for siblings</strong><span>Balance jobs without making everything identical.</span></a><a class="guide-card" href="/morning-routine-chart-for-kids"><strong>Morning routine chart</strong><span>Less reminding before school.</span></a></div>
-    </section>
+            <div class="field-group">
+              <span class="field-label">Starter</span>
+              <div class="starter-list">
+                <button class="starter" type="button" data-starter="weekly" aria-pressed="true"><span class="starter-icon" aria-hidden="true">W</span><span><strong>Weekly</strong><small>Age-based household ideas</small></span></button>
+                <button class="starter" type="button" data-starter="morning" aria-pressed="false"><span class="starter-icon" aria-hidden="true">M</span><span><strong>Morning</strong><small>A short before-school sequence</small></span></button>
+                <button class="starter" type="button" data-starter="blank" aria-pressed="false"><span class="starter-icon" aria-hidden="true">＋</span><span><strong>Blank</strong><small>Write every row yourself</small></span></button>
+                <button class="starter" type="button" data-starter="multiple" aria-pressed="false"><span class="starter-icon" aria-hidden="true">2</span><span><strong>Multiple kids</strong><small>Up to four starting lists</small></span><span class="beta">BETA</span></button>
+              </div>
+            </div>
 
-    <section id="pricing" class="container content-section">
-      <div class="section-head"><h2>Start free. Go Pro when the system becomes a habit.</h2><p>Free is enough to create your first plan. Pro is for families that want to reuse, rotate, and refresh it every week.</p></div>
-      <div class="pricing">
-        <article class="price-card"><h3>Free</h3><div class="price">$0</div><ul><li>One age-aware family plan</li><li>Up to 4 children</li><li>4 starter templates</li><li>Unlimited editing and printing</li><li>Private browser autosave</li><li>Light watermark on print</li></ul><button id="free-button" class="btn btn-secondary" type="button" style="width:100%">Create free plan</button></article>
-        <article class="price-card featured"><span class="test-label">TEST MODE · NO REAL CHARGE</span><h3>Pro Family</h3><div class="price">$4.99 <span>/ month</span></div><ul><li>Everything in Free</li><li>Smart age-aware weekly rotations</li><li>Save up to 20 reusable family plans</li><li>3 premium family, bedtime, and reward templates</li><li>4 print styles</li><li>Watermark-free printing</li><li>Membership stays linked to your Google account</li></ul><button id="upgrade-button" class="btn btn-primary" type="button" style="width:100%">Try Pro in test checkout</button><p class="billing-note">Test checkout only. Real billing remains disabled until the product and cancellation flow pass final review.</p></article>
+            <div class="multi-children" id="multi-children" hidden>
+              <strong>Children</strong>
+              <p class="field-help">Assignments are starting suggestions, not a guarantee of equal effort or suitability.</p>
+              <div id="children-list"></div>
+              <button class="button button-secondary button-small button-full" id="add-child" type="button">Add another child</button>
+            </div>
+
+            <div class="maker-actions">
+              <button class="button button-tool button-full" id="create-chart" type="button">Create my starting chart</button>
+              <small class="field-help">Multiple-kids mode creates an age-based starting plan. Review and adjust the assignments for your family.</small>
+            </div>
+          </aside>
+
+          <section class="editor-panel" id="chart-editor" aria-labelledby="editor-title">
+            <div class="editor-toolbar">
+              <label class="title-field" for="chart-title">
+                <span class="field-label" id="editor-title">Edit your chart</span>
+                <input class="title-input" id="chart-title" maxlength="80" value="My Weekly Chore Chart">
+              </label>
+              <div class="editor-actions">
+                <span id="save-state" class="microcopy" aria-live="polite">Ready to edit</span>
+                <button class="button button-quiet button-small" id="clear-local-data" type="button">Clear local data</button>
+              </div>
+            </div>
+
+            <div class="status" id="editor-status" role="status" aria-live="polite"></div>
+            <div class="table-wrap" tabindex="0" aria-label="Editable weekly chore chart; scroll sideways on small screens">
+              <table class="chart-table">
+                <caption class="sr-only">Editable weekly chore chart</caption>
+                <thead><tr><th class="task-col" scope="col">Chore / task</th><th scope="col">Mon</th><th scope="col">Tue</th><th scope="col">Wed</th><th scope="col">Thu</th><th scope="col">Fri</th><th scope="col">Sat</th><th scope="col">Sun</th><th class="actions-col" scope="col"><span class="sr-only">Actions</span></th></tr></thead>
+                <tbody id="task-list"></tbody>
+              </table>
+            </div>
+            <p class="swipe-hint">Swipe sideways to see all days.</p>
+
+            <div class="add-row">
+              <label class="sr-only" for="new-task">New task</label>
+              <input class="text-input" id="new-task" maxlength="100" placeholder="Type a new task">
+              <button class="button button-secondary" id="add-task" type="button">Add a task</button>
+            </div>
+
+            <fieldset class="paper-options">
+              <legend class="field-label">Paper size</legend>
+              <label class="radio" for="paper-letter"><input id="paper-letter" type="radio" name="paper-size" value="letter" checked><span>US Letter</span></label>
+              <label class="radio" for="paper-a4"><input id="paper-a4" type="radio" name="paper-size" value="a4"><span>A4</span></label>
+            </fieldset>
+
+            <div class="adult-note">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2.5 20h19L12 3Zm0 6v5m0 3v.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>Chore ideas are starting points. An adult should adjust each task to the child’s abilities and home environment.</span>
+            </div>
+
+            <button class="button button-primary button-full" id="preview-print" type="button">Preview and print</button>
+            <div id="editor-announcer" class="sr-only" aria-live="polite"></div>
+            <noscript><p class="status show error">JavaScript is required to edit and print a chart. The guides and legal pages remain available without it.</p></noscript>
+          </section>
+        </div>
       </div>
     </section>
 
-    <section id="faq" class="container content-section">
-      <div class="section-head"><h2>Frequently asked questions</h2></div>
-      <div class="faq">
-        <details><summary>Is ChoreChartEasy free?</summary><p>Yes. The starter templates, editing, and printing are free. Free prints include a light background watermark.</p></details>
-        <details><summary>Do I need an account?</summary><p>No account is required for the free chart maker. Google sign-in is required only to purchase Pro and keep membership linked to you.</p></details>
-        <details><summary>What ages are supported?</summary><p>The family generator supports ages 3–12, with simpler visible tasks for younger children and gradually more independent responsibilities for older kids. Always adapt suggestions to your child’s abilities and safety needs.</p></details>
-        <details><summary>Can I make one fair chart for siblings?</summary><p>Yes. Add up to four children with different ages. Each child receives age-appropriate personal jobs, plus shared family responsibilities that can be rotated instead of forcing every child to do identical work.</p></details>
-        <details><summary>Where is my chart saved?</summary><p>Your current draft is stored locally in this browser. It is not uploaded to our server. Clearing browser storage removes the draft.</p></details>
-        <details><summary>What does Pro Family add?</summary><p>Pro Family adds age-aware weekly rotations, a local library for up to 20 reusable plans, premium family and reward templates, four print styles, and watermark-free printing. The plan library stays on this device; cross-device cloud sync is not currently included.</p></details>
-        <details><summary>How does Pro payment work?</summary><p>Creem processes checkout. Membership is granted only after our server receives and verifies Creem’s signed payment webhook. The current checkout is test mode and does not make a real charge.</p></details>
+    <section class="section section-alt" id="print-examples">
+      <div class="wrap">
+        <div class="section-head"><div><span class="kicker">Product proof</span><h2>See what you’ll print</h2></div><p>Preview a clean page before opening your browser’s print controls. Choose color or an ink-friendly version.</p></div>
+        <div class="proof-grid">
+          <article class="proof-sheet"><h3>Weekly chore chart</h3><small>US Letter · color</small><div class="proof-lines"><div class="proof-line"><strong>Make the bed</strong><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i></div><div class="proof-line"><strong>Help set the table</strong><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i></div></div></article>
+          <article class="proof-sheet ink"><h3>Ink-friendly weekly chart</h3><small>A4 · black and white</small><div class="proof-lines"><div class="proof-line"><strong>Pack school items</strong><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i></div></div></article>
+          <article class="proof-sheet morning"><h3>Morning routine</h3><small>US Letter · sequence</small><div class="proof-lines"><div class="proof-line"><i class="proof-num">1</i><strong>Get dressed</strong></div><div class="proof-line"><i class="proof-num">2</i><strong>Eat breakfast</strong></div><div class="proof-line"><i class="proof-num">3</i><strong>Brush teeth</strong></div></div></article>
+        </div>
       </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><div><span class="kicker">Why this approach</span><h2>Skip the blank design canvas</h2></div><p>Start from a manageable set of practical ideas, then make the decisions that only your family can make.</p></div>
+        <div class="reason-grid">
+          <article class="reason"><h3>Start with age-based ideas</h3><p>Four broad age groups provide a faster first draft without asking for an exact birthday.</p></article>
+          <article class="reason"><h3>Change the plan to fit your home</h3><p>Edit, remove, or add every task. Suggestions are never locked.</p></article>
+          <article class="reason"><h3>Print for Letter or A4</h3><p>Use a real print preview, then print or save as PDF through your browser.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="how-it-works">
+      <div class="wrap">
+        <div class="section-head"><div><span class="kicker">How it works</span><h2>From age group to printable chart in three steps</h2></div></div>
+        <div class="step-grid">
+          <article class="step"><h3>Choose a starting point</h3><p>Select an age group, Weekly, Morning, Blank, or Multiple Kids Beta.</p></article>
+          <article class="step"><h3>Edit every row</h3><p>Rewrite any task, change the title, and add or remove rows.</p></article>
+          <article class="step"><h3>Preview, then print</h3><p>Choose Letter or A4, review the exact page, and open the system print dialog.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head"><div><span class="kicker">Flexible starters</span><h2>Choose the way you want to start</h2></div></div>
+        <div class="start-grid">
+          <article class="start-card"><h3>Weekly</h3><p>Age-based household ideas in a seven-day grid.</p><button class="link-button" type="button" data-start="weekly">Use Weekly</button></article>
+          <article class="start-card"><h3>Morning</h3><p>A short editable sequence for before-school routines.</p><button class="link-button" type="button" data-start="morning">Use Morning</button></article>
+          <article class="start-card"><h3>Blank</h3><p>Three empty rows when you already know what belongs on the page.</p><button class="link-button" type="button" data-start="blank">Use Blank</button></article>
+          <article class="start-card"><h3>Multiple kids <span class="beta">BETA</span></h3><p>An age-based starting plan for up to four children. Adult review is required.</p><button class="link-button" type="button" data-start="multiple">Try the Beta</button></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="wrap privacy-panel">
+        <div><span class="kicker">Local-first tool</span><h2>Designed for adults, built around a paper routine</h2><p>The maker does not require an account. It attempts to keep one active draft in this browser so you can return on the same device. It is not cloud backup. Avoid entering full names or sensitive information, especially on a shared device.</p></div>
+        <div class="privacy-actions"><a class="button button-secondary" href="/privacy">Read the Privacy Policy</a><button class="button button-quiet" type="button" data-clear-local>Clear local data</button><button class="button button-quiet" type="button" data-cookie-settings>Cookie settings</button></div>
+      </div>
+    </section>
+
+    <section class="section" id="guides">
+      <div class="wrap">
+        <div class="section-head"><div><span class="kicker">Keep exploring</span><h2>Chore ideas and printable tools</h2></div><p>Each page should answer a distinct job instead of swapping an age number into the same generic article.</p></div>
+        <nav class="guide-links" aria-label="Chore guides and tools">
+          <a class="guide-link" href="/printable-chore-chart"><strong>Printable chore chart</strong><span>Edit a clean weekly chart before printing.</span></a>
+          <a class="guide-link" href="/chores-for-3-year-olds"><strong>Chores for ages 3–4</strong><span>Small jobs with close adult help.</span></a>
+          <a class="guide-link" href="/chores-for-5-year-olds"><strong>Chores for ages 5–6</strong><span>Practical routines to practice together.</span></a>
+          <a class="guide-link" href="/morning-routine-chart-for-kids"><strong>Morning routine chart</strong><span>Build and print a short sequence.</span></a>
+          <a class="guide-link" href="/chore-randomizer"><strong>Chore randomizer</strong><span>Randomly assign jobs, then review the result.</span></a>
+          <a class="guide-link" href="/chore-chart-for-multiple-kids"><strong>Multiple-kids chart</strong><span>Create an editable sibling starting plan.</span></a>
+        </nav>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="wrap early-access">
+        <div><span class="planned">PLANNED · NO CHARGE TODAY</span><h2>Want more ready-to-print layouts?</h2><p>A Printable Family Pack is being considered at a planned pilot price of <strong>$9.99 one-time</strong>. It is not available to purchase yet.</p></div>
+        <div class="early-actions"><button class="button button-primary" id="early-access-button" type="button">Join early access</button><small class="early-note">No charge today. Joining the list does not purchase or reserve the pack. You can unsubscribe at any time.</small><span id="early-access-status" class="consent-status" role="status" aria-live="polite"></span></div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="narrow">
+        <span class="kicker">FAQ</span><h2>Frequently asked questions</h2>
+        <div class="faq">
+          <details><summary>Is ChoreChartEasy free?</summary><p>Yes. You can choose a starter, edit the tasks, preview the chart, and print or save it as a PDF without creating an account. A separate Printable Family Pack is planned but is not currently available for purchase.</p></details>
+          <details><summary>Do I need an account?</summary><p>No. The free chart maker does not require an account, and children should not create one. One active draft is stored in this browser so you can return on the same device.</p></details>
+          <details><summary>What ages does the chart maker support?</summary><p>The starting library covers ages 3–12 in four groups: 3–4, 5–6, 7–9, and 10–12. The suggestions are starting points, so an adult should adjust every task to the child’s abilities and home environment.</p></details>
+          <details><summary>Can I make one chart for multiple children?</summary><p>Yes. The multiple-kids Beta can create an editable starting plan for up to four children. Review and adjust the assignments; the tool does not guarantee equal effort or suitability for every family.</p></details>
+          <details><summary>Can I print on US Letter and A4 paper?</summary><p>Yes. Preview the chart, choose US Letter or A4, and use your browser’s print controls to print or save as PDF. Check your printer’s scale and margin settings before printing.</p></details>
+          <details><summary>Where is my chart saved?</summary><p>The chart maker is designed to keep one active draft in this browser. It is not cloud backup and will not automatically appear on another device. Clearing this site’s browser data removes the draft.</p></details>
+          <details><summary>Are the chore suggestions right for every child?</summary><p>No. They are general age-based starting ideas, not professional child-development or safety advice. An adult should consider the child’s abilities, supervision needs, tools, products, pets, allergies, and home environment.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <h2>Make this week’s chore chart</h2>
+      <p>Start with age-based ideas or open a blank chart. Edit every row before you print.</p>
+      <div class="cta-row"><button class="button button-primary" type="button" data-start="weekly" data-track="final_primary">Make my free chart</button><button class="button button-secondary" type="button" data-start="blank" data-track="final_blank">Start with a blank chart</button></div>
     </section>
   </main>
 
-  <footer><div class="container footer-inner"><span>© 2026 ChoreChartEasy. Made for parents and caregivers.</span><div class="footer-links"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/refund">Refund & cancellation</a><a href="mailto:support@chorecharteasy.com">Support</a></div></div></footer>
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div class="footer-copy"><a class="brand" href="/"><img src="/favicon.svg" alt="" width="38" height="38"><span>ChoreChartEasy</span></a><p>A free printable tool for parents and caregivers. Adult review is required for every suggested task.</p><small>© 2026 ChoreChartEasy</small></div>
+      <nav class="footer-links" aria-label="Legal and support"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/cookies">Cookies</a><a href="/refund">Refunds</a><a href="/contact">Contact</a><button type="button" data-cookie-settings>Cookie settings</button></nav>
+    </div>
+  </footer>
 
-  <script>
-    const API_BASE = 'https://chorecharteasy-worker.shibin802.workers.dev';
-    const DRAFT_KEY = 'chorecharteasy.draft.v2';
-    const FAMILY_KEY = 'chorecharteasy.family.v1';
-    const LIBRARY_KEY = 'chorecharteasy.library.v1';
-    const THEME_KEY = 'chorecharteasy.theme.v1';
-    const templates = {
-      toddler:{name:'Toddler',age:'Ages 2–3',icon:'🧸',free:true,title:'Toddler Daily Routine',chores:['Brush teeth','Put toys away','Eat breakfast','Take a nap','Wash hands before meals']},
-      preschool:{name:'Preschool',age:'Ages 4–5',icon:'🎨',free:true,title:'Preschool Chore Chart',chores:['Make bed','Get dressed','Clean up playroom','Help set the table','Brush teeth morning and night','Put dirty clothes in hamper']},
-      school:{name:'School Age',age:'Ages 6+',icon:'📚',free:true,title:'School Age Weekly Chores',chores:['Finish homework','Pack backpack','Feed pet','Make bed','Help with dishes','Take out trash','Read for 20 minutes']},
-      morning:{name:'Morning Routine',age:'All ages',icon:'☀️',free:true,title:'My Morning Routine',chores:['Make bed','Get dressed','Eat breakfast','Brush teeth','Pack school bag']},
-      bedtime:{name:'Bedtime Routine',age:'Premium',icon:'🌙',free:false,title:'My Bedtime Routine',chores:['Put toys away','Take a bath','Put on pajamas','Brush teeth','Choose tomorrow’s clothes','Read together']},
-      rewards:{name:'Reward Builder',age:'Premium',icon:'⭐',free:false,title:'Weekly Reward Chart',chores:['Kind words','Helpful hands','Finished routine','Tried something hard','Calm-down practice']},
-      family:{name:'Family Team',age:'Premium',icon:'🏠',free:false,title:'Our Family Team Chart',chores:['Tidy shared space','Set or clear the table','Sort laundry','Water plants','Prepare for tomorrow']},
-      blank:{name:'Blank',age:'Custom',icon:'＋',free:true,title:'My Weekly Chore Chart',chores:['','','']}
-    };
-    const ageChores = {
-      3:['Put toys in the basket','Place dirty clothes in the hamper','Put shoes by the door','Carry napkins to the table','Wipe a small spill with help'],
-      4:['Make the bed with help','Put away toys and books','Help set napkins and forks','Water a small plant','Clear their own plate'],
-      5:['Make the bed','Get dressed and place pajamas away','Pack toys after play','Help set the table','Feed a pet with supervision','Put school items by the door'],
-      6:['Make the bed','Pack the school bag','Feed a pet','Clear the table','Sort clean socks','Tidy the bedroom floor'],
-      7:['Make the bed','Pack the school bag','Load safe dishes','Fold simple laundry','Take out a small trash bag','Sweep a small area'],
-      8:['Prepare a simple snack','Unload safe dishes','Fold and put away laundry','Take out trash','Sweep or vacuum one room','Help prepare tomorrow’s things'],
-      9:['Load and unload the dishwasher','Prepare a simple breakfast','Vacuum a shared room','Fold and put away laundry','Take bins to the collection point','Clean the bathroom sink'],
-      10:['Wash dishes or load the dishwasher','Prepare a simple meal with supervision','Change bed sheets','Clean a bathroom surface','Manage personal laundry','Take responsibility for one shared room'],
-      11:['Plan and prepare one simple meal','Do a full laundry cycle with guidance','Vacuum and mop a room','Clean the bathroom','Manage weekly school preparation','Help a younger sibling with a routine'],
-      12:['Prepare a family meal with supervision','Manage personal laundry independently','Clean a shared bathroom','Take ownership of weekly bins','Plan a room reset','Complete one rotating family job']
-    };
-    const goalSuggestions={independence:'Choose tomorrow’s clothes and prepare personal items',routine:'Complete the morning and bedtime routine without reminders',teamwork:'Ask where help is needed and finish one family job',consistency:'Finish the same small responsibility each day'};
-    let currentChart = null;
-    let currentTemplate = 'toddler';
-    let currentFamilySetup = null;
-    let currentTheme = localStorage.getItem(THEME_KEY)||'classic';
-    let userState = {user:null,isPro:false};
-
-    const rowsEl = document.getElementById('chore-rows');
-    const titleEl = document.getElementById('chart-title');
-    const statusEl = document.getElementById('payment-status');
-
-    function newChart(templateKey){
-      const template = templates[templateKey];
-      return {title:template.title,chores:template.chores.map(text=>({text,days:Array(7).fill(false)}))};
-    }
-    function escapeAttribute(value){return String(value).replace(/[&"<>]/g,char=>({'&':'&amp;','"':'&quot;','<':'&lt;','>':'&gt;'}[char]))}
-    function addMember(name='',age=5){
-      const list=document.getElementById('member-list');if(list.children.length>=4)return;
-      const row=document.createElement('div');row.className='member-row';const number=list.children.length+1;
-      row.innerHTML=`<label class="sr-only" for="child-name-${number}">Child ${number} name</label><input id="child-name-${number}" class="member-name" maxlength="30" placeholder="Child ${number} name" value="${escapeAttribute(name)}"><label class="sr-only" for="child-age-${number}">Child ${number} age</label><select id="child-age-${number}" class="member-age" aria-label="Child ${number} age">${Array.from({length:10},(_,i)=>i+3).map(value=>`<option value="${value}" ${value===age?'selected':''}>Age ${value}</option>`).join('')}</select><button class="btn btn-danger remove-member" type="button" aria-label="Remove child ${number}">×</button>`;
-      row.querySelector('.remove-member').addEventListener('click',()=>{if(list.children.length>1){row.remove();renumberMembers()}else{row.querySelector('.member-name').value=''}});list.appendChild(row);renumberMembers();
-    }
-    function renumberMembers(){document.querySelectorAll('.member-row').forEach((row,index)=>{const number=index+1;const labels=row.querySelectorAll('label');const name=row.querySelector('.member-name');const age=row.querySelector('.member-age');name.id=`child-name-${number}`;name.placeholder=`Child ${number} name`;labels[0].htmlFor=name.id;labels[0].textContent=`Child ${number} name`;age.id=`child-age-${number}`;age.setAttribute('aria-label',`Child ${number} age`);labels[1].htmlFor=age.id;labels[1].textContent=`Child ${number} age`;row.querySelector('.remove-member').setAttribute('aria-label',`Remove child ${number}`)});document.getElementById('add-child').disabled=document.querySelectorAll('.member-row').length>=4}
-    function buildFamilyChart(members,goal,week=0){
-      const chores=[];
-      members.forEach((member,index)=>{const pool=ageChores[member.age];const offset=(index+week*2)%pool.length;const rotated=pool.slice(offset).concat(pool.slice(0,offset));rotated.slice(0,3).forEach(text=>chores.push(`${member.name} — ${text}`));chores.push(`${member.name} — ${goalSuggestions[goal]}`)});
-      if(members.length>1){chores.push(`Week ${week+1} rotation — Set or clear the table`);chores.push('Family team — 10-minute shared-space reset')}
-      return {title:members.length>1?`Our Fair Family Plan — Week ${week+1}`:`${members[0].name}’s Age-Appropriate Plan — Week ${week+1}`,chores:chores.map(text=>({text,days:Array(7).fill(false)}))}
-    }
-    function generateFamilyPlan(){
-      const members=[...document.querySelectorAll('.member-row')].map((row,index)=>({name:row.querySelector('.member-name').value.trim()||`Child ${index+1}`,age:Number(row.querySelector('.member-age').value)}));
-      const goal=document.getElementById('family-goal').value;currentFamilySetup={members,goal,week:0};localStorage.setItem(FAMILY_KEY,JSON.stringify(currentFamilySetup));
-      currentTemplate='family-plan';currentChart=buildFamilyChart(members,goal,0);titleEl.value=currentChart.title;saveDraft();renderTemplates();renderChart();track('generate_family_plan',{children_count:members.length,goal});document.getElementById('chart-editor').scrollIntoView({behavior:'smooth',block:'start'});announce(`Created an age-appropriate plan for ${members.length} ${members.length===1?'child':'children'}`)
-    }
-    function track(name,params={}){if(typeof window.gtag==='function')window.gtag('event',name,params)}
-    function loadDraft(){
-      try{const value=JSON.parse(localStorage.getItem(DRAFT_KEY));if(value?.title&&Array.isArray(value.chores))return value}catch{}
-      return null;
-    }
-    function saveDraft(){localStorage.setItem(DRAFT_KEY,JSON.stringify(currentChart))}
-    function requirePro(feature){if(userState.isPro)return true;showStatus(`${feature} is included in Pro Family. Test checkout will not charge you.`,'info');document.getElementById('pricing').scrollIntoView({behavior:'smooth'});track('view_pro_gate',{feature});return false}
-    function rotateFamilyPlan(){
-      if(!requirePro('Smart weekly rotation'))return;
-      if(!currentFamilySetup){try{currentFamilySetup=JSON.parse(localStorage.getItem(FAMILY_KEY))}catch{}}
-      if(!currentFamilySetup?.members?.length){showStatus('Generate a family plan first, then create next week’s rotation.','info');document.getElementById('family-builder').scrollIntoView({behavior:'smooth'});return}
-      currentFamilySetup.week=(Number(currentFamilySetup.week)||0)+1;localStorage.setItem(FAMILY_KEY,JSON.stringify(currentFamilySetup));currentTemplate='family-plan';currentChart=buildFamilyChart(currentFamilySetup.members,currentFamilySetup.goal,currentFamilySetup.week);titleEl.value=currentChart.title;saveDraft();renderChart();track('rotate_family_plan',{week:currentFamilySetup.week+1,children_count:currentFamilySetup.members.length});announce(`Created week ${currentFamilySetup.week+1}`)
-    }
-    function readLibrary(){try{const items=JSON.parse(localStorage.getItem(LIBRARY_KEY));return Array.isArray(items)?items:[]}catch{return []}}
-    function saveToLibrary(){if(!requirePro('Family plan library'))return;const items=readLibrary();items.unshift({id:crypto.randomUUID(),title:currentChart.title||'Untitled plan',template:currentTemplate,theme:currentTheme,savedAt:Date.now(),chart:JSON.parse(JSON.stringify(currentChart))});localStorage.setItem(LIBRARY_KEY,JSON.stringify(items.slice(0,20)));renderLibrary();track('save_family_plan',{plan_count:Math.min(items.length,20)})}
-    function loadSavedPlan(id){if(!requirePro('Family plan library'))return;const item=readLibrary().find(value=>value.id===id);if(!item)return;currentChart=item.chart;currentTemplate=item.template||'family-plan';titleEl.value=currentChart.title;setTheme(item.theme||'classic',false);saveDraft();renderTemplates();renderChart();announce(`${currentChart.title} loaded`)}
-    function deleteSavedPlan(id){if(!requirePro('Family plan library'))return;localStorage.setItem(LIBRARY_KEY,JSON.stringify(readLibrary().filter(item=>item.id!==id)));renderLibrary()}
-    function renderLibrary(){const host=document.getElementById('saved-plans');host.innerHTML='';if(!userState.isPro){host.textContent='Unlock Pro to keep reusable plans.';return}const items=readLibrary();if(!items.length){host.textContent='No saved plans yet.';return}items.forEach(item=>{const row=document.createElement('div');row.className='saved-plan';const title=document.createElement('span');title.textContent=item.title;const load=document.createElement('button');load.type='button';load.textContent='Load';load.addEventListener('click',()=>loadSavedPlan(item.id));const remove=document.createElement('button');remove.type='button';remove.textContent='×';remove.setAttribute('aria-label',`Delete ${item.title}`);remove.addEventListener('click',()=>deleteSavedPlan(item.id));row.append(title,load,remove);host.append(row)})}
-    function setTheme(theme,trackChange=true){if(theme!=='classic'&&!requirePro('Pro print styles'))return;currentTheme=theme;localStorage.setItem(THEME_KEY,theme);document.getElementById('chart-editor').dataset.theme=theme;document.querySelectorAll('.theme-button').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.theme===theme)));if(trackChange)track('select_print_theme',{theme})}
-    function renderProTools(){document.getElementById('toolkit-badge').textContent=userState.isPro?'PRO ACTIVE':'PRO PREVIEW';renderLibrary();if(!userState.isPro&&currentTheme!=='classic')currentTheme='classic';setTheme(currentTheme,false)}
-    function renderTemplates(){
-      const list=document.getElementById('template-list');list.innerHTML='';
-      Object.entries(templates).filter(([key])=>key!=='blank').forEach(([key,t])=>{
-        const locked=!t.free&&!userState.isPro;
-        const button=document.createElement('button');button.type='button';button.className='template-button';button.dataset.template=key;button.setAttribute('aria-pressed',String(key===currentTemplate));
-        button.innerHTML=`<span class="template-icon" aria-hidden="true">${t.icon}</span><span class="template-copy"><strong>${t.name}</strong><small>${t.age}</small><span class="badge ${t.free?'':'pro'}">${t.free?'FREE':locked?'PRO':'UNLOCKED'}</span></span>`;
-        list.appendChild(button);
-      });
-      document.querySelector('.blank-button').setAttribute('aria-pressed',String(currentTemplate==='blank'));
-    }
-    function selectTemplate(key,fromUser=true){
-      const template=templates[key];if(!template)return;
-      if(!template.free&&!userState.isPro){showStatus('This is a Pro template. Upgrade in test mode to unlock it.','info');document.getElementById('pricing').scrollIntoView({behavior:'smooth'});return}
-      currentTemplate=key;currentChart=newChart(key);titleEl.value=currentChart.title;saveDraft();renderTemplates();renderChart();track('select_template',{template:key});
-      if(fromUser&&innerWidth<=820)document.getElementById('chart-editor').scrollIntoView({behavior:'smooth',block:'start'});
-    }
-    function renderChart(){
-      rowsEl.innerHTML='';
-      currentChart.chores.forEach((chore,rowIndex)=>{
-        const tr=document.createElement('tr');
-        const name=document.createElement('th');name.scope='row';name.className='chore-name';
-        const input=document.createElement('input');input.className='chore-input';input.value=chore.text;input.placeholder='Enter chore…';input.maxLength=100;input.setAttribute('aria-label',`Chore ${rowIndex+1}`);
-        const printText=document.createElement('span');printText.className='print-chore-text';printText.textContent=chore.text||' ';
-        input.addEventListener('input',()=>{chore.text=input.value;printText.textContent=input.value||' ';saveDraft();updateRowLabels(tr,chore,rowIndex)});
-        name.append(input,printText);tr.appendChild(name);
-        chore.days.forEach((checked,dayIndex)=>{const td=document.createElement('td');td.className='day-cell';const hit=document.createElement('label');hit.className='check-hit';const box=document.createElement('input');box.type='checkbox';box.checked=checked;box.setAttribute('aria-label',checkboxLabel(chore,rowIndex,dayIndex));box.addEventListener('change',()=>{chore.days[dayIndex]=box.checked;saveDraft()});hit.appendChild(box);td.appendChild(hit);tr.appendChild(td)});
-        const action=document.createElement('td');action.className='action-cell';const remove=document.createElement('button');remove.type='button';remove.className='btn btn-danger';remove.textContent='×';remove.setAttribute('aria-label',`Delete ${chore.text||`chore ${rowIndex+1}`}`);remove.addEventListener('click',()=>deleteChore(rowIndex));action.appendChild(remove);tr.appendChild(action);rowsEl.appendChild(tr);
-      });
-    }
-    function updateRowLabels(tr,chore,rowIndex){tr.querySelectorAll('.day-cell input').forEach((box,i)=>box.setAttribute('aria-label',checkboxLabel(chore,rowIndex,i)));tr.querySelector('.btn-danger').setAttribute('aria-label',`Delete ${chore.text||`chore ${rowIndex+1}`}`)}
-    function checkboxLabel(chore,rowIndex,dayIndex){return `${chore.text||`Chore ${rowIndex+1}`}, ${['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'][dayIndex]}`}
-    function addChore(){const input=document.getElementById('new-chore');const text=input.value.trim();if(!text)return;currentChart.chores.push({text,days:Array(7).fill(false)});input.value='';saveDraft();renderChart();announce(`${text} added`)}
-    function deleteChore(index){const [removed]=currentChart.chores.splice(index,1);if(!currentChart.chores.length)currentChart.chores.push({text:'',days:Array(7).fill(false)});saveDraft();renderChart();announce(`${removed.text||'Chore'} deleted`)}
-    function announce(message){document.getElementById('editor-announcer').textContent=message}
-    function showStatus(message,type='info'){statusEl.textContent=message;statusEl.className=`status show ${type}`}
-    function clearStatus(){statusEl.className='status';statusEl.textContent=''}
-
-    async function initAuth(){
-      try{
-        const response=await fetch(`${API_BASE}/api/me`,{credentials:'include'});const data=await response.json();userState={user:data.user||null,isPro:Boolean(data.isPro)};updateAuthUI();return userState;
-      }catch(error){console.error('Authentication check failed',error);userState={user:null,isPro:false};updateAuthUI();return userState}
-    }
-    function updateAuthUI(){
-      document.body.classList.toggle('is-pro',userState.isPro);document.getElementById('login-btn').classList.toggle('hidden',Boolean(userState.user));document.getElementById('user-info').classList.toggle('hidden',!userState.user);document.getElementById('pro-badge').classList.toggle('hidden',!userState.isPro);
-      if(userState.user){document.getElementById('user-name').textContent=userState.user.name||userState.user.email;const avatar=document.getElementById('user-avatar');if(userState.user.picture){avatar.src=userState.user.picture;avatar.alt=`${userState.user.name||'User'} avatar`;avatar.hidden=false}}
-      renderTemplates();renderProTools();
-    }
-    async function startCheckout(){
-      clearStatus();const button=document.getElementById('upgrade-button');button.disabled=true;button.textContent='Opening checkout…';
-      try{
-        const response=await fetch(`${API_BASE}/api/checkout`,{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:'{}'});const data=await response.json();
-        if(response.status===401){localStorage.setItem('chorecharteasy.pendingUpgrade','1');location.href=data.loginUrl||`${API_BASE}/auth/google`;return}
-        if(!response.ok||!data.checkoutUrl)throw new Error(data.error||'Checkout unavailable');location.href=data.checkoutUrl;
-      }catch(error){showStatus(error.message||'Checkout could not be opened.','error');button.disabled=false;button.textContent='Try Pro in test checkout'}
-    }
-    async function handlePaymentReturn(){
-      const params=new URLSearchParams(location.search);if(!params.get('checkout_id')&&!params.get('order_id'))return;
-      const url=new URL(location.href);['checkout_id','order_id','customer_id','subscription_id','product_id','request_id','signature'].forEach(k=>url.searchParams.delete(k));history.replaceState({},'',url);
-      showStatus('Payment received. Verifying your membership…','info');
-      for(let attempt=0;attempt<10;attempt++){await new Promise(r=>setTimeout(r,attempt?1500:300));const state=await initAuth();if(state.isPro){showStatus('Welcome to Pro Family — weekly rotations, plan library, print styles, premium templates, and watermark-free printing are unlocked.','success');return}}
-      showStatus('Payment is still being verified. Refresh in a moment; Creem webhooks can take a few seconds.','info');
-    }
-
-    document.getElementById('template-list').addEventListener('click',event=>{const button=event.target.closest('[data-template]');if(button)selectTemplate(button.dataset.template)});
-    document.querySelector('.blank-button').addEventListener('click',()=>selectTemplate('blank'));
-    document.getElementById('print-button').addEventListener('click',()=>{track('print_chart',{template:currentTemplate,rows:currentChart.chores.length});window.print()});
-    document.getElementById('add-child').addEventListener('click',()=>addMember('',Math.min(12,5+document.querySelectorAll('.member-row').length*2)));
-    document.getElementById('generate-plan').addEventListener('click',generateFamilyPlan);
-    document.getElementById('rotate-plan').addEventListener('click',rotateFamilyPlan);
-    document.getElementById('save-plan').addEventListener('click',saveToLibrary);
-    document.querySelectorAll('.theme-button').forEach(button=>button.addEventListener('click',()=>setTheme(button.dataset.theme)));
-    document.getElementById('add-button').addEventListener('click',addChore);
-    document.getElementById('new-chore').addEventListener('keydown',event=>{if(event.key==='Enter')addChore()});
-    titleEl.addEventListener('input',()=>{currentChart.title=titleEl.value;saveDraft()});
-    document.getElementById('free-button').addEventListener('click',()=>document.getElementById('chart-editor').scrollIntoView({behavior:'smooth'}));
-    document.getElementById('upgrade-button').addEventListener('click',startCheckout);
-
-    window.addEventListener('DOMContentLoaded',async()=>{
-      addMember('',5);
-      const requestedTemplate=new URLSearchParams(location.search).get('template');
-      if(requestedTemplate&&templates[requestedTemplate]?.free){currentTemplate=requestedTemplate;currentChart=newChart(requestedTemplate)}else{currentChart=loadDraft()||newChart('toddler')}
-      titleEl.value=currentChart.title;renderTemplates();renderChart();
-      await initAuth();
-      if(localStorage.getItem('chorecharteasy.pendingUpgrade')==='1'&&userState.user){localStorage.removeItem('chorecharteasy.pendingUpgrade');await startCheckout();return}
-      await handlePaymentReturn();
-    });
-  </script>
+  <dialog class="dialog" id="print-dialog" aria-labelledby="print-dialog-title">
+    <div class="dialog-head"><h2 id="print-dialog-title">Print preview</h2><div class="dialog-actions"><button class="button button-primary" id="print-now" type="button">Print or save PDF</button><button class="icon-button" id="close-print" type="button" aria-label="Close print preview">×</button></div></div>
+    <div class="dialog-body">
+      <div class="dialog-controls">
+        <strong>Preview options</strong>
+        <label class="radio"><input type="radio" name="print-mode" value="color" checked>Color</label>
+        <label class="radio"><input type="radio" name="print-mode" value="ink">Ink-friendly</label>
+        <span>Paper size is selected in the editor.</span>
+      </div>
+      <article class="print-sheet" id="print-sheet" data-paper="letter" data-mode="color">
+        <header class="print-head"><h2 id="print-title">My Weekly Chore Chart</h2><div class="print-meta"><span id="print-paper-label">US Letter</span> · Weekly checklist</div></header>
+        <table class="print-table"><thead><tr id="print-days"></tr></thead><tbody id="print-rows"></tbody></table>
+        <footer class="print-footer"><span>ChoreChartEasy</span><span>Review tasks and supervise as needed.</span></footer>
+      </article>
+    </div>
+  </dialog>
 </body>
 </html>

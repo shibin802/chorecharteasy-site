@@ -1,0 +1,33 @@
+{
+  "projectId": "10112449553961527926",
+  "baseScreenId": "59ebbaf3cbab4f06a1a8f796cca1f42d",
+  "refined": {
+    "slug": "direction-a-refined-desktop",
+    "screenId": "f454efcc4bf345d38f93c02db8a78e5d",
+    "htmlFile": "/root/workspace/chorecharteasy-site/docs/design/stitch-artifacts/direction-a-refined-desktop.html",
+    "imageFile": "/root/workspace/chorecharteasy-site/docs/design/stitch-artifacts/direction-a-refined-desktop.png",
+    "html": {
+      "bytes": 34470,
+      "contentType": "text/html"
+    },
+    "image": {
+      "bytes": 28773,
+      "contentType": "image/png"
+    }
+  },
+  "mobile": {
+    "slug": "direction-a-mobile",
+    "screenId": "eae28559483246638c3b37abd9e901b6",
+    "htmlFile": "/root/workspace/chorecharteasy-site/docs/design/stitch-artifacts/direction-a-mobile.html",
+    "imageFile": "/root/workspace/chorecharteasy-site/docs/design/stitch-artifacts/direction-a-mobile.png",
+    "html": {
+      "bytes": 32195,
+      "contentType": "text/html"
+    },
+    "image": {
+      "bytes": 17665,
+      "contentType": "image/png"
+    }
+  },
+  "updatedAt": "2026-07-26T05:17:16.214Z"
+}

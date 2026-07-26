@@ -30,9 +30,26 @@
     "@context":"https://schema.org",
     "@graph":[
       {
-        "@type":"WebApplication",
+        "@type":"Organization",
+        "@id":"https://chorecharteasy.com/#organization",
+        "name":"ChoreChartEasy",
+        "url":"https://chorecharteasy.com/"
+      },
+      {
+        "@type":"WebSite",
+        "@id":"https://chorecharteasy.com/#website",
         "name":"ChoreChartEasy",
         "url":"https://chorecharteasy.com/",
+        "publisher":{"@id":"https://chorecharteasy.com/#organization"},
+        "inLanguage":"en-US"
+      },
+      {
+        "@type":"WebApplication",
+        "@id":"https://chorecharteasy.com/#app",
+        "name":"ChoreChartEasy",
+        "url":"https://chorecharteasy.com/",
+        "isPartOf":{"@id":"https://chorecharteasy.com/#website"},
+        "publisher":{"@id":"https://chorecharteasy.com/#organization"},
         "applicationCategory":"LifestyleApplication",
         "operatingSystem":"Any",
         "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},

@@ -36,6 +36,7 @@ ROOT_FILES = (
     "favicon.svg",
     "guide.css",
     "robots.txt",
+    "llms.txt",
     "sitemap.xml",
     "_headers",
 )

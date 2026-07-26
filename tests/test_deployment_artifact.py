@@ -26,6 +26,7 @@ class DeploymentArtifactContract(unittest.TestCase):
                 "assets/site.css",
                 "assets/site.js",
                 "assets/social/chorecharteasy-og.png",
+                "llms.txt",
             ):
                 self.assertTrue((output / required).is_file(), required)
 

@@ -195,7 +195,7 @@ class FrontendV2Contract(unittest.TestCase):
 
     def test_shared_assets_and_security_headers(self):
         home = self.text("index.html")
-        self.assertIn('href="/assets/site.css?v=20260726-mobile-v2"', home)
+        self.assertIn('href="/assets/site.css?v=20260726-mobile-v3"', home)
         self.assertIn('src="/assets/consent.js"', home)
         self.assertIn('src="/assets/site.js"', home)
         headers = self.text("_headers")
@@ -207,10 +207,12 @@ class FrontendV2Contract(unittest.TestCase):
 
     def test_mobile_layout_guards_common_393px_iphones(self):
         css = self.text("assets/site.css")
+        self.assertIn("html,body{max-width:100%;overflow-x:hidden}", css)
         self.assertRegex(css, r"\.editor-panel\{[^}]*min-width:0")
         self.assertIn(".maker-shell{grid-template-columns:minmax(0,1fr)}", css)
         self.assertIn("@media(max-width:480px)", css)
-        self.assertRegex(css, re.compile(r"@media\(max-width:480px\).*?\.paper-note\{[^}]*position:static", re.S))
+        self.assertRegex(css, re.compile(r"@media\(max-width:480px\).*?\.paper-stack\{[^}]*padding-bottom:72px", re.S))
+        self.assertRegex(css, re.compile(r"@media\(max-width:480px\).*?\.paper-note\{[^}]*position:absolute;right:4px;bottom:4px", re.S))
         self.assertRegex(css, re.compile(r"@media\(max-width:480px\).*?h1\{font-size:clamp\([^)]*2\.75rem", re.S))
 
     def test_hero_example_uses_square_checkbox_inside_grid_cell(self):
@@ -226,7 +228,7 @@ class FrontendV2Contract(unittest.TestCase):
         for path in ROOT.glob("*.html"):
             html = path.read_text(encoding="utf-8")
             if "/assets/site.css" in html:
-                self.assertIn('href="/assets/site.css?v=20260726-mobile-v2"', html, path.name)
+                self.assertIn('href="/assets/site.css?v=20260726-mobile-v3"', html, path.name)
                 self.assertNotIn('href="/assets/site.css"', html, path.name)
 
     def test_launch_legal_pages_match_current_free_product(self):

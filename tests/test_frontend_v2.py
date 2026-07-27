@@ -195,7 +195,7 @@ class FrontendV2Contract(unittest.TestCase):
 
     def test_shared_assets_and_security_headers(self):
         home = self.text("index.html")
-        self.assertIn('href="/assets/site.css"', home)
+        self.assertIn('href="/assets/site.css?v=20260726-mobile-v2"', home)
         self.assertIn('src="/assets/consent.js"', home)
         self.assertIn('src="/assets/site.js"', home)
         headers = self.text("_headers")
@@ -215,8 +215,19 @@ class FrontendV2Contract(unittest.TestCase):
 
     def test_hero_example_uses_square_checkbox_inside_grid_cell(self):
         css = self.text("assets/site.css")
-        self.assertIn(".mini-check{width:auto;height:auto", css)
+        self.assertIn(".mini-check{width:auto;height:auto;border-right:0", css)
         self.assertRegex(css, r"\.mini-check::after\{[^}]*width:12px;height:12px")
+
+    def test_mutable_assets_are_revalidated_and_css_is_cache_busted(self):
+        headers = self.text("_headers")
+        asset_rule = headers.split("/assets/*", 1)[1].split("\n\n", 1)[0]
+        self.assertIn("max-age=0, must-revalidate", asset_rule)
+        self.assertNotIn("immutable", asset_rule)
+        for path in ROOT.glob("*.html"):
+            html = path.read_text(encoding="utf-8")
+            if "/assets/site.css" in html:
+                self.assertIn('href="/assets/site.css?v=20260726-mobile-v2"', html, path.name)
+                self.assertNotIn('href="/assets/site.css"', html, path.name)
 
     def test_launch_legal_pages_match_current_free_product(self):
         legal_pages = ["privacy.html", "terms.html", "cookies.html", "refund.html", "contact.html"]

@@ -209,8 +209,8 @@ class FrontendV2Contract(unittest.TestCase):
     def test_shared_assets_and_security_headers(self):
         home = self.text("index.html")
         self.assertIn('href="/assets/site.css?v=20260726-mobile-v4"', home)
-        self.assertIn('src="/assets/consent.js"', home)
-        self.assertIn('src="/assets/site.js"', home)
+        self.assertIn('src="/assets/consent.js?v=20260728-analytics-v1"', home)
+        self.assertIn('src="/assets/site.js?v=20260728-analytics-v1"', home)
         headers = self.text("_headers")
         self.assertIn("Content-Security-Policy:", headers)
         self.assertIn("script-src 'self' https://www.googletagmanager.com", headers)
@@ -246,6 +246,15 @@ class FrontendV2Contract(unittest.TestCase):
             if "/assets/site.css" in html:
                 self.assertIn('href="/assets/site.css?v=20260726-mobile-v4"', html, path.name)
                 self.assertNotIn('href="/assets/site.css"', html, path.name)
+            if "/assets/consent.js" in html:
+                self.assertIn('src="/assets/consent.js?v=20260728-analytics-v1"', html, path.name)
+                self.assertNotIn('src="/assets/consent.js"', html, path.name)
+            if "/assets/site.js" in html:
+                self.assertIn('src="/assets/site.js?v=20260728-analytics-v1"', html, path.name)
+                self.assertNotIn('src="/assets/site.js"', html, path.name)
+            if "/assets/pages/chore-randomizer.js" in html:
+                self.assertIn('src="/assets/pages/chore-randomizer.js?v=20260728-analytics-v1"', html, path.name)
+                self.assertNotIn('src="/assets/pages/chore-randomizer.js"', html, path.name)
 
     def test_launch_legal_pages_match_current_free_product(self):
         legal_pages = ["privacy.html", "terms.html", "cookies.html", "refund.html", "contact.html"]

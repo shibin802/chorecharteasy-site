@@ -209,7 +209,7 @@ class FrontendV2Contract(unittest.TestCase):
     def test_shared_assets_and_security_headers(self):
         home = self.text("index.html")
         self.assertIn('href="/assets/site.css?v=20260726-mobile-v4"', home)
-        self.assertIn('src="/assets/consent.js?v=20260728-analytics-v1"', home)
+        self.assertIn('src="/assets/consent.js?v=20260728-analytics-v2"', home)
         self.assertIn('src="/assets/site.js?v=20260728-analytics-v1"', home)
         headers = self.text("_headers")
         self.assertIn("Content-Security-Policy:", headers)
@@ -247,7 +247,7 @@ class FrontendV2Contract(unittest.TestCase):
                 self.assertIn('href="/assets/site.css?v=20260726-mobile-v4"', html, path.name)
                 self.assertNotIn('href="/assets/site.css"', html, path.name)
             if "/assets/consent.js" in html:
-                self.assertIn('src="/assets/consent.js?v=20260728-analytics-v1"', html, path.name)
+                self.assertIn('src="/assets/consent.js?v=20260728-analytics-v2"', html, path.name)
                 self.assertNotIn('src="/assets/consent.js"', html, path.name)
             if "/assets/site.js" in html:
                 self.assertIn('src="/assets/site.js?v=20260728-analytics-v1"', html, path.name)

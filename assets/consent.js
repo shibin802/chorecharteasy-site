@@ -117,14 +117,12 @@
     window.dataLayer = window.dataLayer || [];
     window.gtag = function () { window.dataLayer.push(arguments); };
     window.gtag("consent", "default", {
-      analytics_storage: "denied",
+      analytics_storage: "granted",
       ad_storage: "denied",
       ad_user_data: "denied",
-      ad_personalization: "denied",
-      wait_for_update: 500
+      ad_personalization: "denied"
     });
     window.gtag("js", new Date());
-    window.gtag("consent", "update", { analytics_storage: "granted" });
     window.gtag("config", ANALYTICS_ID, {
       anonymize_ip: true,
       allow_google_signals: false,

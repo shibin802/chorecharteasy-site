@@ -9,13 +9,21 @@
 
   const EVENT_FIELDS = {
     cta_click: ["source"],
+    chart_started: ["starter", "children_count", "task_count"],
+    chart_edited: ["source", "starter", "task_count", "checked_count"],
+    task_added: ["starter", "task_count"],
+    task_removed: ["starter", "task_count"],
+    task_checked: ["starter", "checked", "checked_count", "task_count"],
+    draft_cleared: ["source"],
     starter_loaded: ["starter"],
     plan_ready: ["starter", "children_count"],
+    print_clicked: ["paper", "mode", "starter", "task_count"],
     print_preview_opened: ["paper", "mode"],
     print_confirmed: ["paper", "mode"],
     early_access_click: ["source"],
     randomize_chores: ["people_count", "chore_count"],
     print_randomized_chores: [],
+    randomizer_cleared: [],
     cookie_preference_updated: ["analytics"]
   };
 

@@ -157,7 +157,7 @@ class FrontendV2Contract(unittest.TestCase):
     def test_analytics_event_payload_is_allowlisted(self):
         js = self.text("assets/consent.js")
         self.assertIn("EVENT_FIELDS", js)
-        forbidden_payloads = ["nickname", "child_name", "chart_title", "task_text", "task_name"]
+        forbidden_payloads = ["nickname", "child_name", "chart_title", "task_text", "task_name", "child_label"]
         event_fields = re.search(r"const EVENT_FIELDS\s*=\s*\{(.*?)\};", js, re.S)
         self.assertIsNotNone(event_fields)
         if event_fields is None:
@@ -165,6 +165,19 @@ class FrontendV2Contract(unittest.TestCase):
         fields = event_fields.group(1).lower()
         for field in forbidden_payloads:
             self.assertNotIn(field, fields)
+        for event_name in [
+            "chart_started",
+            "chart_edited",
+            "task_added",
+            "task_removed",
+            "task_checked",
+            "print_clicked",
+            "draft_cleared",
+            "randomizer_cleared",
+        ]:
+            self.assertIn(event_name, event_fields.group(1))
+        for safe_field in ["starter", "paper", "mode", "source", "task_count", "checked_count", "children_count"]:
+            self.assertIn(safe_field, event_fields.group(1))
 
     def test_legal_and_contact_routes_exist_and_are_linked(self):
         for page in ["privacy.html", "terms.html", "cookies.html", "refund.html", "contact.html"]:

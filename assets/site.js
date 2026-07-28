@@ -50,6 +50,7 @@
   let chart = null;
   let storageEnabled = canUseStorage();
   let lastFocusedElement = null;
+  const trackedEditSources = new Set();
 
   const $ = selector => document.querySelector(selector);
   const $$ = selector => [...document.querySelectorAll(selector)];
@@ -144,6 +145,18 @@
     if (element) element.textContent = message;
   }
 
+  function chartStats() {
+    const tasks = Array.isArray(chart?.tasks) ? chart.tasks : [];
+    const checkedCount = tasks.reduce((sum, item) => sum + item.days.filter(Boolean).length, 0);
+    return { starter: chart?.starter || selectedStarter, task_count: tasks.length, checked_count: checkedCount };
+  }
+
+  function trackChartEdited(source) {
+    if (trackedEditSources.has(source)) return;
+    trackedEditSources.add(source);
+    window.ChoreConsent?.track("chart_edited", { source, ...chartStats() });
+  }
+
   function setPressedState(selector, key, value) {
     $$(selector).forEach(button => button.setAttribute("aria-pressed", String(button.dataset[key] === value)));
   }
@@ -210,6 +223,8 @@
     syncEditorFromChart();
     saveDraft();
     const childrenCount = starter === "multiple" ? childRows().length : 1;
+    trackedEditSources.clear();
+    window.ChoreConsent?.track("chart_started", { starter, children_count: childrenCount, task_count: chart.tasks.length });
     window.ChoreConsent?.track("plan_ready", { starter, children_count: childrenCount });
     showStatus("Your starting chart is ready. Edit any task before printing.", "info");
     announce("Starting chart created and ready to edit");
@@ -242,6 +257,7 @@
         item.text = input.value;
         updateRowLabels(row, item, rowIndex);
         saveDraft();
+        trackChartEdited("task_input");
       });
       taskCell.appendChild(input);
       row.appendChild(taskCell);
@@ -258,6 +274,9 @@
         checkbox.addEventListener("change", () => {
           item.days[dayIndex] = checkbox.checked;
           saveDraft();
+          const stats = chartStats();
+          window.ChoreConsent?.track("task_checked", { checked: checkbox.checked, ...stats });
+          trackChartEdited("task_checked");
         });
         label.appendChild(checkbox);
         cell.appendChild(label);
@@ -302,6 +321,8 @@
     input.value = "";
     renderTasks();
     saveDraft();
+    window.ChoreConsent?.track("task_added", chartStats());
+    trackChartEdited("task_added");
     announce(`${text} added`);
   }
 
@@ -310,6 +331,8 @@
     if (!chart.tasks.length) chart.tasks.push(task(""));
     renderTasks();
     saveDraft();
+    window.ChoreConsent?.track("task_removed", chartStats());
+    trackChartEdited("task_removed");
     announce(`${removed?.text || "Task"} removed`);
   }
 
@@ -378,6 +401,7 @@
   function printChart() {
     updatePrintSheet();
     const mode = $("input[name='print-mode']:checked")?.value || "color";
+    window.ChoreConsent?.track("print_clicked", { paper: chart.paper, mode, starter: chart.starter, task_count: chart.tasks.length });
     window.ChoreConsent?.track("print_confirmed", { paper: chart.paper, mode });
     window.print();
   }
@@ -494,11 +518,13 @@
     $("#chart-title").addEventListener("input", () => {
       chart.title = $("#chart-title").value;
       saveDraft();
+      trackChartEdited("title");
     });
     $$('input[name="paper-size"]').forEach(input => input.addEventListener("change", () => {
       chart.paper = selectedPaper();
       saveDraft();
       updatePrintSheet();
+      trackChartEdited("paper");
     }));
     $$('input[name="print-mode"]').forEach(input => input.addEventListener("change", updatePrintSheet));
     $("#add-task").addEventListener("click", addTask);
@@ -507,8 +533,8 @@
     $("#print-now").addEventListener("click", printChart);
     $("#close-print").addEventListener("click", closePrintPreview);
     $("#print-dialog").addEventListener("cancel", event => { event.preventDefault(); closePrintPreview(); });
-    $("#clear-local-data").addEventListener("click", clearDraft);
-    $$('[data-clear-local]').forEach(button => button.addEventListener("click", clearDraft));
+    $("#clear-local-data").addEventListener("click", () => { window.ChoreConsent?.track("draft_cleared", { source: "editor" }); clearDraft(); });
+    $$('[data-clear-local]').forEach(button => button.addEventListener("click", () => { window.ChoreConsent?.track("draft_cleared", { source: "footer" }); clearDraft(); }));
     $("#early-access-button").addEventListener("click", () => {
       window.ChoreConsent?.track("early_access_click", { source: "home_pack" });
       $("#early-access-status").textContent = "The early-access list is not open yet. No information was submitted and no charge was made.";

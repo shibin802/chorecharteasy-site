@@ -255,6 +255,9 @@ class FrontendV2Contract(unittest.TestCase):
             if "/assets/pages/chore-randomizer.js" in html:
                 self.assertIn('src="/assets/pages/chore-randomizer.js?v=20260728-analytics-v1"', html, path.name)
                 self.assertNotIn('src="/assets/pages/chore-randomizer.js"', html, path.name)
+            if "/assets/pages/chore-randomizer.css" in html:
+                self.assertIn('href="/assets/pages/chore-randomizer.css?v=20260728-randomizer-v1"', html, path.name)
+                self.assertNotIn('href="/assets/pages/chore-randomizer.css"', html, path.name)
 
     def test_launch_legal_pages_match_current_free_product(self):
         legal_pages = ["privacy.html", "terms.html", "cookies.html", "refund.html", "contact.html"]

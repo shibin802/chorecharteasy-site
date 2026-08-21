@@ -19,14 +19,20 @@
 - 待完成：Owner Review、Production 发布确认、正式 URL Re-QA 和 GSC 提交。
 - 新发现：`docs/keyword-research-2026-07-22.md` 混入与 chore chart 无关的关键词数据，Opportunity Gate 降级为 `NEEDS_REPAIR`；必须以当前 GSC/SERP 重建事实源。
 
-## 2026-08-22 用户反馈候选
+## 2026-08-22 用户反馈 Preview
 
-- 状态：`LOCAL_IMPLEMENTATION / PREVIEW_PENDING / PRODUCTION_NOT_DEPLOYED`
+- 状态：`PREVIEW_PASS / WAITING_OWNER / PRODUCTION_NOT_DEPLOYED`
 - 参考：stealaneggcoach.com 的全站 Feedback 按钮、分类弹窗和真实 API 提交模式；没有复制其品牌文案或视觉。
 - 前端：全站 Feedback 入口；Idea / Problem / Helpful / Other；消息上限 1,000 字符；键盘可操作；成功返回 reference；错误保留原文。
 - 后端：新增 `POST /api/feedback`、D1 migration `0002_feedback.sql`、同源校验、字段 allowlist、honeypot 和 120 次/10 分钟无用户标识全站限流。
 - 数据最小化：不收邮箱、账号、IP、儿童资料或图表内容；Privacy/Terms 已同步说明。
-- 发布边界：仅准备在 Draft PR 的 Preview 验证；不代表已合并或 Production 上线。
+- Source commit：`4b9f41243ac4fd395dbbcde15ee2b7a49d0c81d2`。
+- GitHub Actions：run `32504248865`（#15）success；Preview D1 migration、构建和部署均 success。
+- Preview fixed URL：`https://fe1d502a.chorecharteasy.pages.dev`；alias：`https://codex-optimize-conversion-se.chorecharteasy.pages.dev`。
+- API Re-QA：合法提交 201 + reference；非法分类 422；跨站 Origin 403；health 200 / D1 ready。
+- UI Re-QA：390×844 与 1440×1000 弹窗打开、4 类反馈、1,000 字符限制、按钮在视口内；无页面级横向溢出；真实 UI 提交成功；console errors=0。
+- Preview 测试记录：`CCE-EF718C77`（API）与 `CCE-AC02E7D9`（UI），只含 QA 标记文本，可删除。
+- 发布边界：Draft PR 的 Preview 已验证；不代表已合并或 Production 上线。
 
 ## 当前发布状态
 

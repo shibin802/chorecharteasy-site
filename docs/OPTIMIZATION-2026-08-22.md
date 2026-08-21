@@ -2,8 +2,8 @@
 
 ## 当前结论
 
-- 状态：`LOCAL_REPAIR_PASS / NOT_DEPLOYED`
-- 一句话结论：审计中的低风险 P0/P1 已在本地修复并通过公开主流程 Re-QA；生产发布仍需 Owner 确认。
+- 状态：`PREVIEW_PASS / PRODUCTION_NOT_DEPLOYED`
+- 一句话结论：审计中的低风险 P0/P1 已修复并通过 Cloudflare Preview Re-QA；生产发布仍需 Owner 确认。
 
 ## 已完成
 
@@ -25,10 +25,20 @@
 - 390×844：页面无横向溢出；生成 5 行、修改标题、增加至 6 行、打开打印预览 PASS。
 - 1440×1000：页面无横向溢出；Early Access/Family Pack 文案不存在；console errors=0。
 
+## Preview 证据
+
+- Draft PR：`https://github.com/shibin802/chorecharteasy-site/pull/2`
+- Source commit：`4ccff5c0e6fc1e851a374a5795c00cf25e86405d`
+- GitHub Actions run：`32502027486`，success。
+- Fixed URL：`https://5d029d8d.chorecharteasy.pages.dev`
+- Alias：`https://codex-optimize-conversion-se.chorecharteasy.pages.dev`
+- Preview `x-robots-tag=noindex`，不会进入正式索引。
+- 18 个公开/API 路由通过；404 正常；D1 ready；账户、Early Access、支付关闭。
+- 真实 390×844 和 1440×1000 Re-QA PASS，console errors=0。
+
 ## 未完成 / BLOCKED
 
-- 本地候选尚未 push、Preview 或 Production deploy。
-- 未在真实 Preview URL 做独立 Re-QA。
+- Draft PR 与 Preview 已完成；尚未合并或 Production deploy。
 - 未进入 GSC/Bing/Cloudflare Dashboard；不能声明已提交收录或已调整 Cloudflare Managed robots。
 - 关键词事实源仍需用当前 GSC/SERP 重建。
 - Legal operator、support 邮箱、Starter 内容和实机打印仍需 Owner 闭环。

@@ -5,12 +5,18 @@
 
 ## 2026-08-22 本地优化候选（尚未发布）
 
-- 状态：`LOCAL_REPAIR_PASS / OWNER_REVIEW / NOT_DEPLOYED`
+- 状态：`PREVIEW_PASS / WAITING_OWNER / PRODUCTION_NOT_DEPLOYED`
 - 基线 commit：`417df65dce13a8a1c3199dfd835b019c6d6999f9`
 - 当前工作树：移除不可用的 Early Access/$9.99 CTA；将内部写作提示改为用户文案；删除误导性的 `print_confirmed`，增加语义准确的 `afterprint_returned`；修复 Windows UTF-8 测试；更新首页 sitemap lastmod；增加同仓库 PR → Cloudflare Preview 的安全部署路径。
-- 发布边界：本节只记录本地候选，不代表已 push、Preview、Production 或 GSC 提交。
+- Draft PR：`https://github.com/shibin802/chorecharteasy-site/pull/2`
+- Preview source commit：`4ccff5c0e6fc1e851a374a5795c00cf25e86405d`
+- GitHub Actions：run `32502027486`，conclusion=`success`。
+- Preview fixed URL：`https://5d029d8d.chorecharteasy.pages.dev`
+- Preview alias：`https://codex-optimize-conversion-se.chorecharteasy.pages.dev`
+- 发布边界：Preview 已部署并复验；不代表已合并、Production 或 GSC 提交。
 - 本地证据：39/39 unittest PASS；Node syntax PASS；minimal artifact builder PASS（32 files）；`git diff --check` PASS；390px/1440px 无页面级横向溢出；移动端生成、编辑、加任务、打印预览 PASS；console errors=0。
-- 待完成：Owner Review、Preview 部署、真实 URL Re-QA、Production 发布确认和 GSC 提交。
+- Preview Re-QA：18 个公开/API 路由状态通过；404 正常；`x-robots-tag=noindex`；D1 ready；账号/Early Access/支付关闭；390px/1440px 无横向溢出；移动端生成、编辑、加任务、打印预览 PASS；console errors=0。
+- 待完成：Owner Review、Production 发布确认、正式 URL Re-QA 和 GSC 提交。
 - 新发现：`docs/keyword-research-2026-07-22.md` 混入与 chore chart 无关的关键词数据，Opportunity Gate 降级为 `NEEDS_REPAIR`；必须以当前 GSC/SERP 重建事实源。
 
 ## 当前发布状态

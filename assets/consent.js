@@ -19,11 +19,12 @@
     plan_ready: ["starter", "children_count"],
     print_clicked: ["paper", "mode", "starter", "task_count"],
     print_preview_opened: ["paper", "mode"],
-    print_confirmed: ["paper", "mode"],
-    early_access_click: ["source"],
+    afterprint_returned: ["paper", "mode"],
     randomize_chores: ["people_count", "chore_count"],
     print_randomized_chores: [],
     randomizer_cleared: [],
+    feedback_opened: [],
+    feedback_submitted: ["kind"],
     cookie_preference_updated: ["analytics"]
   };
 

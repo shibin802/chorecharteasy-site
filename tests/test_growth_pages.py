@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class GrowthPagesContract(unittest.TestCase):
     def text(self, name):
-        return (ROOT / name).read_text()
+        return (ROOT / name).read_text(encoding="utf-8")
 
     def test_homepage_targets_maker_and_links_growth_pages(self):
         html = self.text('index.html')

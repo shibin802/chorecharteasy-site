@@ -172,12 +172,23 @@ class FrontendV2Contract(unittest.TestCase):
             "task_removed",
             "task_checked",
             "print_clicked",
+            "afterprint_returned",
             "draft_cleared",
             "randomizer_cleared",
         ]:
             self.assertIn(event_name, event_fields.group(1))
         for safe_field in ["starter", "paper", "mode", "source", "task_count", "checked_count", "children_count"]:
             self.assertIn(safe_field, event_fields.group(1))
+
+    def test_homepage_has_no_inactive_commercial_cta(self):
+        html = self.text("index.html")
+        js = self.text("assets/site.js")
+        self.assertNotIn("Join early access", html)
+        self.assertNotIn("early-access-button", html)
+        self.assertNotIn("$9.99", html)
+        self.assertNotIn("early_access_click", js)
+        self.assertNotIn("print_confirmed", js)
+        self.assertIn("afterprint_returned", js)
 
     def test_legal_and_contact_routes_exist_and_are_linked(self):
         for page in ["privacy.html", "terms.html", "cookies.html", "refund.html", "contact.html"]:
@@ -208,9 +219,9 @@ class FrontendV2Contract(unittest.TestCase):
 
     def test_shared_assets_and_security_headers(self):
         home = self.text("index.html")
-        self.assertIn('href="/assets/site.css?v=20260726-mobile-v4"', home)
-        self.assertIn('src="/assets/consent.js?v=20260728-analytics-v2"', home)
-        self.assertIn('src="/assets/site.js?v=20260728-analytics-v1"', home)
+        self.assertIn('href="/assets/site.css?v=20260822-ux-v1"', home)
+        self.assertIn('src="/assets/consent.js?v=20260822-analytics-v1"', home)
+        self.assertIn('src="/assets/site.js?v=20260822-ux-v1"', home)
         headers = self.text("_headers")
         self.assertIn("Content-Security-Policy:", headers)
         self.assertIn("script-src 'self' https://www.googletagmanager.com", headers)
@@ -244,16 +255,16 @@ class FrontendV2Contract(unittest.TestCase):
         for path in ROOT.glob("*.html"):
             html = path.read_text(encoding="utf-8")
             if "/assets/site.css" in html:
-                self.assertIn('href="/assets/site.css?v=20260726-mobile-v4"', html, path.name)
+                self.assertIn('href="/assets/site.css?v=20260822-ux-v1"', html, path.name)
                 self.assertNotIn('href="/assets/site.css"', html, path.name)
             if "/assets/consent.js" in html:
-                self.assertIn('src="/assets/consent.js?v=20260728-analytics-v2"', html, path.name)
+                self.assertIn('src="/assets/consent.js?v=20260822-analytics-v1"', html, path.name)
                 self.assertNotIn('src="/assets/consent.js"', html, path.name)
             if "/assets/site.js" in html:
-                self.assertIn('src="/assets/site.js?v=20260728-analytics-v1"', html, path.name)
+                self.assertIn('src="/assets/site.js?v=20260822-ux-v1"', html, path.name)
                 self.assertNotIn('src="/assets/site.js"', html, path.name)
             if "/assets/pages/chore-randomizer.js" in html:
-                self.assertIn('src="/assets/pages/chore-randomizer.js?v=20260728-analytics-v1"', html, path.name)
+                self.assertIn('src="/assets/pages/chore-randomizer.js?v=20260822-ux-v1"', html, path.name)
                 self.assertNotIn('src="/assets/pages/chore-randomizer.js"', html, path.name)
             if "/assets/pages/chore-randomizer.css" in html:
                 self.assertIn('href="/assets/pages/chore-randomizer.css?v=20260728-randomizer-v1"', html, path.name)
@@ -326,6 +337,21 @@ class FrontendV2Contract(unittest.TestCase):
             self.assertNotIn(vague_task, js)
         review = ROOT / "docs/content/STARTER-CHORES-SAFETY-REVIEW-2026-07-26.md"
         self.assertTrue(review.exists())
+
+    def test_sitewide_feedback_is_real_minimized_and_disclosed(self):
+        public_pages = [path for path in ROOT.glob("*.html")]
+        for page in public_pages:
+            html = page.read_text(encoding="utf-8")
+            self.assertIn("/assets/feedback.css?v=20260822-feedback-v1", html, page.name)
+            self.assertIn("/assets/feedback.js?v=20260822-feedback-v1", html, page.name)
+
+        script = self.text("assets/feedback.js")
+        for fragment in ("/api/feedback", "data-feedback-kind", "aria-checked", "maxlength=\"1000\"", "Reference:"):
+            self.assertIn(fragment, script)
+        self.assertNotIn("contact_email", script)
+        self.assertNotIn('type="email"', script)
+        self.assertIn("Product feedback and support messages", self.text("privacy.html"))
+        self.assertIn("voluntarily submit product feedback", self.text("terms.html"))
 
 
 if __name__ == "__main__":

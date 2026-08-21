@@ -402,7 +402,6 @@
     updatePrintSheet();
     const mode = $("input[name='print-mode']:checked")?.value || "color";
     window.ChoreConsent?.track("print_clicked", { paper: chart.paper, mode, starter: chart.starter, task_count: chart.tasks.length });
-    window.ChoreConsent?.track("print_confirmed", { paper: chart.paper, mode });
     window.print();
   }
 
@@ -535,10 +534,6 @@
     $("#print-dialog").addEventListener("cancel", event => { event.preventDefault(); closePrintPreview(); });
     $("#clear-local-data").addEventListener("click", () => { window.ChoreConsent?.track("draft_cleared", { source: "editor" }); clearDraft(); });
     $$('[data-clear-local]').forEach(button => button.addEventListener("click", () => { window.ChoreConsent?.track("draft_cleared", { source: "footer" }); clearDraft(); }));
-    $("#early-access-button").addEventListener("click", () => {
-      window.ChoreConsent?.track("early_access_click", { source: "home_pack" });
-      $("#early-access-status").textContent = "The early-access list is not open yet. No information was submitted and no charge was made.";
-    });
     $$(".mobile-menu a").forEach(link => link.addEventListener("click", () => $(".mobile-nav").removeAttribute("open")));
     window.addEventListener("beforeprint", () => {
       updatePrintSheet();
@@ -546,6 +541,8 @@
     });
     window.addEventListener("afterprint", () => {
       document.body.classList.remove("printing");
+      const mode = $("input[name='print-mode']:checked")?.value || "color";
+      window.ChoreConsent?.track("afterprint_returned", { paper: chart.paper, mode });
     });
   }
 

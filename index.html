@@ -22,9 +22,11 @@
   <link rel="preload" href="/assets/fonts/bricolage-grotesque-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/atkinson-hyperlegible-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/atkinson-hyperlegible-700.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/site.css?v=20260726-mobile-v4">
-  <script defer src="/assets/consent.js?v=20260728-analytics-v2"></script>
-  <script defer src="/assets/site.js?v=20260728-analytics-v1"></script>
+  <link rel="stylesheet" href="/assets/site.css?v=20260822-ux-v1">
+  <link rel="stylesheet" href="/assets/feedback.css?v=20260822-feedback-v1">
+  <script defer src="/assets/consent.js?v=20260822-analytics-v1"></script>
+  <script defer src="/assets/feedback.js?v=20260822-feedback-v1"></script>
+  <script defer src="/assets/site.js?v=20260822-ux-v1"></script>
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -58,7 +60,7 @@
       {
         "@type":"FAQPage",
         "mainEntity":[
-          {"@type":"Question","name":"Is ChoreChartEasy free?","acceptedAnswer":{"@type":"Answer","text":"Yes. You can choose a starter, edit the tasks, preview the chart, and print or save it as a PDF without creating an account. A separate Printable Family Pack is planned but is not currently available for purchase."}},
+          {"@type":"Question","name":"Is ChoreChartEasy free?","acceptedAnswer":{"@type":"Answer","text":"Yes. You can choose a starter, edit the tasks, preview the chart, and print or save it as a PDF without creating an account or entering payment information."}},
           {"@type":"Question","name":"Do I need an account?","acceptedAnswer":{"@type":"Answer","text":"No. The free chart maker does not require an account, and children should not create one. One active draft is stored in this browser so you can return on the same device."}},
           {"@type":"Question","name":"What ages does the chart maker support?","acceptedAnswer":{"@type":"Answer","text":"The starting library covers ages 3–12 in four groups: 3–4, 5–6, 7–9, and 10–12. The suggestions are starting points, so an adult should adjust every task to the child’s abilities and home environment."}},
           {"@type":"Question","name":"Can I make one chart for multiple children?","acceptedAnswer":{"@type":"Answer","text":"Yes. The multiple-kids Beta can create an editable starting plan for up to four children. Review and adjust the assignments; the tool does not guarantee equal effort or suitability for every family."}},
@@ -287,7 +289,7 @@
 
     <section class="section" id="guides">
       <div class="wrap">
-        <div class="section-head"><div><span class="kicker">Keep exploring</span><h2>Chore ideas and printable tools</h2></div><p>Each page should answer a distinct job instead of swapping an age number into the same generic article.</p></div>
+        <div class="section-head"><div><span class="kicker">Keep exploring</span><h2>Chore ideas and printable tools</h2></div><p>Choose a guide for your child’s age, your family setup, or the routine you want to print.</p></div>
         <nav class="guide-links" aria-label="Chore guides and tools">
           <a class="guide-link" href="/printable-chore-chart"><strong>Printable chore chart</strong><span>Edit a clean weekly chart before printing.</span></a>
           <a class="guide-link" href="/chores-for-3-year-olds"><strong>Chores for ages 3–4</strong><span>Small jobs with close adult help.</span></a>
@@ -299,18 +301,11 @@
       </div>
     </section>
 
-    <section class="section section-alt">
-      <div class="wrap early-access">
-        <div><span class="planned">PLANNED · NO CHARGE TODAY</span><h2>Want more ready-to-print layouts?</h2><p>A Printable Family Pack is being considered at a planned pilot price of <strong>$9.99 one-time</strong>. It is not available to purchase yet.</p></div>
-        <div class="early-actions"><button class="button button-primary" id="early-access-button" type="button">Join early access</button><small class="early-note">No charge today. Joining the list does not purchase or reserve the pack. You can unsubscribe at any time.</small><span id="early-access-status" class="consent-status" role="status" aria-live="polite"></span></div>
-      </div>
-    </section>
-
     <section class="section" id="faq">
       <div class="narrow">
         <span class="kicker">FAQ</span><h2>Frequently asked questions</h2>
         <div class="faq">
-          <details><summary>Is ChoreChartEasy free?</summary><p>Yes. You can choose a starter, edit the tasks, preview the chart, and print or save it as a PDF without creating an account. A separate Printable Family Pack is planned but is not currently available for purchase.</p></details>
+          <details><summary>Is ChoreChartEasy free?</summary><p>Yes. You can choose a starter, edit the tasks, preview the chart, and print or save it as a PDF without creating an account or entering payment information.</p></details>
           <details><summary>Do I need an account?</summary><p>No. The free chart maker does not require an account, and children should not create one. One active draft is stored in this browser so you can return on the same device.</p></details>
           <details><summary>What ages does the chart maker support?</summary><p>The starting library covers ages 3–12 in four groups: 3–4, 5–6, 7–9, and 10–12. The suggestions are starting points, so an adult should adjust every task to the child’s abilities and home environment.</p></details>
           <details><summary>Can I make one chart for multiple children?</summary><p>Yes. The multiple-kids Beta can create an editable starting plan for up to four children. Review and adjust the assignments; the tool does not guarantee equal effort or suitability for every family.</p></details>

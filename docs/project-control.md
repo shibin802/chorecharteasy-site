@@ -1,7 +1,38 @@
 # ChoreChartEasy 项目控制板
 
-更新时间：2026-07-26 23:23 CST
+更新时间：2026-08-22 00:15 CST
 事实源：本文件用于阶段 Gate、返修、Preview 和上线状态；聊天不是发布状态真源。
+
+## 2026-08-22 本地优化候选（尚未发布）
+
+- 状态：`PREVIEW_PASS / WAITING_OWNER / PRODUCTION_NOT_DEPLOYED`
+- 基线 commit：`417df65dce13a8a1c3199dfd835b019c6d6999f9`
+- 当前工作树：移除不可用的 Early Access/$9.99 CTA；将内部写作提示改为用户文案；删除误导性的 `print_confirmed`，增加语义准确的 `afterprint_returned`；修复 Windows UTF-8 测试；更新首页 sitemap lastmod；增加同仓库 PR → Cloudflare Preview 的安全部署路径。
+- Draft PR：`https://github.com/shibin802/chorecharteasy-site/pull/2`
+- Preview source commit：`4ccff5c0e6fc1e851a374a5795c00cf25e86405d`
+- GitHub Actions：run `32502027486`，conclusion=`success`。
+- Preview fixed URL：`https://5d029d8d.chorecharteasy.pages.dev`
+- Preview alias：`https://codex-optimize-conversion-se.chorecharteasy.pages.dev`
+- 发布边界：Preview 已部署并复验；不代表已合并、Production 或 GSC 提交。
+- 本地证据：39/39 unittest PASS；Node syntax PASS；minimal artifact builder PASS（32 files）；`git diff --check` PASS；390px/1440px 无页面级横向溢出；移动端生成、编辑、加任务、打印预览 PASS；console errors=0。
+- Preview Re-QA：18 个公开/API 路由状态通过；404 正常；`x-robots-tag=noindex`；D1 ready；账号/Early Access/支付关闭；390px/1440px 无横向溢出；移动端生成、编辑、加任务、打印预览 PASS；console errors=0。
+- 待完成：Owner Review、Production 发布确认、正式 URL Re-QA 和 GSC 提交。
+- 新发现：`docs/keyword-research-2026-07-22.md` 混入与 chore chart 无关的关键词数据，Opportunity Gate 降级为 `NEEDS_REPAIR`；必须以当前 GSC/SERP 重建事实源。
+
+## 2026-08-22 用户反馈 Preview
+
+- 状态：`PREVIEW_PASS / WAITING_OWNER / PRODUCTION_NOT_DEPLOYED`
+- 参考：stealaneggcoach.com 的全站 Feedback 按钮、分类弹窗和真实 API 提交模式；没有复制其品牌文案或视觉。
+- 前端：全站 Feedback 入口；Idea / Problem / Helpful / Other；消息上限 1,000 字符；键盘可操作；成功返回 reference；错误保留原文。
+- 后端：新增 `POST /api/feedback`、D1 migration `0002_feedback.sql`、同源校验、字段 allowlist、honeypot 和 120 次/10 分钟无用户标识全站限流。
+- 数据最小化：不收邮箱、账号、IP、儿童资料或图表内容；Privacy/Terms 已同步说明。
+- Source commit：`4b9f41243ac4fd395dbbcde15ee2b7a49d0c81d2`。
+- GitHub Actions：run `32504248865`（#15）success；Preview D1 migration、构建和部署均 success。
+- Preview fixed URL：`https://fe1d502a.chorecharteasy.pages.dev`；alias：`https://codex-optimize-conversion-se.chorecharteasy.pages.dev`。
+- API Re-QA：合法提交 201 + reference；非法分类 422；跨站 Origin 403；health 200 / D1 ready。
+- UI Re-QA：390×844 与 1440×1000 弹窗打开、4 类反馈、1,000 字符限制、按钮在视口内；无页面级横向溢出；真实 UI 提交成功；console errors=0。
+- Preview 测试记录：`CCE-EF718C77`（API）与 `CCE-AC02E7D9`（UI），只含 QA 标记文本，可删除。
+- 发布边界：Draft PR 的 Preview 已验证；不代表已合并或 Production 上线。
 
 ## 当前发布状态
 

@@ -4,10 +4,22 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
   workflow_dispatch:
+
+concurrency:
+  group: pages-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   deploy:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,4 +42,4 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           wranglerVersion: 4.80.0
-          command: pages deploy dist --project-name=chorecharteasy --branch=main --commit-hash="${{ github.sha }}" --commit-message="GitHub Actions deploy" --commit-dirty=false
+          command: pages deploy dist --project-name=chorecharteasy --branch="${{ github.event_name == 'pull_request' && github.head_ref || 'main' }}" --commit-hash="${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}" --commit-message="GitHub Actions deploy" --commit-dirty=false

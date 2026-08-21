@@ -14,6 +14,7 @@
 5. 更新首页 sitemap `lastmod` 和共享资产 cache-busting 版本。
 6. 修复 `test_growth_pages.py` 在 Windows 默认编码下的 UTF-8 读取失败。
 7. 新增回归合同，防止不可用商业 CTA 和误导打印事件回归。
+8. 扩展 GitHub Actions：`main` push 保持 Production 部署；同仓库 PR 只部署对应 Cloudflare Preview 分支，并阻止 fork PR 使用部署 secrets。
 
 ## QA 证据
 

@@ -7,7 +7,7 @@
 
 - 状态：`LOCAL_REPAIR_PASS / OWNER_REVIEW / NOT_DEPLOYED`
 - 基线 commit：`417df65dce13a8a1c3199dfd835b019c6d6999f9`
-- 当前工作树：移除不可用的 Early Access/$9.99 CTA；将内部写作提示改为用户文案；删除误导性的 `print_confirmed`，增加语义准确的 `afterprint_returned`；修复 Windows UTF-8 测试；更新首页 sitemap lastmod。
+- 当前工作树：移除不可用的 Early Access/$9.99 CTA；将内部写作提示改为用户文案；删除误导性的 `print_confirmed`，增加语义准确的 `afterprint_returned`；修复 Windows UTF-8 测试；更新首页 sitemap lastmod；增加同仓库 PR → Cloudflare Preview 的安全部署路径。
 - 发布边界：本节只记录本地候选，不代表已 push、Preview、Production 或 GSC 提交。
 - 本地证据：39/39 unittest PASS；Node syntax PASS；minimal artifact builder PASS（32 files）；`git diff --check` PASS；390px/1440px 无页面级横向溢出；移动端生成、编辑、加任务、打印预览 PASS；console errors=0。
 - 待完成：Owner Review、Preview 部署、真实 URL Re-QA、Production 发布确认和 GSC 提交。

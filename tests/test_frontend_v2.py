@@ -133,7 +133,7 @@ class FrontendV2Contract(unittest.TestCase):
         for phrase in forbidden:
             self.assertNotIn(phrase.lower(), corpus.lower())
 
-    def test_analytics_is_consent_gated_and_clarity_is_absent(self):
+    def test_analytics_uses_advanced_consent_mode_and_clarity_is_absent(self):
         public_html = list(ROOT.glob("*.html"))
         for path in public_html:
             html = path.read_text(encoding="utf-8")
@@ -141,18 +141,36 @@ class FrontendV2Contract(unittest.TestCase):
             self.assertNotIn("googletagmanager.com/gtag/js", html, path.name)
         js = self.text("assets/consent.js")
         for contract in [
-            "Accept analytics",
-            "Reject non-essential",
+            "Accept Analytics cookies",
+            "Continue without Analytics cookies",
             "Cookie settings",
             "globalPrivacyControl",
             "loadAnalytics",
             "deleteAnalyticsCookies",
-            "ga-disable-",
+            'analytics_storage: analyticsGranted ? "granted" : "denied"',
+            "Cookieless measurement is always on",
+            "close-consent",
             ".chorecharteasy.pages.dev",
         ]:
             self.assertIn(contract, js)
         self.assertRegex(js, r"function\s+loadAnalytics")
         self.assertIn("googletagmanager.com/gtag/js", js)
+        self.assertRegex(js, re.compile(r'DOMContentLoaded.*?loadAnalytics\(\);.*?ensureUi\(\);', re.S))
+        self.assertIn('getElementById("close-consent")?.addEventListener("click", () => savePreference(false)', js)
+        self.assertNotIn("ga-disable-", js)
+
+    def test_consent_ui_is_a_compact_bottom_bar_with_close_control(self):
+        css = self.text("assets/consent.css")
+        self.assertIn("position:fixed", css)
+        self.assertIn("right:0", css)
+        self.assertIn("bottom:0", css)
+        self.assertIn("left:0", css)
+        self.assertIn("grid-template-columns:auto minmax(0,1fr) auto auto", css)
+        self.assertIn(".consent-close", css)
+        self.assertIn("@media(max-width:760px)", css)
+        self.assertNotIn("width:min(540px", css)
+        self.assertIn('@import url("/assets/consent.css?v=20260822-consent-bar-v1")', self.text("assets/site.css"))
+        self.assertIn('@import url("/assets/consent.css?v=20260822-consent-bar-v1")', self.text("guide.css"))
 
     def test_analytics_event_payload_is_allowlisted(self):
         js = self.text("assets/consent.js")
@@ -219,8 +237,8 @@ class FrontendV2Contract(unittest.TestCase):
 
     def test_shared_assets_and_security_headers(self):
         home = self.text("index.html")
-        self.assertIn('href="/assets/site.css?v=20260822-ux-v1"', home)
-        self.assertIn('src="/assets/consent.js?v=20260822-analytics-v1"', home)
+        self.assertIn('href="/assets/site.css?v=20260822-consent-bar-v1"', home)
+        self.assertIn('src="/assets/consent.js?v=20260822-consent-mode-v1"', home)
         self.assertIn('src="/assets/site.js?v=20260822-ux-v1"', home)
         headers = self.text("_headers")
         self.assertIn("Content-Security-Policy:", headers)
@@ -255,10 +273,13 @@ class FrontendV2Contract(unittest.TestCase):
         for path in ROOT.glob("*.html"):
             html = path.read_text(encoding="utf-8")
             if "/assets/site.css" in html:
-                self.assertIn('href="/assets/site.css?v=20260822-ux-v1"', html, path.name)
+                self.assertIn('href="/assets/site.css?v=20260822-consent-bar-v1"', html, path.name)
                 self.assertNotIn('href="/assets/site.css"', html, path.name)
+            if "/guide.css" in html:
+                self.assertIn('href="/guide.css?v=20260822-consent-bar-v1"', html, path.name)
+                self.assertNotIn('href="/guide.css"', html, path.name)
             if "/assets/consent.js" in html:
-                self.assertIn('src="/assets/consent.js?v=20260822-analytics-v1"', html, path.name)
+                self.assertIn('src="/assets/consent.js?v=20260822-consent-mode-v1"', html, path.name)
                 self.assertNotIn('src="/assets/consent.js"', html, path.name)
             if "/assets/site.js" in html:
                 self.assertIn('src="/assets/site.js?v=20260822-ux-v1"', html, path.name)
@@ -294,6 +315,17 @@ class FrontendV2Contract(unittest.TestCase):
         refund = self.text("refund.html")
         self.assertIn("does not currently sell paid products", refund)
         self.assertNotIn("Creem", refund)
+
+    def test_legal_pages_disclose_advanced_consent_mode(self):
+        privacy = self.text("privacy.html")
+        cookies = self.text("cookies.html")
+        terms = self.text("terms.html")
+        self.assertIn("advanced consent mode", privacy)
+        self.assertIn("cookieless measurement signals", cookies)
+        self.assertIn("Always active", cookies)
+        self.assertIn("Analytics cookie storage is enabled only after acceptance", terms)
+        self.assertNotIn("Analytics is off until", cookies)
+        self.assertNotIn("Google Analytics 4 is off until", privacy)
 
     def test_public_html_has_no_inline_styles_and_csp_disallows_them(self):
         for path in ROOT.glob("*.html"):

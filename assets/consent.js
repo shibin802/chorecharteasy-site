@@ -4,7 +4,6 @@
   const CONSENT_KEY = "chorecharteasy.consent.v2";
   const CONSENT_VERSION = 2;
   const ANALYTICS_ID = "G-WZL9EYQM8E";
-  const GA_DISABLE_KEY = `ga-disable-${ANALYTICS_ID}`;
   const MAX_AGE_MS = 180 * 24 * 60 * 60 * 1000;
 
   const EVENT_FIELDS = {
@@ -33,7 +32,7 @@
   let lastFocusedElement = null;
 
   window.dataLayer = window.dataLayer || [];
-  window.gtag = window.gtag || function () {};
+  window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
 
   function storageAvailable() {
     try {
@@ -69,11 +68,7 @@
         localStorage.setItem(CONSENT_KEY, JSON.stringify(currentPreference));
       } catch (_) {}
     }
-    if (currentPreference.analytics && !gpcEnabled()) {
-      loadAnalytics();
-    } else {
-      denyAnalytics();
-    }
+    updateAnalyticsConsent(currentPreference.analytics && !gpcEnabled());
     updateSettingsStatus();
     hideBanner();
   }
@@ -94,10 +89,12 @@
   }
 
   function denyAnalytics() {
-    window[GA_DISABLE_KEY] = true;
-    if (typeof window.gtag === "function" && analyticsLoaded) {
-      window.gtag("consent", "update", { analytics_storage: "denied" });
-    }
+    updateAnalyticsConsent(false);
+  }
+
+  function updateAnalyticsConsent(granted) {
+    window.gtag("consent", "update", { analytics_storage: granted ? "granted" : "denied" });
+    if (granted) return;
     deleteAnalyticsCookies();
     window.setTimeout(() => {
       if (!currentPreference?.analytics || gpcEnabled()) deleteAnalyticsCookies();
@@ -108,21 +105,17 @@
   }
 
   function loadAnalytics() {
-    if (!currentPreference?.analytics || gpcEnabled()) return;
-    window[GA_DISABLE_KEY] = false;
-    if (analyticsLoaded) {
-      window.gtag("consent", "update", { analytics_storage: "granted" });
-      return;
-    }
+    if (analyticsLoaded) return;
     analyticsLoaded = true;
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function () { window.dataLayer.push(arguments); };
+    const analyticsGranted = Boolean(currentPreference?.analytics && !gpcEnabled());
     window.gtag("consent", "default", {
-      analytics_storage: "granted",
+      analytics_storage: analyticsGranted ? "granted" : "denied",
       ad_storage: "denied",
       ad_user_data: "denied",
-      ad_personalization: "denied"
+      ad_personalization: "denied",
+      personalization_storage: "denied"
     });
+    window.gtag("set", "ads_data_redaction", true);
     window.gtag("js", new Date());
     window.gtag("config", ANALYTICS_ID, {
       anonymize_ip: true,
@@ -145,7 +138,7 @@
   }
 
   function track(eventName, params = {}) {
-    if (!analyticsLoaded || !currentPreference?.analytics || gpcEnabled()) return;
+    if (!analyticsLoaded) return;
     const allowed = EVENT_FIELDS[eventName];
     if (!allowed) return;
     const payload = {};
@@ -160,14 +153,15 @@
     const gpc = gpcEnabled();
     return `
       <aside class="consent-banner" id="consent-banner" aria-labelledby="consent-title" role="region">
-        <h2 id="consent-title">Your analytics choice</h2>
-        <p>Essential browser storage keeps one local chart draft. Optional analytics is off unless you accept it. We do not use advertising cookies.</p>
-        ${gpc ? '<p class="gpc-note">Global Privacy Control is enabled, so optional analytics will remain off.</p>' : ""}
+        <h2 id="consent-title">Analytics choice</h2>
+        <p>Cookieless measurement is always on. Accept to allow analytics cookies. No advertising cookies.</p>
+        ${gpc ? '<p class="gpc-note">Global Privacy Control is enabled, so Analytics cookie storage will remain off.</p>' : ""}
         <div class="consent-actions">
-          <button class="button button-tool" id="accept-analytics" type="button" ${gpc ? "disabled" : ""}>Accept analytics</button>
-          <button class="button button-secondary" id="reject-analytics" type="button">Reject non-essential</button>
-          <button class="button button-quiet settings" type="button" data-cookie-settings>Cookie settings</button>
+          <button class="button button-tool" id="accept-analytics" type="button" ${gpc ? "disabled" : ""}>Accept</button>
+          <button class="button button-secondary" id="reject-analytics" type="button">No cookies</button>
+          <button class="button button-quiet settings" type="button" data-cookie-settings>Settings</button>
         </div>
+        <button class="consent-close" id="close-consent" type="button" aria-label="Close and continue without analytics cookies">×</button>
       </aside>`;
   }
 
@@ -185,12 +179,12 @@
           </section>
           <section>
             <h3>Analytics</h3>
-            <p>Disabled by default. If accepted, Google Analytics receives technical page and allowlisted product events. Nicknames, chart titles, task text, and completion details are never event parameters.</p>
+            <p>Cookieless measurement is active on every visit. If accepted, Google Analytics may also use analytics cookies. Nicknames, chart titles, task text, and completion details are never event parameters.</p>
           </section>
           <p id="cookie-settings-status" class="consent-status" aria-live="polite"></p>
           <div class="consent-actions">
-            <button class="button button-tool" id="settings-accept" type="button" ${gpcEnabled() ? "disabled" : ""}>Accept analytics</button>
-            <button class="button button-secondary" id="settings-reject" type="button">Reject non-essential</button>
+            <button class="button button-tool" id="settings-accept" type="button" ${gpcEnabled() ? "disabled" : ""}>Accept Analytics cookies</button>
+            <button class="button button-secondary" id="settings-reject" type="button">Continue without Analytics cookies</button>
           </div>
         </div>
       </dialog>`;
@@ -210,6 +204,7 @@
   function bindUi() {
     document.getElementById("accept-analytics")?.addEventListener("click", () => savePreference(true), { once: true });
     document.getElementById("reject-analytics")?.addEventListener("click", () => savePreference(false), { once: true });
+    document.getElementById("close-consent")?.addEventListener("click", () => savePreference(false), { once: true });
     document.getElementById("settings-accept")?.addEventListener("click", () => {
       savePreference(true);
       closeSettings();
@@ -231,11 +226,11 @@
     const status = document.getElementById("cookie-settings-status");
     if (!status) return;
     if (gpcEnabled()) {
-      status.textContent = "Global Privacy Control is enabled. Analytics is off.";
+      status.textContent = "Global Privacy Control is enabled. Analytics cookies are off; cookieless measurement remains active.";
     } else if (!currentPreference) {
-      status.textContent = "Analytics is currently off because no choice has been saved.";
+      status.textContent = "Analytics cookies are off because no choice has been saved. Cookieless measurement is active.";
     } else {
-      status.textContent = currentPreference.analytics ? "Analytics is currently accepted." : "Analytics is currently off.";
+      status.textContent = currentPreference.analytics ? "Analytics cookies are currently accepted." : "Analytics cookies are off; cookieless measurement remains active.";
     }
   }
 
@@ -267,9 +262,9 @@
 
   document.addEventListener("click", delegatedTracking);
   document.addEventListener("DOMContentLoaded", () => {
+    loadAnalytics();
     ensureUi();
-    if (currentPreference?.analytics && !gpcEnabled()) loadAnalytics();
-    if (gpcEnabled()) denyAnalytics();
+    if (!currentPreference?.analytics || gpcEnabled()) denyAnalytics();
   });
 
   window.ChoreConsent = {

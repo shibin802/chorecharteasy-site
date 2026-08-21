@@ -3,6 +3,16 @@
 更新时间：2026-08-22 00:15 CST
 事实源：本文件用于阶段 Gate、返修、Preview 和上线状态；聊天不是发布状态真源。
 
+## 2026-08-22 紧凑同意条与 Advanced Consent Mode（尚未发布）
+
+- 状态：`LOCAL_IMPLEMENTED / PREVIEW_PENDING / PRODUCTION_NOT_DEPLOYED`。
+- Owner 要求：Analytics 提示改为底部小横条；未点击也进行基础测量；增加关闭按钮。
+- 实现口径：GA4 Advanced Consent Mode；页面访问即加载 Google tag，未选择、拒绝或 GPC 开启时保持 `analytics_storage=denied` 并发送 cookieless measurement signals；仅接受后允许第一方 Analytics Cookie。
+- 关闭按钮：等同“关闭横条并继续无 Analytics Cookie”，保存拒绝存储选择；不是伪关闭。
+- 数据最小化：事件字段继续使用 allowlist；不发送昵称、图表标题、任务文本、完成详情、邮箱或账号标识；广告存储、广告用户数据、广告个性化、Google Signals 均关闭。
+- 披露同步：Privacy、Cookies、Terms 已改为与 Advanced Consent Mode 一致；这不是律师意见，目标市场的 cookieless measurement 法律基础仍需 Owner/专业复核。
+- 发布边界：必须先完成本地测试、Preview 部署、移动/桌面视觉、拒绝/关闭/接受/GPC 与网络请求复验，再请求 Production 确认。
+
 ## 2026-08-22 本地优化候选（尚未发布）
 
 - 状态：`PREVIEW_PASS / WAITING_OWNER / PRODUCTION_NOT_DEPLOYED`

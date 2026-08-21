@@ -1,0 +1,67 @@
+.consent-banner{
+  position:fixed;
+  z-index:100;
+  right:0;
+  bottom:0;
+  left:0;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto auto;
+  align-items:center;
+  gap:6px 14px;
+  width:100%;
+  padding:7px max(14px,env(safe-area-inset-right)) calc(7px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));
+  border:0;
+  border-top:1px solid var(--line-strong,#8ca8a0);
+  background:var(--paper,#fffdf8);
+  color:var(--ink,#17313a);
+  box-shadow:0 -8px 24px rgba(23,49,58,.16);
+}
+.consent-banner h2{margin:0;font:700 .92rem/1.2 var(--display,system-ui,sans-serif);letter-spacing:0;white-space:nowrap}
+.consent-banner p{min-width:0;margin:0;color:var(--muted,#5b6b70);font-size:.8rem;line-height:1.3}
+.consent-actions{display:flex;align-items:center;gap:6px}
+.consent-actions .button{
+  display:inline-flex;
+  min-height:36px;
+  align-items:center;
+  justify-content:center;
+  padding:5px 10px;
+  border:1px solid var(--line-strong,#8ca8a0);
+  border-radius:7px;
+  font:700 .78rem/1.15 var(--body,system-ui,sans-serif);
+  white-space:nowrap;
+  cursor:pointer;
+}
+.consent-actions .button-tool{border-color:var(--teal,#1f6d62);background:var(--teal,#1f6d62);color:#fff}
+.consent-actions .button-secondary{background:var(--paper,#fffdf8);color:var(--ink,#17313a)}
+.consent-actions .button-quiet{border-color:transparent;background:transparent;color:var(--ink,#17313a);text-decoration:underline;text-underline-offset:2px}
+.consent-actions .button:disabled{cursor:not-allowed;opacity:.55}
+.consent-actions .button:focus-visible{outline:3px solid var(--focus,#1877c9);outline-offset:2px}
+.consent-close{display:grid;width:32px;height:32px;padding:0;place-items:center;border:0;border-radius:6px;background:transparent;color:var(--muted,#5b6b70);font:400 1.35rem/1 system-ui,sans-serif;cursor:pointer}
+.consent-close:hover{background:rgba(23,49,58,.08);color:var(--ink,#17313a)}
+.consent-close:focus-visible{outline:3px solid var(--focus,#1877c9);outline-offset:2px}
+.gpc-note{grid-column:2;padding:4px 7px;background:#f6edcf;color:var(--ink,#17313a)!important}
+.consent-status{margin-top:10px;color:var(--muted,#5b6b70);font-size:.86rem}
+
+#cookie-settings-dialog{width:min(680px,calc(100% - 32px));max-height:calc(100vh - 32px);padding:0;border:1px solid var(--line-strong,#8ca8a0);background:var(--canvas,#f6f1e7);color:var(--ink,#17313a);box-shadow:0 20px 80px rgba(23,49,58,.34)}
+#cookie-settings-dialog::backdrop{background:rgba(16,38,45,.72)}
+#cookie-settings-dialog .dialog-head{position:sticky;z-index:2;top:0;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px;border-bottom:1px solid var(--line,#c9d7d1);background:var(--paper,#fffdf8)}
+#cookie-settings-dialog .dialog-head h2{margin:0;font-size:1.45rem}
+#cookie-settings-dialog .dialog-body{width:auto;margin:0;padding:20px;overflow:auto}
+#cookie-settings-dialog .icon-button{display:grid;width:44px;height:44px;padding:0;place-items:center;border:1px solid var(--line-strong,#8ca8a0);background:var(--paper,#fffdf8);color:var(--ink,#17313a);font-size:1.45rem;cursor:pointer}
+
+@media(max-width:760px){
+  .consent-banner{grid-template-columns:1fr;gap:5px;padding:7px 10px calc(7px + env(safe-area-inset-bottom))}
+  .consent-banner h2{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .consent-banner p{font-size:.75rem;text-align:center}
+  .consent-banner>p{padding-right:28px;padding-left:28px}
+  .consent-actions{width:100%}
+  .consent-actions .button{min-height:44px;flex:1;padding:6px 8px;font-size:.76rem}
+  .gpc-note{grid-column:auto}
+  .consent-close{position:absolute;top:5px;right:6px}
+  #cookie-settings-dialog{width:100%;max-height:100vh;margin:0}
+  #cookie-settings-dialog .dialog-body{padding:14px}
+  #cookie-settings-dialog .consent-actions{display:grid;grid-template-columns:1fr}
+  #cookie-settings-dialog .consent-actions .button{width:100%;white-space:normal}
+}
+
+@media print{.consent-banner,#cookie-settings-dialog{display:none!important}}

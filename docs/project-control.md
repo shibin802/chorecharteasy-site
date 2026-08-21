@@ -34,6 +34,22 @@
 - Preview 测试记录：`CCE-EF718C77`（API）与 `CCE-AC02E7D9`（UI），只含 QA 标记文本，可删除。
 - 发布边界：Draft PR 的 Preview 已验证；不代表已合并或 Production 上线。
 
+## 2026-08-22 Production 发布
+
+- 状态：`PRODUCTION_PASS / QA_GO`。
+- Owner Gate：2026-08-22 用户明确确认可以更新 Production。
+- PR：`https://github.com/shibin802/chorecharteasy-site/pull/2`，squash merged。
+- Production source commit：`63a0f97a9ac12d5cb2110110dd8364a5a5a81a84`。
+- GitHub Actions：workflow_dispatch run `32505155716`（#18）success；自动 push run 未生成，因此使用已有 `workflow_dispatch` 人工触发，没有增加代码提交。
+- Production D1：`chorecharteasy-production` 执行 `0002_feedback.sql` 成功；3 queries，0 rows read/written（幂等结构变更）。
+- Cloudflare fixed deployment：`https://aadbb596.chorecharteasy.pages.dev`；正式域名：`https://chorecharteasy.com`。
+- HTTP/SEO smoke：首页、增长页、Privacy、Terms、Contact、feedback assets、robots、sitemap、health、membership 均 200；未知路由 404；HTTPS/CSP/HSTS/X-Content-Type-Options 正常；Production 无 Preview `noindex` header。
+- Feedback API：合法提交 201 + `CCE-287FC37A`；非法分类 422；跨站 Origin 403；D1 health 200 / ready。
+- Feedback UI：390×844 与 1440×1000 弹窗、4 分类、1,000 字符限制和按钮可见性 PASS；真实 UI 提交 `CCE-D762A9B2`；无页面级横向溢出；console errors=0。
+- 核心 Maker Re-QA：移动端生成 5 行、编辑标题、增加至 6 行、打开打印预览 PASS；桌面端内容与布局 PASS；Early Access / Family Pack 文案不存在；console errors=0。
+- Production QA 测试记录只含明确 QA 标记文本，可删除。
+- 结论：P0=0，P1=0；公开反馈和原有制表主路径均可用。
+
 ## 当前发布状态
 
 - Production release verdict：`LAUNCHED / QA_PASS_WITH_LIGHTHOUSE_EXCEPTION`

@@ -25,6 +25,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Apply feedback D1 migration
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            database="chorecharteasy-preview"
+          else
+            database="chorecharteasy-production"
+          fi
+          npx --yes wrangler@4.80.0 d1 execute "$database" --remote --file=backend/migrations/0002_feedback.sql
+
       - name: Build minimal Pages artifact
         run: |
           python3 backend/scripts/build_pages_artifact.py dist

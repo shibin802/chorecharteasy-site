@@ -25,6 +25,8 @@ class DeploymentArtifactContract(unittest.TestCase):
                 "_headers",
                 "assets/site.css",
                 "assets/site.js",
+                "assets/feedback.js",
+                "assets/feedback.css",
                 "assets/social/chorecharteasy-og.png",
                 "llms.txt",
             ):
@@ -41,6 +43,9 @@ class DeploymentArtifactContract(unittest.TestCase):
         self.assertIn("pages deploy dist", workflow)
         self.assertIn("wranglerVersion: 4.80.0", workflow)
         self.assertIn("pull_request:", workflow)
+        self.assertIn("0002_feedback.sql", workflow)
+        self.assertIn('database="chorecharteasy-preview"', workflow)
+        self.assertIn('database="chorecharteasy-production"', workflow)
         self.assertIn("github.head_ref", workflow)
         self.assertIn("github.event.pull_request.head.sha", workflow)
         self.assertIn("github.event.pull_request.head.repo.full_name == github.repository", workflow)

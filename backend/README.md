@@ -18,6 +18,7 @@
 functions/api/[[path]].js          Pages Functions 路由入口
 functions/_lib/api.mjs             API、安全、session、D1 逻辑
 backend/migrations/0001_initial.sql
+backend/migrations/0002_feedback.sql
 backend/seed/dev.sql               仅 .test 假数据
 backend/contracts/api-v1.json
 backend/contracts/env.schema.json
@@ -32,6 +33,7 @@ backend/scripts/integration_local.py
 |---|---|---:|---|
 | GET | `/api/health` | 开放 | D1 readiness |
 | GET | `/api/membership` | 开放 | 机器可读能力状态 |
+| POST | `/api/feedback` | 开放 | 无账号产品反馈；不收邮箱、儿童资料或图表内容 |
 | POST | `/api/early-access` | 关闭 | 成人邮箱兴趣列表 |
 | POST | `/api/auth/request-link` | 关闭 | 开发态 Magic Link |
 | GET | `/api/auth/verify` | 关闭 | 一次性 token → session |
@@ -49,6 +51,7 @@ backend/scripts/integration_local.py
 - JSON body 最大 4096 bytes，字段 allowlist。
 - Email 和 chart/child 数据不进入 Analytics。
 - D1 限流 key 是带 secret salt 的 IP/email pseudonymous HMAC bucket，不存原 IP。
+- Feedback 只存类型、消息、页面路径、时间和随机 reference；不存邮箱、IP、账号或图表字段。
 - 错误响应不返回 stack、SQL 或 PII。
 - 生产 `AUTH_DEV_BYPASS` 必须为 `false`；代码同时限制 bypass 只能在 loopback 使用。
 

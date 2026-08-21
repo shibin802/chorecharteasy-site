@@ -6,6 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MIGRATION = ROOT / "backend/migrations/0001_initial.sql"
+FEEDBACK_MIGRATION = ROOT / "backend/migrations/0002_feedback.sql"
 API_CONTRACT = ROOT / "backend/contracts/api-v1.json"
 ENV_CONTRACT = ROOT / "backend/contracts/env.schema.json"
 ROUTE = ROOT / "functions/api/[[path]].js"
@@ -15,7 +16,7 @@ DEV_SEED = ROOT / "backend/seed/dev.sql"
 
 class BackendArtifactContractTests(unittest.TestCase):
     def test_required_backend_artifacts_exist(self):
-        for path in (MIGRATION, API_CONTRACT, ENV_CONTRACT, ROUTE, API_LIB, DEV_SEED):
+        for path in (MIGRATION, FEEDBACK_MIGRATION, API_CONTRACT, ENV_CONTRACT, ROUTE, API_LIB, DEV_SEED):
             with self.subTest(path=path.relative_to(ROOT)):
                 self.assertTrue(path.is_file())
 
@@ -30,6 +31,7 @@ class BackendArtifactContractTests(unittest.TestCase):
         required = {
             ("GET", "/api/health"),
             ("GET", "/api/membership"),
+            ("POST", "/api/feedback"),
             ("POST", "/api/early-access"),
             ("POST", "/api/auth/request-link"),
             ("GET", "/api/auth/verify"),
@@ -68,6 +70,12 @@ class BackendArtifactContractTests(unittest.TestCase):
         self.assertNotIn("chart_title", sql)
         self.assertNotIn("chore_text", sql)
 
+        feedback_sql = FEEDBACK_MIGRATION.read_text().lower()
+        self.assertRegex(feedback_sql, r"create table if not exists\s+feedback_submissions\b")
+        self.assertIn("check (kind in", feedback_sql)
+        for forbidden in ("email", "child_name", "chart_title", "chore_text", "ip_address"):
+            self.assertNotIn(forbidden, feedback_sql)
+
     def test_route_is_pages_functions_catch_all(self):
         route = ROUTE.read_text()
         self.assertIn("onRequest", route)
@@ -101,7 +109,16 @@ class BackendArtifactContractTests(unittest.TestCase):
         self.assertRegex(source, r"MAX_BODY_BYTES\s*=\s*4096")
         self.assertIn("ALLOWED_EARLY_ACCESS_FIELDS", source)
         self.assertIn("ALLOWED_AUTH_FIELDS", source)
+        self.assertIn("ALLOWED_FEEDBACK_FIELDS", source)
         self.assertNotIn("request.json()", source)
+
+    def test_feedback_is_minimized_and_protected(self):
+        source = API_LIB.read_text()
+        self.assertIn('path === "/api/feedback"', source)
+        self.assertIn('pseudonymousBucket(request, env, "feedback")', source)
+        self.assertIn("assertSameOrigin(request, env)", source)
+        self.assertIn("feedback_submissions", source)
+        self.assertNotRegex(source, r"ALLOWED_FEEDBACK_FIELDS[^\n]*email")
 
     def test_dev_seed_is_obviously_non_production(self):
         seed = DEV_SEED.read_text().lower()

@@ -19,6 +19,15 @@
 - 待完成：Owner Review、Production 发布确认、正式 URL Re-QA 和 GSC 提交。
 - 新发现：`docs/keyword-research-2026-07-22.md` 混入与 chore chart 无关的关键词数据，Opportunity Gate 降级为 `NEEDS_REPAIR`；必须以当前 GSC/SERP 重建事实源。
 
+## 2026-08-22 用户反馈候选
+
+- 状态：`LOCAL_IMPLEMENTATION / PREVIEW_PENDING / PRODUCTION_NOT_DEPLOYED`
+- 参考：stealaneggcoach.com 的全站 Feedback 按钮、分类弹窗和真实 API 提交模式；没有复制其品牌文案或视觉。
+- 前端：全站 Feedback 入口；Idea / Problem / Helpful / Other；消息上限 1,000 字符；键盘可操作；成功返回 reference；错误保留原文。
+- 后端：新增 `POST /api/feedback`、D1 migration `0002_feedback.sql`、同源校验、字段 allowlist、honeypot 和 6 次/10 分钟伪匿名限流。
+- 数据最小化：不收邮箱、账号、IP、儿童资料或图表内容；Privacy/Terms 已同步说明。
+- 发布边界：仅准备在 Draft PR 的 Preview 验证；不代表已合并或 Production 上线。
+
 ## 当前发布状态
 
 - Production release verdict：`LAUNCHED / QA_PASS_WITH_LIGHTHOUSE_EXCEPTION`

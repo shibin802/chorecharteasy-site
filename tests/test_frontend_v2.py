@@ -338,6 +338,21 @@ class FrontendV2Contract(unittest.TestCase):
         review = ROOT / "docs/content/STARTER-CHORES-SAFETY-REVIEW-2026-07-26.md"
         self.assertTrue(review.exists())
 
+    def test_sitewide_feedback_is_real_minimized_and_disclosed(self):
+        public_pages = [path for path in ROOT.glob("*.html")]
+        for page in public_pages:
+            html = page.read_text(encoding="utf-8")
+            self.assertIn("/assets/feedback.css?v=20260822-feedback-v1", html, page.name)
+            self.assertIn("/assets/feedback.js?v=20260822-feedback-v1", html, page.name)
+
+        script = self.text("assets/feedback.js")
+        for fragment in ("/api/feedback", "data-feedback-kind", "aria-checked", "maxlength=\"1000\"", "Reference:"):
+            self.assertIn(fragment, script)
+        self.assertNotIn("contact_email", script)
+        self.assertNotIn('type="email"', script)
+        self.assertIn("Product feedback and support messages", self.text("privacy.html"))
+        self.assertIn("voluntarily submit product feedback", self.text("terms.html"))
+
 
 if __name__ == "__main__":
     unittest.main()

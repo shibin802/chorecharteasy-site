@@ -28,6 +28,12 @@
     },
     "cloudDrafts": {
       "enabled": false
+    },
+    "feedback": {
+      "enabled": true,
+      "requiresAccount": false,
+      "acceptsEmail": false,
+      "storage": "cloudflare_d1"
     }
   },
   "session": {
@@ -59,6 +65,14 @@
       "storedIn": ["sessions"],
       "analyticsAllowed": false,
       "retention": "30_days_or_logout"
+    },
+    {
+      "name": "product_feedback",
+      "classification": "user_supplied_text",
+      "storedIn": ["feedback_submissions"],
+      "fields": ["kind", "message", "page_path", "created_at"],
+      "analyticsAllowed": false,
+      "retention": "only_as_long_as_reasonably_needed_for_review_service_improvement_or_obligations"
     }
   ],
   "neverAcceptedFields": [
@@ -92,6 +106,16 @@
       "auth": "none",
       "writes": false,
       "success": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/feedback",
+      "auth": "none",
+      "writes": true,
+      "requestFields": ["kind", "message", "page", "website"],
+      "acceptedKinds": ["idea", "problem", "helpful", "other"],
+      "rateLimit": "6_per_10_minutes_per_pseudonymous_ip_bucket",
+      "success": 201
     },
     {
       "method": "POST",

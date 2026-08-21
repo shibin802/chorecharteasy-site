@@ -5,6 +5,8 @@ const DEFAULT_SESSION_TTL_SECONDS = 30 * 24 * 60 * 60;
 const DEFAULT_MAGIC_LINK_TTL_SECONDS = 15 * 60;
 const ALLOWED_EARLY_ACCESS_FIELDS = new Set(["email", "consent", "source", "company"]);
 const ALLOWED_AUTH_FIELDS = new Set(["email"]);
+const ALLOWED_FEEDBACK_FIELDS = new Set(["kind", "message", "page", "website"]);
+const FEEDBACK_KINDS = new Set(["idea", "problem", "helpful", "other"]);
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PAYMENTS_ENABLED = false;
 
@@ -126,7 +128,9 @@ function expectedOrigin(request, env) {
 
 function assertSameOrigin(request, env) {
   const origin = request.headers.get("Origin");
-  if (!origin || origin !== expectedOrigin(request, env)) {
+  const requestOrigin = new URL(request.url).origin;
+  const configuredOrigin = expectedOrigin(request, env);
+  if (!origin || (origin !== requestOrigin && origin !== configuredOrigin)) {
     throw new ApiError(403, "origin_not_allowed", "This request origin is not allowed.");
   }
 }
@@ -297,6 +301,42 @@ async function earlyAccess(request, env) {
   return jsonResponse({ ok: true, accepted: true }, 202);
 }
 
+async function submitFeedback(request, env) {
+  if (request.method !== "POST") methodNotAllowed(["POST"]);
+  assertSameOrigin(request, env);
+  const db = requireDatabase(env);
+  const body = await parseJsonObject(request, ALLOWED_FEEDBACK_FIELDS);
+  if (typeof body.website === "string" && body.website.trim()) {
+    return jsonResponse({ ok: true, accepted: true }, 202);
+  }
+
+  const kind = typeof body.kind === "string" ? body.kind.trim().toLowerCase() : "";
+  if (!FEEDBACK_KINDS.has(kind)) {
+    throw new ApiError(422, "invalid_feedback_kind", "Choose a valid feedback type.");
+  }
+  const message = typeof body.message === "string" ? body.message.trim() : "";
+  if (message.length < 3 || message.length > 1000) {
+    throw new ApiError(422, "invalid_feedback_message", "Write a message between 3 and 1,000 characters.");
+  }
+  const page = typeof body.page === "string" ? body.page.trim() : "";
+  if (!page.startsWith("/") || page.length > 160 || /[\r\n]/u.test(page)) {
+    throw new ApiError(422, "invalid_feedback_page", "The feedback page is invalid.");
+  }
+
+  const now = Math.floor(Date.now() / 1000);
+  const bucket = await pseudonymousBucket(request, env, "feedback");
+  await checkRateLimit(db, bucket, 6, 10 * 60, now);
+  const id = crypto.randomUUID();
+  const reference = `CCE-${id.replaceAll("-", "").slice(0, 8).toUpperCase()}`;
+  await db.prepare(`
+    INSERT INTO feedback_submissions (
+      id, reference, kind, message, page_path, status, created_at, reviewed_at, deleted_at
+    ) VALUES (?, ?, ?, ?, ?, 'new', ?, NULL, NULL)
+  `).bind(id, reference, kind, message, page, now).run();
+  await audit(db, "feedback_submitted", "feedback_submission", id);
+  return jsonResponse({ ok: true, accepted: true, reference }, 201);
+}
+
 async function requestMagicLink(request, env) {
   if (request.method !== "POST") methodNotAllowed(["POST"]);
   requireFeature(env, "AUTH_ENABLED");
@@ -463,6 +503,7 @@ export async function handleApiRequest({ request, env }) {
     const path = new URL(request.url).pathname.replace(/\/$/u, "") || "/";
     if (path === "/api/health") return await health(request, env);
     if (path === "/api/membership") return membership(request, env);
+    if (path === "/api/feedback") return await submitFeedback(request, env);
     if (path === "/api/early-access") return await earlyAccess(request, env);
     if (path === "/api/auth/request-link") return await requestMagicLink(request, env);
     if (path === "/api/auth/verify") return await verifyMagicLink(request, env);
@@ -477,6 +518,7 @@ export async function handleApiRequest({ request, env }) {
 export {
   ALLOWED_AUTH_FIELDS,
   ALLOWED_EARLY_ACCESS_FIELDS,
+  ALLOWED_FEEDBACK_FIELDS,
   MAX_BODY_BYTES,
   assertSameOrigin,
   checkRateLimit,

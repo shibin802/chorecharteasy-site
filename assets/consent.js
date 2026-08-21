@@ -23,6 +23,8 @@
     randomize_chores: ["people_count", "chore_count"],
     print_randomized_chores: [],
     randomizer_cleared: [],
+    feedback_opened: [],
+    feedback_submitted: ["kind"],
     cookie_preference_updated: ["analytics"]
   };
 

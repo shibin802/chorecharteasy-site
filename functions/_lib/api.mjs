@@ -324,8 +324,7 @@ async function submitFeedback(request, env) {
   }
 
   const now = Math.floor(Date.now() / 1000);
-  const bucket = await pseudonymousBucket(request, env, "feedback");
-  await checkRateLimit(db, bucket, 6, 10 * 60, now);
+  await checkRateLimit(db, "feedback:global", 120, 10 * 60, now);
   const id = crypto.randomUUID();
   const reference = `CCE-${id.replaceAll("-", "").slice(0, 8).toUpperCase()}`;
   await db.prepare(`

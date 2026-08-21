@@ -114,7 +114,7 @@
       "writes": true,
       "requestFields": ["kind", "message", "page", "website"],
       "acceptedKinds": ["idea", "problem", "helpful", "other"],
-      "rateLimit": "6_per_10_minutes_per_pseudonymous_ip_bucket",
+      "rateLimit": "120_per_10_minutes_global_without_user_identifier",
       "success": 201
     },
     {

@@ -51,7 +51,7 @@ backend/scripts/integration_local.py
 - JSON body 最大 4096 bytes，字段 allowlist。
 - Email 和 chart/child 数据不进入 Analytics。
 - D1 限流 key 是带 secret salt 的 IP/email pseudonymous HMAC bucket，不存原 IP。
-- Feedback 只存类型、消息、页面路径、时间和随机 reference；不存邮箱、IP、账号或图表字段。
+- Feedback 只存类型、消息、页面路径、时间和随机 reference；使用不含用户标识的全站限流，不存邮箱、IP、账号或图表字段。
 - 错误响应不返回 stack、SQL 或 PII。
 - 生产 `AUTH_DEV_BYPASS` 必须为 `false`；代码同时限制 bypass 只能在 loopback 使用。
 

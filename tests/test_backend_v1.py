@@ -115,7 +115,7 @@ class BackendArtifactContractTests(unittest.TestCase):
     def test_feedback_is_minimized_and_protected(self):
         source = API_LIB.read_text()
         self.assertIn('path === "/api/feedback"', source)
-        self.assertIn('pseudonymousBucket(request, env, "feedback")', source)
+        self.assertIn('checkRateLimit(db, "feedback:global", 120, 10 * 60, now)', source)
         self.assertIn("assertSameOrigin(request, env)", source)
         self.assertIn("feedback_submissions", source)
         self.assertNotRegex(source, r"ALLOWED_FEEDBACK_FIELDS[^\n]*email")

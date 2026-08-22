@@ -323,7 +323,6 @@
     sheet.dataset.paper = chart.paper;
     sheet.dataset.mode = mode;
     $("#print-title").textContent = chart.title;
-    $("#print-paper-label").textContent = chart.paper === "a4" ? "A4" : "US Letter";
     const head = $("#print-days");
     head.textContent = "";
     const taskHeader = document.createElement("th");

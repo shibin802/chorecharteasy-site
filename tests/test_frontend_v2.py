@@ -197,8 +197,22 @@ class FrontendV2Contract(unittest.TestCase):
             "randomizer_cleared",
         ]:
             self.assertIn(event_name, event_fields.group(1))
-        for safe_field in ["starter", "paper", "mode", "source", "task_count", "checked_count", "children_count"]:
+        for safe_field in ["starter", "paper", "source", "task_count", "checked_count", "children_count"]:
             self.assertIn(safe_field, event_fields.group(1))
+
+    def test_print_preview_has_no_redundant_mode_controls(self):
+        html = self.text("index.html")
+        js = self.text("assets/site.js")
+        css = self.text("assets/site.css")
+        for obsolete_copy in ["Preview options", "Ink-friendly", "Paper size is selected in the editor."]:
+            self.assertNotIn(obsolete_copy, html)
+        self.assertNotIn('name="print-mode"', html)
+        self.assertNotIn("print-mode", js)
+        self.assertNotIn("data-mode", css)
+        self.assertIn("Every starter uses the same clean, ink-efficient seven-day layout.", html)
+        self.assertIn("Morning routine chart", html)
+        self.assertNotIn("A4 weekly chart", html)
+        self.assertNotIn("US Letter · color", html)
 
     def test_homepage_has_no_inactive_commercial_cta(self):
         html = self.text("index.html")
@@ -239,9 +253,9 @@ class FrontendV2Contract(unittest.TestCase):
 
     def test_shared_assets_and_security_headers(self):
         home = self.text("index.html")
-        self.assertIn('href="/assets/site.css?v=20260823-workbench-v6"', home)
+        self.assertIn('href="/assets/site.css?v=20260823-print-preview-v1"', home)
         self.assertIn('src="/assets/consent.js?v=20260823-consent-copy-v2"', home)
-        self.assertIn('src="/assets/site.js?v=20260823-workbench-v4"', home)
+        self.assertIn('src="/assets/site.js?v=20260823-print-preview-v1"', home)
         headers = self.text("_headers")
         self.assertIn("Content-Security-Policy:", headers)
         self.assertIn("script-src 'self' https://www.googletagmanager.com", headers)
@@ -302,7 +316,7 @@ class FrontendV2Contract(unittest.TestCase):
         for path in ROOT.glob("*.html"):
             html = path.read_text(encoding="utf-8")
             if "/assets/site.css" in html:
-                site_css_version = "20260823-workbench-v6" if path.name == "index.html" else "20260822-consent-bar-v1"
+                site_css_version = "20260823-print-preview-v1" if path.name == "index.html" else "20260822-consent-bar-v1"
                 self.assertIn(f'href="/assets/site.css?v={site_css_version}"', html, path.name)
                 self.assertNotIn('href="/assets/site.css"', html, path.name)
             if "/guide.css" in html:
@@ -312,7 +326,7 @@ class FrontendV2Contract(unittest.TestCase):
                 self.assertIn('src="/assets/consent.js?v=20260823-consent-copy-v2"', html, path.name)
                 self.assertNotIn('src="/assets/consent.js"', html, path.name)
             if "/assets/site.js" in html:
-                site_js_version = "20260823-workbench-v4" if path.name == "index.html" else "20260822-ux-v1"
+                site_js_version = "20260823-print-preview-v1" if path.name == "index.html" else "20260822-ux-v1"
                 self.assertIn(f'src="/assets/site.js?v={site_js_version}"', html, path.name)
                 self.assertNotIn('src="/assets/site.js"', html, path.name)
             if "/assets/pages/chore-randomizer.js" in html:

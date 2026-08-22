@@ -22,11 +22,11 @@
   <link rel="preload" href="/assets/fonts/bricolage-grotesque-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/atkinson-hyperlegible-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/atkinson-hyperlegible-700.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/site.css?v=20260823-workbench-v6">
+  <link rel="stylesheet" href="/assets/site.css?v=20260823-print-preview-v1">
   <link rel="stylesheet" href="/assets/feedback.css?v=20260822-workbench-v2">
   <script defer src="/assets/consent.js?v=20260823-consent-copy-v2"></script>
   <script defer src="/assets/feedback.js?v=20260822-feedback-v1"></script>
-  <script defer src="/assets/site.js?v=20260823-workbench-v4"></script>
+  <script defer src="/assets/site.js?v=20260823-print-preview-v1"></script>
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -212,11 +212,10 @@
 
     <section class="section section-alt" id="print-examples">
       <div class="wrap">
-        <div class="section-head"><div><span class="kicker">Product proof</span><h2>See what you’ll print</h2></div><p>Preview a clean page before opening your browser’s print controls. Choose color or an ink-friendly version.</p></div>
+        <div class="section-head"><div><span class="kicker">Product proof</span><h2>See what you’ll print</h2></div><p>Every starter uses the same clean, ink-efficient seven-day layout. The task rows reflect your choices and edits.</p></div>
         <div class="proof-grid">
-          <article class="proof-sheet"><h3>Weekly chore chart</h3><small>US Letter · color</small><div class="proof-lines"><div class="proof-line"><strong>Make the bed</strong><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i></div><div class="proof-line"><strong>Help set the table</strong><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i></div></div></article>
-          <article class="proof-sheet ink"><h3>Ink-friendly weekly chart</h3><small>A4 · black and white</small><div class="proof-lines"><div class="proof-line"><strong>Pack school items</strong><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i></div></div></article>
-          <article class="proof-sheet morning"><h3>Morning routine</h3><small>US Letter · sequence</small><div class="proof-lines"><div class="proof-line"><i class="proof-num">1</i><strong>Get dressed</strong></div><div class="proof-line"><i class="proof-num">2</i><strong>Eat breakfast</strong></div><div class="proof-line"><i class="proof-num">3</i><strong>Brush teeth</strong></div></div></article>
+          <article class="proof-sheet"><h3>Weekly chore chart</h3><small>Seven-day checklist</small><div class="proof-lines"><div class="proof-line"><strong>Make the bed</strong><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i></div><div class="proof-line"><strong>Help set the table</strong><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i></div></div></article>
+          <article class="proof-sheet"><h3>Morning routine chart</h3><small>Same layout, routine-focused tasks</small><div class="proof-lines"><div class="proof-line"><strong>Get dressed</strong><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i></div><div class="proof-line"><strong>Brush teeth</strong><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i><i class="proof-box"></i></div></div></article>
         </div>
       </div>
     </section>
@@ -305,13 +304,7 @@
   <dialog class="dialog" id="print-dialog" aria-labelledby="print-dialog-title">
     <div class="dialog-head"><h2 id="print-dialog-title">Print preview</h2><div class="dialog-actions"><button class="button button-primary" id="print-now" type="button">Print or save PDF</button><button class="icon-button" id="close-print" type="button" aria-label="Close print preview">×</button></div></div>
     <div class="dialog-body">
-      <div class="dialog-controls">
-        <strong>Preview options</strong>
-        <label class="radio"><input type="radio" name="print-mode" value="color" checked>Color</label>
-        <label class="radio"><input type="radio" name="print-mode" value="ink">Ink-friendly</label>
-        <span>Paper size is selected in the editor.</span>
-      </div>
-      <article class="print-sheet" id="print-sheet" data-paper="letter" data-mode="color">
+      <article class="print-sheet" id="print-sheet" data-paper="letter">
         <header class="print-head"><h2 id="print-title">My Weekly Chore Chart</h2><div class="print-meta">Weekly checklist</div></header>
         <table class="print-table"><thead><tr id="print-days"></tr></thead><tbody id="print-rows"></tbody></table>
         <footer class="print-footer"><span>ChoreChartEasy</span><span>Review tasks and supervise as needed.</span></footer>

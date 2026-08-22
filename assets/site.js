@@ -319,9 +319,7 @@
     chart.title = $("#chart-title").value.trim().slice(0, 80) || "My Chore Chart";
     chart.paper = selectedPaper();
     const sheet = $("#print-sheet");
-    const mode = $("input[name='print-mode']:checked")?.value === "ink" ? "ink" : "color";
     sheet.dataset.paper = chart.paper;
-    sheet.dataset.mode = mode;
     $("#print-title").textContent = chart.title;
     const head = $("#print-days");
     head.textContent = "";
@@ -364,8 +362,7 @@
     lastFocusedElement = document.activeElement;
     if (!dialog.open) dialog.showModal();
     document.body.classList.add("dialog-open");
-    const mode = $("input[name='print-mode']:checked")?.value || "color";
-    window.ChoreConsent?.track("print_preview_opened", { paper: chart.paper, mode });
+    window.ChoreConsent?.track("print_preview_opened", { paper: chart.paper });
   }
 
   function closePrintPreview() {
@@ -377,8 +374,7 @@
 
   function printChart() {
     updatePrintSheet();
-    const mode = $("input[name='print-mode']:checked")?.value || "color";
-    window.ChoreConsent?.track("print_clicked", { paper: chart.paper, mode, starter: chart.starter, task_count: chart.tasks.length });
+    window.ChoreConsent?.track("print_clicked", { paper: chart.paper, starter: chart.starter, task_count: chart.tasks.length });
     window.print();
   }
 
@@ -452,7 +448,6 @@
       updatePrintSheet();
       trackChartEdited("paper");
     }));
-    $$('input[name="print-mode"]').forEach(input => input.addEventListener("change", updatePrintSheet));
     $("#add-task").addEventListener("click", addTask);
     $("#new-task").addEventListener("keydown", event => { if (event.key === "Enter") addTask(); });
     $("#preview-print").addEventListener("click", openPrintPreview);
@@ -468,8 +463,7 @@
     });
     window.addEventListener("afterprint", () => {
       document.body.classList.remove("printing");
-      const mode = $("input[name='print-mode']:checked")?.value || "color";
-      window.ChoreConsent?.track("afterprint_returned", { paper: chart.paper, mode });
+      window.ChoreConsent?.track("afterprint_returned", { paper: chart.paper });
     });
   }
 

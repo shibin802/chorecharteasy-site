@@ -118,7 +118,7 @@
     }
     selectedAge = "5-6";
     selectedStarter = "weekly";
-    setPressedState("[data-age]", "age", selectedAge);
+    syncAgeControl();
     setPressedState("[data-starter]", "starter", selectedStarter);
     $("#nickname").value = "";
     $("#multi-children").hidden = true;
@@ -159,6 +159,12 @@
 
   function setPressedState(selector, key, value) {
     $$(selector).forEach(button => button.setAttribute("aria-pressed", String(button.dataset[key] === value)));
+  }
+
+  function syncAgeControl() {
+    setPressedState("[data-age]", "age", selectedAge);
+    const select = $("#age-select");
+    if (select) select.value = selectedAge;
   }
 
   function starterTitle(starter, label = "") {
@@ -233,6 +239,8 @@
 
   function syncEditorFromChart() {
     $("#chart-title").value = chart.title;
+    const ageLabel = $("#chart-age-label");
+    if (ageLabel) ageLabel.textContent = chart.starter === "multiple" ? "Multiple-kids starter" : `Ages ${chart.age} starter`;
     const paperInput = $(`#paper-${chart.paper}`);
     if (paperInput) paperInput.checked = true;
     renderTasks();
@@ -474,13 +482,13 @@
     const requestedPaper = params.get("paper");
     if (requestedAge && Object.hasOwn(TASKS_BY_AGE, requestedAge)) selectedAge = requestedAge;
     if (["weekly", "morning", "blank", "multiple"].includes(requested)) selectedStarter = requested;
-    setPressedState("[data-age]", "age", selectedAge);
+    syncAgeControl();
     const saved = requested ? null : readDraft();
     if (saved) {
       chart = saved;
       selectedStarter = chart.starter;
       selectedAge = chart.age;
-      setPressedState("[data-age]", "age", selectedAge);
+      syncAgeControl();
       setPressedState("[data-starter]", "starter", selectedStarter);
       $("#multi-children").hidden = selectedStarter !== "multiple";
       syncEditorFromChart();
@@ -504,8 +512,12 @@
   function bindEvents() {
     $$("[data-age]").forEach(button => button.addEventListener("click", () => {
       selectedAge = button.dataset.age;
-      setPressedState("[data-age]", "age", selectedAge);
+      syncAgeControl();
     }));
+    $("#age-select")?.addEventListener("change", event => {
+      selectedAge = event.currentTarget.value;
+      syncAgeControl();
+    });
     $$("[data-starter]").forEach(button => button.addEventListener("click", () => setStarter(button.dataset.starter)));
     $$("[data-start]").forEach(button => button.addEventListener("click", () => {
       const starter = button.dataset.start;

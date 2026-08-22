@@ -3,6 +3,21 @@
 更新时间：2026-08-22 00:15 CST
 事实源：本文件用于阶段 Gate、返修、Preview 和上线状态；聊天不是发布状态真源。
 
+## 2026-08-22 紧凑同意条与 Advanced Consent Mode（Preview）
+
+- 状态：`PREVIEW_PASS / WAITING_OWNER / PRODUCTION_NOT_DEPLOYED`。
+- Owner 要求：Analytics 提示改为底部小横条；未点击也进行基础测量；增加关闭按钮。
+- 实现口径：GA4 Advanced Consent Mode；页面访问即加载 Google tag，未选择、拒绝或 GPC 开启时保持 `analytics_storage=denied` 并发送 cookieless measurement signals；仅接受后允许第一方 Analytics Cookie。
+- 关闭按钮：等同“关闭横条并继续无 Analytics Cookie”，保存拒绝存储选择；不是伪关闭。
+- 数据最小化：事件字段继续使用 allowlist；不发送昵称、图表标题、任务文本、完成详情、邮箱或账号标识；广告存储、广告用户数据、广告个性化、Google Signals 均关闭。
+- 披露同步：Privacy、Cookies、Terms 已改为与 Advanced Consent Mode 一致；这不是律师意见，目标市场的 cookieless measurement 法律基础仍需 Owner/专业复核。
+- 本地证据：43/43 unittest PASS；Node syntax PASS；minimal artifact builder PASS（35 files）；`git diff --check` PASS；1440×1000 横条约 51px、390×844 横条约 95px；主页与说明页无横向溢出；关闭后刷新保持无 Cookie 选择但 GA tag 继续加载；接受状态、设置弹窗与 44px 移动触控尺寸 PASS。
+- Draft PR：`https://github.com/shibin802/chorecharteasy-site/pull/4`；source commit：`b2ace5879b73f68ba7f5cab274b8a17911013ebe`。
+- GitHub Actions：run `32507509770`（#22）success；Preview D1 migration、35-file artifact、Worker build 与 Cloudflare deploy 均 success。
+- Preview fixed URL：`https://dc3a008f.chorecharteasy.pages.dev`；alias：`https://codex-compact-consent-bar-20.chorecharteasy.pages.dev`。
+- Preview 证据：远程桌面可见横条、Accept / No cookies / Settings / Close 控件和新披露；因远程浏览器等待 Google 外部脚本时多次超时，390px 远程复验降级使用同构本地产物浏览器证据，未伪造远程移动端结果。
+- 发布边界：Preview 通过不代表 Production；合并/正式发布前必须由 Owner 明确确认新的“cookieless measurement 始终开启、Analytics Cookie 仅接受后开启”口径。
+
 ## 2026-08-22 本地优化候选（尚未发布）
 
 - 状态：`PREVIEW_PASS / WAITING_OWNER / PRODUCTION_NOT_DEPLOYED`

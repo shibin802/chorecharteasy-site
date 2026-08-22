@@ -86,7 +86,7 @@
       title,
       tasks,
       paper: value.paper === "a4" ? "a4" : "letter",
-      starter: ["weekly", "morning", "blank", "multiple"].includes(value.starter) ? value.starter : "weekly",
+      starter: ["weekly", "morning", "blank"].includes(value.starter) ? value.starter : "weekly",
       age: Object.hasOwn(TASKS_BY_AGE, value.age) ? value.age : "5-6"
     };
   }
@@ -121,7 +121,6 @@
     syncAgeControl();
     setPressedState("[data-starter]", "starter", selectedStarter);
     $("#nickname").value = "";
-    $("#multi-children").hidden = true;
     chart = buildSingleChart("weekly", selectedAge, "");
     syncEditorFromChart();
     showStatus("Local chart data cleared. A fresh weekly starter is ready.", "info");
@@ -170,7 +169,6 @@
   function starterTitle(starter, label = "") {
     if (starter === "morning") return label ? `${label}’s Morning Routine` : "My Morning Routine";
     if (starter === "blank") return label ? `${label}’s Chore Chart` : "My Chore Chart";
-    if (starter === "multiple") return "Our Family Chore Chart";
     return label ? `${label}’s Weekly Chore Chart` : "My Weekly Chore Chart";
   }
 
@@ -189,46 +187,18 @@
     };
   }
 
-  function childRows() {
-    return $$("#children-list .child-row").map((row, index) => ({
-      label: row.querySelector(".child-label").value.trim().slice(0, 30) || `Child ${index + 1}`,
-      age: row.querySelector(".child-age").value
-    }));
-  }
-
-  function buildMultipleChart() {
-    const children = childRows();
-    const tasks = [];
-    children.forEach((child, childIndex) => {
-      TASKS_BY_AGE[child.age].slice(childIndex % 2, childIndex % 2 + 3).forEach(text => {
-        tasks.push(task(`${child.label} — ${text}`));
-      });
-    });
-    return {
-      title: "Our Family Chore Chart",
-      tasks,
-      paper: selectedPaper(),
-      starter: "multiple",
-      age: selectedAge
-    };
-  }
-
   function selectedPaper() {
     return $("input[name='paper-size']:checked")?.value === "a4" ? "a4" : "letter";
   }
 
   function createStartingChart(options = {}) {
     const starter = options.starter || selectedStarter;
-    if (starter === "multiple") {
-      chart = buildMultipleChart();
-    } else {
-      chart = buildSingleChart(starter, selectedAge, $("#nickname").value);
-    }
+    chart = buildSingleChart(starter, selectedAge, $("#nickname").value);
     selectedStarter = starter;
     chart.paper = selectedPaper();
     syncEditorFromChart();
     saveDraft();
-    const childrenCount = starter === "multiple" ? childRows().length : 1;
+    const childrenCount = 1;
     trackedEditSources.clear();
     window.ChoreConsent?.track("chart_started", { starter, children_count: childrenCount, task_count: chart.tasks.length });
     window.ChoreConsent?.track("plan_ready", { starter, children_count: childrenCount });
@@ -240,7 +210,7 @@
   function syncEditorFromChart() {
     $("#chart-title").value = chart.title;
     const ageLabel = $("#chart-age-label");
-    if (ageLabel) ageLabel.textContent = chart.starter === "multiple" ? "Multiple-kids starter" : `Ages ${chart.age} starter`;
+    if (ageLabel) ageLabel.textContent = `Ages ${chart.age} starter`;
     const paperInput = $(`#paper-${chart.paper}`);
     if (paperInput) paperInput.checked = true;
     renderTasks();
@@ -413,65 +383,9 @@
     window.print();
   }
 
-  function addChildRow(label = "", age = "5-6") {
-    const list = $("#children-list");
-    if (list.children.length >= 4) return;
-    const index = list.children.length;
-    const row = document.createElement("div");
-    row.className = "child-row";
-    const input = document.createElement("input");
-    input.className = "text-input child-label";
-    input.maxLength = 30;
-    input.placeholder = `Child ${index + 1}`;
-    input.setAttribute("aria-label", `Child ${index + 1} nickname or initials`);
-    input.value = label;
-    const select = document.createElement("select");
-    select.className = "select-input child-age";
-    select.setAttribute("aria-label", `Child ${index + 1} age group`);
-    [["3-4", "3–4"], ["5-6", "5–6"], ["7-9", "7–9"], ["10-12", "10–12"]].forEach(([value, text]) => {
-      const option = document.createElement("option");
-      option.value = value;
-      option.textContent = text;
-      option.selected = value === age;
-      select.appendChild(option);
-    });
-    const remove = document.createElement("button");
-    remove.type = "button";
-    remove.className = "button button-danger";
-    remove.textContent = "×";
-    remove.setAttribute("aria-label", `Remove child ${index + 1}`);
-    remove.addEventListener("click", () => {
-      if (list.children.length <= 2) {
-        showStatus("Multiple-kids mode needs at least two rows.", "error");
-        return;
-      }
-      row.remove();
-      renumberChildren();
-    });
-    row.append(input, select, remove);
-    list.appendChild(row);
-    renumberChildren();
-  }
-
-  function renumberChildren() {
-    $$("#children-list .child-row").forEach((row, index) => {
-      row.querySelector(".child-label").placeholder = `Child ${index + 1}`;
-      row.querySelector(".child-label").setAttribute("aria-label", `Child ${index + 1} nickname or initials`);
-      row.querySelector(".child-age").setAttribute("aria-label", `Child ${index + 1} age group`);
-      row.querySelector("button").setAttribute("aria-label", `Remove child ${index + 1}`);
-    });
-    $("#add-child").disabled = $("#children-list").children.length >= 4;
-  }
-
   function setStarter(starter) {
     selectedStarter = starter;
     setPressedState("[data-starter]", "starter", starter);
-    const multiple = starter === "multiple";
-    $("#multi-children").hidden = !multiple;
-    if (multiple && !$("#children-list").children.length) {
-      addChildRow("", "5-6");
-      addChildRow("", "7-9");
-    }
     window.ChoreConsent?.track("starter_loaded", { starter });
   }
 
@@ -481,7 +395,7 @@
     const requestedAge = params.get("age");
     const requestedPaper = params.get("paper");
     if (requestedAge && Object.hasOwn(TASKS_BY_AGE, requestedAge)) selectedAge = requestedAge;
-    if (["weekly", "morning", "blank", "multiple"].includes(requested)) selectedStarter = requested;
+    if (["weekly", "morning", "blank"].includes(requested)) selectedStarter = requested;
     syncAgeControl();
     const saved = requested ? null : readDraft();
     if (saved) {
@@ -490,15 +404,13 @@
       selectedAge = chart.age;
       syncAgeControl();
       setPressedState("[data-starter]", "starter", selectedStarter);
-      $("#multi-children").hidden = selectedStarter !== "multiple";
       syncEditorFromChart();
       showStatus("Your last active draft was restored from this browser.", "info");
       showSavedState("Draft restored");
       return;
     }
     setStarter(selectedStarter);
-    chart = buildSingleChart(selectedStarter === "multiple" ? "weekly" : selectedStarter, selectedAge, "");
-    if (selectedStarter === "multiple") chart = buildMultipleChart();
+    chart = buildSingleChart(selectedStarter, selectedAge, "");
     if (["letter", "a4"].includes(requestedPaper)) chart.paper = requestedPaper;
     syncEditorFromChart();
     if (!storageEnabled) {
@@ -513,19 +425,23 @@
     $$("[data-age]").forEach(button => button.addEventListener("click", () => {
       selectedAge = button.dataset.age;
       syncAgeControl();
+      createStartingChart({ scroll: false });
     }));
     $("#age-select")?.addEventListener("change", event => {
       selectedAge = event.currentTarget.value;
       syncAgeControl();
+      createStartingChart({ scroll: false });
     });
-    $$("[data-starter]").forEach(button => button.addEventListener("click", () => setStarter(button.dataset.starter)));
+    $$("[data-starter]").forEach(button => button.addEventListener("click", () => {
+      const starter = button.dataset.starter;
+      setStarter(starter);
+      createStartingChart({ starter, scroll: false });
+    }));
     $$("[data-start]").forEach(button => button.addEventListener("click", () => {
       const starter = button.dataset.start;
       setStarter(starter);
       createStartingChart({ starter });
     }));
-    $("#create-chart").addEventListener("click", () => createStartingChart());
-    $("#add-child").addEventListener("click", () => addChildRow("", selectedAge));
     $("#chart-title").addEventListener("input", () => {
       chart.title = $("#chart-title").value;
       saveDraft();

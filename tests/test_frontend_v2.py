@@ -237,15 +237,35 @@ class FrontendV2Contract(unittest.TestCase):
 
     def test_shared_assets_and_security_headers(self):
         home = self.text("index.html")
-        self.assertIn('href="/assets/site.css?v=20260822-workbench-v5"', home)
+        self.assertIn('href="/assets/site.css?v=20260823-workbench-v6"', home)
         self.assertIn('src="/assets/consent.js?v=20260822-consent-mode-v1"', home)
-        self.assertIn('src="/assets/site.js?v=20260822-workbench-v2"', home)
+        self.assertIn('src="/assets/site.js?v=20260823-workbench-v3"', home)
         headers = self.text("_headers")
         self.assertIn("Content-Security-Policy:", headers)
         self.assertIn("script-src 'self' https://www.googletagmanager.com", headers)
         self.assertNotIn("script-src 'self' 'unsafe-inline'", headers)
         self.assertNotIn("chorecharteasy-worker", headers)
         self.assertNotIn("googleusercontent.com", headers)
+
+    def test_home_starters_update_live_and_share_the_header_alignment_grid(self):
+        home = self.text("index.html")
+        script = self.text("assets/site.js")
+        css = self.text("assets/site.css")
+        self.assertEqual(3, home.count('data-starter="'))
+        self.assertNotIn('id="create-chart"', home)
+        self.assertNotIn('data-starter="multiple"', home)
+        self.assertNotIn("Multiple kids", home)
+        self.assertIn("Updates instantly", home)
+        self.assertRegex(
+            script,
+            re.compile(r'age-select.*?change.*?createStartingChart\(\{ scroll: false \}\)', re.S),
+        )
+        self.assertRegex(
+            script,
+            re.compile(r'\[data-starter\].*?click.*?createStartingChart\(\{ starter, scroll: false \}\)', re.S),
+        )
+        self.assertIn("width:min(1360px,calc(100% - 48px))", css)
+        self.assertIn("grid-template-columns:repeat(3,minmax(0,1fr))", css)
 
     def test_mobile_layout_guards_common_393px_iphones(self):
         css = self.text("assets/site.css")
@@ -273,7 +293,7 @@ class FrontendV2Contract(unittest.TestCase):
         for path in ROOT.glob("*.html"):
             html = path.read_text(encoding="utf-8")
             if "/assets/site.css" in html:
-                site_css_version = "20260822-workbench-v5" if path.name == "index.html" else "20260822-consent-bar-v1"
+                site_css_version = "20260823-workbench-v6" if path.name == "index.html" else "20260822-consent-bar-v1"
                 self.assertIn(f'href="/assets/site.css?v={site_css_version}"', html, path.name)
                 self.assertNotIn('href="/assets/site.css"', html, path.name)
             if "/guide.css" in html:
@@ -283,7 +303,7 @@ class FrontendV2Contract(unittest.TestCase):
                 self.assertIn('src="/assets/consent.js?v=20260822-consent-mode-v1"', html, path.name)
                 self.assertNotIn('src="/assets/consent.js"', html, path.name)
             if "/assets/site.js" in html:
-                site_js_version = "20260822-workbench-v2" if path.name == "index.html" else "20260822-ux-v1"
+                site_js_version = "20260823-workbench-v3" if path.name == "index.html" else "20260822-ux-v1"
                 self.assertIn(f'src="/assets/site.js?v={site_js_version}"', html, path.name)
                 self.assertNotIn('src="/assets/site.js"', html, path.name)
             if "/assets/pages/chore-randomizer.js" in html:

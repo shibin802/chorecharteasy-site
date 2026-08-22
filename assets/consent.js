@@ -153,12 +153,12 @@
     const gpc = gpcEnabled();
     return `
       <aside class="consent-banner" id="consent-banner" aria-labelledby="consent-title" role="region">
-        <h2 id="consent-title">Analytics choice</h2>
-        <p>Cookieless measurement is always on. Accept to allow analytics cookies. No advertising cookies.</p>
+        <h2 id="consent-title">Analytics cookies</h2>
+        <p>We always collect basic usage data without cookies. Accept analytics cookies to help us improve the site. We never use advertising cookies.</p>
         ${gpc ? '<p class="gpc-note">Global Privacy Control is enabled, so Analytics cookie storage will remain off.</p>' : ""}
         <div class="consent-actions">
           <button class="button button-tool" id="accept-analytics" type="button" ${gpc ? "disabled" : ""}>Accept</button>
-          <button class="button button-secondary" id="reject-analytics" type="button">No cookies</button>
+          <button class="button button-secondary" id="reject-analytics" type="button">Reject analytics</button>
           <button class="button button-quiet settings" type="button" data-cookie-settings>Settings</button>
         </div>
         <button class="consent-close" id="close-consent" type="button" aria-label="Close and continue without analytics cookies">×</button>

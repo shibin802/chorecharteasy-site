@@ -22,11 +22,11 @@
   <link rel="preload" href="/assets/fonts/bricolage-grotesque-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/atkinson-hyperlegible-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/atkinson-hyperlegible-700.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/site.css?v=20260822-workbench-v5">
+  <link rel="stylesheet" href="/assets/site.css?v=20260823-workbench-v6">
   <link rel="stylesheet" href="/assets/feedback.css?v=20260822-workbench-v2">
-  <script defer src="/assets/consent.js?v=20260822-consent-mode-v1"></script>
+  <script defer src="/assets/consent.js?v=20260823-consent-copy-v2"></script>
   <script defer src="/assets/feedback.js?v=20260822-feedback-v1"></script>
-  <script defer src="/assets/site.js?v=20260822-workbench-v2"></script>
+  <script defer src="/assets/site.js?v=20260823-workbench-v4"></script>
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -63,7 +63,6 @@
           {"@type":"Question","name":"Is ChoreChartEasy free?","acceptedAnswer":{"@type":"Answer","text":"Yes. You can choose a starter, edit the tasks, preview the chart, and print or save it as a PDF without creating an account or entering payment information."}},
           {"@type":"Question","name":"Do I need an account?","acceptedAnswer":{"@type":"Answer","text":"No. The free chart maker does not require an account, and children should not create one. One active draft is stored in this browser so you can return on the same device."}},
           {"@type":"Question","name":"What ages does the chart maker support?","acceptedAnswer":{"@type":"Answer","text":"The starting library covers ages 3–12 in four groups: 3–4, 5–6, 7–9, and 10–12. The suggestions are starting points, so an adult should adjust every task to the child’s abilities and home environment."}},
-          {"@type":"Question","name":"Can I make one chart for multiple children?","acceptedAnswer":{"@type":"Answer","text":"Yes. The multiple-kids Beta can create an editable starting plan for up to four children. Review and adjust the assignments; the tool does not guarantee equal effort or suitability for every family."}},
           {"@type":"Question","name":"Can I print on US Letter and A4 paper?","acceptedAnswer":{"@type":"Answer","text":"Yes. Preview the chart, choose US Letter or A4, and use your browser’s print controls to print or save as PDF. Check your printer’s scale and margin settings before printing."}},
           {"@type":"Question","name":"Where is my chart saved?","acceptedAnswer":{"@type":"Answer","text":"The chart maker is designed to keep one active draft in this browser. It is not cloud backup and will not automatically appear on another device. Clearing this site’s browser data removes the draft."}},
           {"@type":"Question","name":"Are the chore suggestions right for every child?","acceptedAnswer":{"@type":"Answer","text":"No. They are general age-based starting ideas, not professional child-development or safety advice. An adult should consider the child’s abilities, supervision needs, tools, products, pets, allergies, and home environment."}}
@@ -138,31 +137,23 @@
             </div>
 
             <div class="quick-start-group quick-start-starters">
-              <span class="field-label">2. Choose your starter</span>
+              <span class="field-label">2. Choose chart type <small>Updates instantly</small></span>
               <div class="starter-list">
                 <button class="starter" type="button" data-starter="weekly" aria-pressed="true"><strong>Weekly</strong><small>Daily basics</small></button>
                 <button class="starter" type="button" data-starter="morning" aria-pressed="false"><strong>Morning</strong><small>Before-school routine</small></button>
                 <button class="starter" type="button" data-starter="blank" aria-pressed="false"><strong>Blank</strong><small>Start from scratch</small></button>
-                <button class="starter" type="button" data-starter="multiple" aria-pressed="false"><strong>Multiple kids</strong><small>Up to four lists</small><span class="beta">BETA</span></button>
               </div>
             </div>
 
-            <button class="button button-tool quick-start-apply" id="create-chart" type="button">Create this draft</button>
           </div>
 
           <details class="optional-settings">
-            <summary>Optional name and multiple-kids settings</summary>
+            <summary>Optional nickname</summary>
             <label class="field-group" for="nickname">
               <span class="field-label">Nickname or initials (optional)</span>
               <input class="text-input" id="nickname" maxlength="30" autocomplete="off" placeholder="For example, Sam or S.">
               <small class="field-help">Avoid full names, school names, addresses, health details, or other sensitive information.</small>
             </label>
-            <div class="multi-children" id="multi-children" hidden>
-              <strong>Children</strong>
-              <p class="field-help">Assignments are starting suggestions, not a guarantee of equal effort or suitability.</p>
-              <div id="children-list"></div>
-              <button class="button button-secondary button-small" id="add-child" type="button">Add another child</button>
-            </div>
           </details>
 
           <section class="editor-panel" id="chart-editor" aria-labelledby="editor-title">
@@ -245,7 +236,7 @@
       <div class="wrap">
         <div class="section-head"><div><span class="kicker">How it works</span><h2>From age group to printable chart in three steps</h2></div></div>
         <div class="step-grid">
-          <article class="step"><h3>Choose a starting point</h3><p>Select an age group, Weekly, Morning, Blank, or Multiple Kids Beta.</p></article>
+          <article class="step"><h3>Choose a starting point</h3><p>Select an age group, then choose Weekly, Morning, or Blank.</p></article>
           <article class="step"><h3>Edit every row</h3><p>Rewrite any task, change the title, and add or remove rows.</p></article>
           <article class="step"><h3>Preview, then print</h3><p>Choose Letter or A4, review the exact page, and open the system print dialog.</p></article>
         </div>
@@ -259,7 +250,6 @@
           <article class="start-card"><h3>Weekly</h3><p>Age-based household ideas in a seven-day grid.</p><button class="link-button" type="button" data-start="weekly">Use Weekly</button></article>
           <article class="start-card"><h3>Morning</h3><p>A short editable sequence for before-school routines.</p><button class="link-button" type="button" data-start="morning">Use Morning</button></article>
           <article class="start-card"><h3>Blank</h3><p>Three empty rows when you already know what belongs on the page.</p><button class="link-button" type="button" data-start="blank">Use Blank</button></article>
-          <article class="start-card"><h3>Multiple kids <span class="beta">BETA</span></h3><p>An age-based starting plan for up to four children. Adult review is required.</p><button class="link-button" type="button" data-start="multiple">Try the Beta</button></article>
         </div>
       </div>
     </section>
@@ -280,7 +270,6 @@
           <a class="guide-link" href="/chores-for-5-year-olds"><strong>Chores for ages 5–6</strong><span>Practical routines to practice together.</span></a>
           <a class="guide-link" href="/morning-routine-chart-for-kids"><strong>Morning routine chart</strong><span>Build and print a short sequence.</span></a>
           <a class="guide-link" href="/chore-randomizer"><strong>Chore randomizer</strong><span>Randomly assign jobs, then review the result.</span></a>
-          <a class="guide-link" href="/chore-chart-for-multiple-kids"><strong>Multiple-kids chart</strong><span>Create an editable sibling starting plan.</span></a>
         </nav>
       </div>
     </section>
@@ -292,7 +281,6 @@
           <details><summary>Is ChoreChartEasy free?</summary><p>Yes. You can choose a starter, edit the tasks, preview the chart, and print or save it as a PDF without creating an account or entering payment information.</p></details>
           <details><summary>Do I need an account?</summary><p>No. The free chart maker does not require an account, and children should not create one. One active draft is stored in this browser so you can return on the same device.</p></details>
           <details><summary>What ages does the chart maker support?</summary><p>The starting library covers ages 3–12 in four groups: 3–4, 5–6, 7–9, and 10–12. The suggestions are starting points, so an adult should adjust every task to the child’s abilities and home environment.</p></details>
-          <details><summary>Can I make one chart for multiple children?</summary><p>Yes. The multiple-kids Beta can create an editable starting plan for up to four children. Review and adjust the assignments; the tool does not guarantee equal effort or suitability for every family.</p></details>
           <details><summary>Can I print on US Letter and A4 paper?</summary><p>Yes. Preview the chart, choose US Letter or A4, and use your browser’s print controls to print or save as PDF. Check your printer’s scale and margin settings before printing.</p></details>
           <details><summary>Where is my chart saved?</summary><p>The chart maker is designed to keep one active draft in this browser. It is not cloud backup and will not automatically appear on another device. Clearing this site’s browser data removes the draft.</p></details>
           <details><summary>Are the chore suggestions right for every child?</summary><p>No. They are general age-based starting ideas, not professional child-development or safety advice. An adult should consider the child’s abilities, supervision needs, tools, products, pets, allergies, and home environment.</p></details>
@@ -324,7 +312,7 @@
         <span>Paper size is selected in the editor.</span>
       </div>
       <article class="print-sheet" id="print-sheet" data-paper="letter" data-mode="color">
-        <header class="print-head"><h2 id="print-title">My Weekly Chore Chart</h2><div class="print-meta"><span id="print-paper-label">US Letter</span> · Weekly checklist</div></header>
+        <header class="print-head"><h2 id="print-title">My Weekly Chore Chart</h2><div class="print-meta">Weekly checklist</div></header>
         <table class="print-table"><thead><tr id="print-days"></tr></thead><tbody id="print-rows"></tbody></table>
         <footer class="print-footer"><span>ChoreChartEasy</span><span>Review tasks and supervise as needed.</span></footer>
       </article>

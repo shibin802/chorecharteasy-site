@@ -237,9 +237,9 @@ class FrontendV2Contract(unittest.TestCase):
 
     def test_shared_assets_and_security_headers(self):
         home = self.text("index.html")
-        self.assertIn('href="/assets/site.css?v=20260822-consent-bar-v1"', home)
+        self.assertIn('href="/assets/site.css?v=20260822-workbench-v5"', home)
         self.assertIn('src="/assets/consent.js?v=20260822-consent-mode-v1"', home)
-        self.assertIn('src="/assets/site.js?v=20260822-ux-v1"', home)
+        self.assertIn('src="/assets/site.js?v=20260822-workbench-v2"', home)
         headers = self.text("_headers")
         self.assertIn("Content-Security-Policy:", headers)
         self.assertIn("script-src 'self' https://www.googletagmanager.com", headers)
@@ -273,7 +273,8 @@ class FrontendV2Contract(unittest.TestCase):
         for path in ROOT.glob("*.html"):
             html = path.read_text(encoding="utf-8")
             if "/assets/site.css" in html:
-                self.assertIn('href="/assets/site.css?v=20260822-consent-bar-v1"', html, path.name)
+                site_css_version = "20260822-workbench-v5" if path.name == "index.html" else "20260822-consent-bar-v1"
+                self.assertIn(f'href="/assets/site.css?v={site_css_version}"', html, path.name)
                 self.assertNotIn('href="/assets/site.css"', html, path.name)
             if "/guide.css" in html:
                 self.assertIn('href="/guide.css?v=20260822-consent-bar-v1"', html, path.name)
@@ -282,7 +283,8 @@ class FrontendV2Contract(unittest.TestCase):
                 self.assertIn('src="/assets/consent.js?v=20260822-consent-mode-v1"', html, path.name)
                 self.assertNotIn('src="/assets/consent.js"', html, path.name)
             if "/assets/site.js" in html:
-                self.assertIn('src="/assets/site.js?v=20260822-ux-v1"', html, path.name)
+                site_js_version = "20260822-workbench-v2" if path.name == "index.html" else "20260822-ux-v1"
+                self.assertIn(f'src="/assets/site.js?v={site_js_version}"', html, path.name)
                 self.assertNotIn('src="/assets/site.js"', html, path.name)
             if "/assets/pages/chore-randomizer.js" in html:
                 self.assertIn('src="/assets/pages/chore-randomizer.js?v=20260822-ux-v1"', html, path.name)
@@ -374,7 +376,8 @@ class FrontendV2Contract(unittest.TestCase):
         public_pages = [path for path in ROOT.glob("*.html")]
         for page in public_pages:
             html = page.read_text(encoding="utf-8")
-            self.assertIn("/assets/feedback.css?v=20260822-feedback-v1", html, page.name)
+            feedback_css_version = "20260822-workbench-v2" if page.name == "index.html" else "20260822-feedback-v1"
+            self.assertIn(f"/assets/feedback.css?v={feedback_css_version}", html, page.name)
             self.assertIn("/assets/feedback.js?v=20260822-feedback-v1", html, page.name)
 
         script = self.text("assets/feedback.js")

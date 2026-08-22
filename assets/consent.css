@@ -36,7 +36,7 @@
 .consent-actions .button-quiet{border-color:transparent;background:transparent;color:var(--ink,#17313a);text-decoration:underline;text-underline-offset:2px}
 .consent-actions .button:disabled{cursor:not-allowed;opacity:.55}
 .consent-actions .button:focus-visible{outline:3px solid var(--focus,#1877c9);outline-offset:2px}
-.consent-close{display:grid;width:32px;height:32px;padding:0;place-items:center;border:0;border-radius:6px;background:transparent;color:var(--muted,#5b6b70);font:400 1.35rem/1 system-ui,sans-serif;cursor:pointer}
+.consent-close{display:grid;width:44px;height:44px;padding:0;place-items:center;border:0;border-radius:6px;background:transparent;color:var(--muted,#5b6b70);font:400 1.35rem/1 system-ui,sans-serif;cursor:pointer}
 .consent-close:hover{background:rgba(23,49,58,.08);color:var(--ink,#17313a)}
 .consent-close:focus-visible{outline:3px solid var(--focus,#1877c9);outline-offset:2px}
 .gpc-note{grid-column:2;padding:4px 7px;background:#f6edcf;color:var(--ink,#17313a)!important}
@@ -50,14 +50,14 @@
 #cookie-settings-dialog .icon-button{display:grid;width:44px;height:44px;padding:0;place-items:center;border:1px solid var(--line-strong,#8ca8a0);background:var(--paper,#fffdf8);color:var(--ink,#17313a);font-size:1.45rem;cursor:pointer}
 
 @media(max-width:760px){
-  .consent-banner{grid-template-columns:1fr;gap:5px;padding:7px 10px calc(7px + env(safe-area-inset-bottom))}
+  .consent-banner{grid-template-columns:1fr;gap:2px;padding:4px 6px calc(4px + env(safe-area-inset-bottom))}
   .consent-banner h2{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-  .consent-banner p{font-size:.75rem;text-align:center}
-  .consent-banner>p{padding-right:28px;padding-left:28px}
+  .consent-banner p{font-size:.69rem;line-height:1.15;text-align:left}
+  .consent-banner>p{padding-right:42px;padding-left:4px}
   .consent-actions{width:100%}
   .consent-actions .button{min-height:44px;flex:1;padding:6px 8px;font-size:.76rem}
   .gpc-note{grid-column:auto}
-  .consent-close{position:absolute;top:5px;right:6px}
+  .consent-close{position:absolute;top:0;right:2px}
   #cookie-settings-dialog{width:100%;max-height:100vh;margin:0}
   #cookie-settings-dialog .dialog-body{padding:14px}
   #cookie-settings-dialog .consent-actions{display:grid;grid-template-columns:1fr}

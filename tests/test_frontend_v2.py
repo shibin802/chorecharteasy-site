@@ -161,6 +161,14 @@ class FrontendV2Contract(unittest.TestCase):
         self.assertIn('getElementById("close-consent")?.addEventListener("click", () => savePreference(false)', js)
         self.assertNotIn("ga-disable-", js)
 
+    def test_plausible_is_enabled_on_every_public_page(self):
+        expected_src = "https://plausible.shipsolo.io/js/script.js"
+        for path in ROOT.glob("*.html"):
+            doc = self.parse(path.name)
+            html = path.read_text(encoding="utf-8")
+            self.assertIn(expected_src, doc.scripts, path.name)
+            self.assertIn('data-domain="chorecharteasy.com"', html, path.name)
+
     def test_consent_ui_is_a_compact_bottom_bar_with_close_control(self):
         css = self.text("assets/consent.css")
         self.assertIn("position:fixed", css)
@@ -258,7 +266,8 @@ class FrontendV2Contract(unittest.TestCase):
         self.assertIn('src="/assets/site.js?v=20260823-print-preview-v1"', home)
         headers = self.text("_headers")
         self.assertIn("Content-Security-Policy:", headers)
-        self.assertIn("script-src 'self' https://www.googletagmanager.com", headers)
+        self.assertIn("script-src 'self' https://www.googletagmanager.com https://plausible.shipsolo.io", headers)
+        self.assertIn("connect-src 'self' https://*.google-analytics.com https://www.googletagmanager.com https://plausible.shipsolo.io", headers)
         self.assertNotIn("script-src 'self' 'unsafe-inline'", headers)
         self.assertNotIn("chorecharteasy-worker", headers)
         self.assertNotIn("googleusercontent.com", headers)

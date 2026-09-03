@@ -22,6 +22,8 @@ class DeploymentArtifactContract(unittest.TestCase):
 
             for required in (
                 "index.html",
+                "checkout-success.html",
+                "checkout-cancelled.html",
                 "_headers",
                 "assets/site.css",
                 "assets/site.js",
@@ -38,6 +40,7 @@ class DeploymentArtifactContract(unittest.TestCase):
     def test_ci_builds_and_deploys_dist_not_repository_root(self):
         workflow = (ROOT / ".github/workflows/deploy.yml").read_text(encoding="utf-8")
         self.assertIn("build_pages_artifact.py dist", workflow)
+        self.assertIn("npm ci", workflow)
         self.assertIn("pages functions build functions", workflow)
         self.assertIn("cp .wrangler/pages-functions-build/index.js dist/_worker.js", workflow)
         self.assertIn("pages deploy dist", workflow)

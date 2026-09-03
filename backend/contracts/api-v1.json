@@ -23,7 +23,9 @@
     },
     "payments": {
       "enabled": false,
-      "checkoutEndpoint": null,
+      "provider": "stripe_checkout",
+      "checkoutEndpoint": "/api/checkout",
+      "confirmationEndpoint": "/api/checkout-session",
       "webhookEndpoint": null
     },
     "cloudDrafts": {
@@ -105,6 +107,23 @@
       "path": "/api/membership",
       "auth": "none",
       "writes": false,
+      "success": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/checkout",
+      "auth": "none",
+      "writes": true,
+      "featureFlag": "PAYMENTS_ENABLED",
+      "requestFields": ["product"],
+      "success": 201
+    },
+    {
+      "method": "GET",
+      "path": "/api/checkout-session",
+      "auth": "stripe_session_id",
+      "writes": false,
+      "queryFields": ["session_id"],
       "success": 200
     },
     {

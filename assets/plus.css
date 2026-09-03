@@ -1,0 +1,13 @@
+.plus-section{background:#17313a;color:#f8f4eb;border-bottom:1px solid #31505a}
+.plus-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr);gap:clamp(40px,7vw,92px);align-items:center}
+.plus-copy .kicker{color:#f2c660}.plus-copy h2{max-width:720px}.plus-lede{max-width:720px;color:#cfdbd8;font-size:1.08rem}
+.plus-features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:34px 0 0;padding:0;list-style:none}
+.plus-features li{padding-top:16px;border-top:2px solid #e9b949}.plus-features strong,.plus-features span{display:block}.plus-features span{margin-top:6px;color:#bfd0cc;font-size:.92rem}
+.plus-card{padding:30px;background:#fffdf8;color:#17313a;border:1px solid #8ca8a0;border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,.2)}
+.plus-badge{margin:0;color:#1f6d62;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:.78rem}
+.plus-price{display:flex;align-items:baseline;gap:8px;margin:12px 0 0}.plus-price span{font:700 3.3rem/1 "Bricolage Grotesque",system-ui,sans-serif}.plus-billing{margin:8px 0 22px;color:#5b6b70}
+.plus-status{min-height:48px;margin:13px 0 0;padding:11px 12px;background:#f1eee5;border-left:4px solid #8ca8a0;font-size:.9rem}.plus-status.ready{background:#edf8f2;border-color:#22684d}.plus-status.error{background:#fff0ec;border-color:#a33424;color:#742317}
+.plus-fineprint{margin:16px 0 0;color:#5b6b70;font-size:.82rem}
+.checkout-main{min-height:calc(100vh - 72px);display:grid;place-items:center;padding:56px 20px}.checkout-card{width:min(640px,100%);padding:clamp(28px,6vw,54px);background:#fffdf8;border:1px solid #8ca8a0;border-radius:16px;box-shadow:0 16px 40px rgba(23,49,58,.12);text-align:center}.checkout-mark{display:grid;place-items:center;width:58px;height:58px;margin:0 auto 22px;border-radius:50%;background:#edf8f2;color:#22684d;font-size:1.8rem;font-weight:700}.checkout-card h1{font-size:clamp(2.2rem,6vw,3.6rem)}.checkout-card>p{color:#5b6b70}.checkout-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:26px}
+@media(max-width:900px){.plus-layout{grid-template-columns:1fr}.plus-features{grid-template-columns:1fr 1fr}.plus-card{max-width:600px}}
+@media(max-width:600px){.plus-features{grid-template-columns:1fr}.plus-card{padding:24px}.checkout-actions{display:grid}.checkout-actions .button{width:100%}}

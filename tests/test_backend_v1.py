@@ -1,5 +1,6 @@
 import json
 import re
+import subprocess
 import unittest
 from pathlib import Path
 
@@ -31,6 +32,8 @@ class BackendArtifactContractTests(unittest.TestCase):
         required = {
             ("GET", "/api/health"),
             ("GET", "/api/membership"),
+            ("POST", "/api/checkout"),
+            ("GET", "/api/checkout-session"),
             ("POST", "/api/feedback"),
             ("POST", "/api/early-access"),
             ("POST", "/api/auth/request-link"),
@@ -49,7 +52,10 @@ class BackendArtifactContractTests(unittest.TestCase):
         self.assertTrue(props["SESSION_SECRET"]["secret"])
         self.assertTrue(props["RATE_LIMIT_SALT"]["secret"])
         self.assertEqual(props["AUTH_ENABLED"]["default"], "false")
-        self.assertEqual(props["PAYMENTS_ENABLED"]["const"], "false")
+        self.assertEqual(props["PAYMENTS_ENABLED"]["default"], "false")
+        self.assertEqual(set(props["PAYMENTS_ENABLED"]["enum"]), {"true", "false"})
+        self.assertTrue(props["STRIPE_SECRET_KEY"]["secret"])
+        self.assertRegex(props["STRIPE_PRICE_ID"]["pattern"], r"price_")
         self.assertNotIn("CREEM_API_KEY", contract.get("required", []))
 
     def test_migration_is_idempotent_and_has_minimum_tables(self):
@@ -90,12 +96,35 @@ class BackendArtifactContractTests(unittest.TestCase):
 
     def test_auth_and_payments_are_fail_closed(self):
         source = API_LIB.read_text()
+        stripe_source = (ROOT / "functions/_lib/stripe.mjs").read_text()
         self.assertIn("AUTH_ENABLED", source)
         self.assertIn("AUTH_DEV_BYPASS", source)
-        self.assertIn("PAYMENTS_ENABLED", source)
-        self.assertNotIn("/api/checkout", source)
+        self.assertIn("checkoutConfigured(env)", source)
+        self.assertIn('path === "/api/checkout"', source)
+        self.assertIn('env?.PAYMENTS_ENABLED === "true"', stripe_source)
+        self.assertIn("STRIPE_SECRET_KEY", stripe_source)
+        self.assertIn("STRIPE_PRICE_ID", stripe_source)
+        self.assertIn("checkout.stripe.com", source)
+        self.assertNotIn("payment_method_types", source)
         self.assertNotIn("/api/webhook/creem", source)
         self.assertNotIn("accounts.google.com", source)
+
+    def test_checkout_returns_503_without_server_configuration(self):
+        script = r'''
+import("./functions/_lib/api.mjs").then(async ({ handleApiRequest }) => {
+  const request = new Request("https://chorecharteasy.com/api/checkout", {
+    method: "POST",
+    headers: { "Origin": "https://chorecharteasy.com", "Content-Type": "application/json" },
+    body: JSON.stringify({ product: "plus_starter_pack" }),
+  });
+  const response = await handleApiRequest({ request, env: { PUBLIC_ORIGIN: "https://chorecharteasy.com", PAYMENTS_ENABLED: "false" } });
+  process.stdout.write(JSON.stringify({ status: response.status, body: await response.json() }));
+});
+'''
+        result = subprocess.run(["node", "-e", script], cwd=ROOT, check=True, capture_output=True, text=True)
+        payload = json.loads(result.stdout)
+        self.assertEqual(payload["status"], 503)
+        self.assertEqual(payload["body"]["error"]["code"], "checkout_unavailable")
 
     def test_state_changes_require_same_origin_and_rate_limit(self):
         source = API_LIB.read_text()

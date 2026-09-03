@@ -24,8 +24,10 @@
   <link rel="preload" href="/assets/fonts/atkinson-hyperlegible-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/site.css?v=20260823-print-preview-v1">
   <link rel="stylesheet" href="/assets/feedback.css?v=20260822-workbench-v2">
+  <link rel="stylesheet" href="/assets/plus.css?v=20260904-plus-v1">
   <script defer src="/assets/consent.js?v=20260823-consent-copy-v2"></script>
   <script defer src="/assets/feedback.js?v=20260822-feedback-v1"></script>
+  <script defer src="/assets/plus.js?v=20260904-plus-v1"></script>
   <script defer src="/assets/site.js?v=20260823-print-preview-v1"></script>
   <script type="application/ld+json">
   {
@@ -85,6 +87,7 @@
       <nav class="desktop-nav" aria-label="Main navigation">
         <a href="#how-it-works">How it works</a>
         <a href="#print-examples">Print examples</a>
+        <a href="#plus">Plus</a>
         <a href="#guides">Age guides</a>
         <a href="#faq">FAQ</a>
         <a class="button button-primary" href="#chart-maker" data-track="header">Make a chart</a>
@@ -97,6 +100,7 @@
           <a href="#chart-maker">Make a chart</a>
           <a href="#how-it-works">How it works</a>
           <a href="#print-examples">Print examples</a>
+          <a href="#plus">Plus</a>
           <a href="#guides">Age guides</a>
           <a href="#faq">FAQ</a>
         </nav>
@@ -208,6 +212,29 @@
             <noscript><p class="status show error">JavaScript is required to edit and print a chart. The guides and legal pages remain available without it.</p></noscript>
           </section>
         </div>
+      </div>
+    </section>
+
+    <section class="section plus-section" id="plus" aria-labelledby="plus-title">
+      <div class="wrap plus-layout">
+        <div class="plus-copy">
+          <span class="kicker">Optional upgrade</span>
+          <h2 id="plus-title">More printable choices, one simple purchase</h2>
+          <p class="plus-lede">ChoreChartEasy Plus Starter Pack adds extra ways to make the same routine feel personal. The free chart maker stays free and needs no account.</p>
+          <ul class="plus-features">
+            <li><strong>Three premium print themes</strong><span>Warm, ocean, and berry color styles alongside the ink-friendly classic.</span></li>
+            <li><strong>Reward-goal print strip</strong><span>Add one clear family goal to the bottom of the weekly chart.</span></li>
+            <li><strong>Household use</strong><span>Print the included layouts for your household as often as you need.</span></li>
+          </ul>
+        </div>
+        <aside class="plus-card" aria-label="ChoreChartEasy Plus Starter Pack offer">
+          <p class="plus-badge">Plus Starter Pack</p>
+          <p class="plus-price"><span>$4.99</span> USD</p>
+          <p class="plus-billing">One-time purchase · No subscription</p>
+          <button class="button button-primary button-full" id="start-checkout" type="button" disabled>Checkout opening soon</button>
+          <p class="plus-status" id="checkout-status" role="status" aria-live="polite">Secure checkout is off while production Stripe setup is pending.</p>
+          <p class="plus-fineprint">When enabled, payment opens on Stripe’s hosted checkout. Review the <a href="/terms">Terms</a> and <a href="/refund">Refund Policy</a> before purchasing.</p>
+        </aside>
       </div>
     </section>
 

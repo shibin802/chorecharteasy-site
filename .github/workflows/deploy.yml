@@ -39,6 +39,7 @@ jobs:
 
       - name: Build minimal Pages artifact
         run: |
+          npm ci
           python3 backend/scripts/build_pages_artifact.py dist
           rm -rf .wrangler/pages-functions-build
           npx --yes wrangler@4.80.0 pages functions build functions \

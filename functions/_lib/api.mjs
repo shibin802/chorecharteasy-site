@@ -1,3 +1,5 @@
+import { checkoutConfigured, integrationIdentifier, stripeClient } from "./stripe.mjs";
+
 const API_VERSION = "v1";
 const SESSION_COOKIE = "cce_session";
 const MAX_BODY_BYTES = 4096;
@@ -6,9 +8,10 @@ const DEFAULT_MAGIC_LINK_TTL_SECONDS = 15 * 60;
 const ALLOWED_EARLY_ACCESS_FIELDS = new Set(["email", "consent", "source", "company"]);
 const ALLOWED_AUTH_FIELDS = new Set(["email"]);
 const ALLOWED_FEEDBACK_FIELDS = new Set(["kind", "message", "page", "website"]);
+const ALLOWED_CHECKOUT_FIELDS = new Set(["product"]);
 const FEEDBACK_KINDS = new Set(["idea", "problem", "helpful", "other"]);
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PAYMENTS_ENABLED = false;
+const PLUS_PRODUCT = "plus_starter_pack";
 
 class ApiError extends Error {
   constructor(status, code, message, headers = {}) {
@@ -257,7 +260,62 @@ function membership(request, env) {
     accounts: { enabled: localAuthReady, method: "email_magic_link" },
     earlyAccess: { enabled: earlyAccessReady },
     familyPack: { status: "planned", chargeToday: false, purchaseOrReservation: false },
-    payments: { enabled: PAYMENTS_ENABLED && featureEnabled(env, "PAYMENTS_ENABLED") },
+    plus: {
+      product: PLUS_PRODUCT,
+      name: "ChoreChartEasy Plus Starter Pack",
+      price: { amount: 499, currency: "usd", display: "$4.99" },
+      billing: "one_time",
+    },
+    payments: { enabled: checkoutConfigured(env), provider: "stripe_checkout" },
+  });
+}
+
+async function createCheckout(request, env) {
+  if (request.method !== "POST") methodNotAllowed(["POST"]);
+  assertSameOrigin(request, env);
+  if (!checkoutConfigured(env)) {
+    throw new ApiError(503, "checkout_unavailable", "Secure checkout is being finalized. Please try again later.");
+  }
+  const body = await parseJsonObject(request, ALLOWED_CHECKOUT_FIELDS);
+  if (body.product !== PLUS_PRODUCT) {
+    throw new ApiError(422, "invalid_product", "This product is not available.");
+  }
+  const origin = expectedOrigin(request, env);
+  const stripe = stripeClient(env);
+  const price = await stripe.prices.retrieve(env.STRIPE_PRICE_ID);
+  if (!price.active || price.type !== "one_time" || price.currency !== "usd" || price.unit_amount !== 499) {
+    throw new ApiError(503, "checkout_unavailable", "Secure checkout is being finalized. Please try again later.");
+  }
+  const session = await stripe.checkout.sessions.create({
+    mode: "payment",
+    line_items: [{ price: env.STRIPE_PRICE_ID, quantity: 1 }],
+    success_url: `${origin}/checkout-success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${origin}/checkout-cancelled`,
+    metadata: { product: PLUS_PRODUCT, site: "chorecharteasy.com" },
+    payment_intent_data: { metadata: { product: PLUS_PRODUCT, site: "chorecharteasy.com" } },
+    integration_identifier: integrationIdentifier(),
+  });
+  if (typeof session.url !== "string" || !session.url.startsWith("https://checkout.stripe.com/")) {
+    throw new ApiError(502, "checkout_creation_failed", "Secure checkout could not be opened. Please try again.");
+  }
+  return jsonResponse({ ok: true, url: session.url }, 201);
+}
+
+async function checkoutSessionStatus(request, env) {
+  if (request.method !== "GET") methodNotAllowed(["GET"]);
+  if (!checkoutConfigured(env)) {
+    throw new ApiError(503, "checkout_unavailable", "Payment confirmation is temporarily unavailable.");
+  }
+  const sessionId = new URL(request.url).searchParams.get("session_id") || "";
+  if (!/^cs_(?:test_|live_)?[A-Za-z0-9]+$/u.test(sessionId) || sessionId.length > 160) {
+    throw new ApiError(422, "invalid_session", "The checkout confirmation link is invalid.");
+  }
+  const session = await stripeClient(env).checkout.sessions.retrieve(sessionId);
+  return jsonResponse({
+    ok: true,
+    paid: session.payment_status === "paid",
+    status: session.status,
+    product: session.metadata?.product === PLUS_PRODUCT ? PLUS_PRODUCT : null,
   });
 }
 
@@ -502,6 +560,8 @@ export async function handleApiRequest({ request, env }) {
     const path = new URL(request.url).pathname.replace(/\/$/u, "") || "/";
     if (path === "/api/health") return await health(request, env);
     if (path === "/api/membership") return membership(request, env);
+    if (path === "/api/checkout") return await createCheckout(request, env);
+    if (path === "/api/checkout-session") return await checkoutSessionStatus(request, env);
     if (path === "/api/feedback") return await submitFeedback(request, env);
     if (path === "/api/early-access") return await earlyAccess(request, env);
     if (path === "/api/auth/request-link") return await requestMagicLink(request, env);

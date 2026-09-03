@@ -14,20 +14,35 @@
     try { return await response.json(); } catch { return null; }
   }
 
+  let authenticated = false;
+
   async function loadAvailability() {
     try {
-      const response = await fetch("/api/membership", { headers: { Accept: "application/json" } });
-      const payload = await readJson(response);
-      if (!response.ok || !payload?.payments?.enabled) return;
+      const [capabilityResponse, accountResponse] = await Promise.all([
+        fetch("/api/membership", { headers: { Accept: "application/json" } }),
+        fetch("/api/me", { headers: { Accept: "application/json" } }),
+      ]);
+      const payload = await readJson(capabilityResponse);
+      const account = await readJson(accountResponse);
+      if (!capabilityResponse.ok || !payload?.payments?.enabled) return;
+      if (!payload?.accounts?.enabled) {
+        setStatus("Account sign-in must be configured before checkout can open.", "error");
+        return;
+      }
+      authenticated = Boolean(accountResponse.ok && account?.authenticated);
       button.disabled = false;
-      button.textContent = `Buy Plus for ${payload.plus?.price?.display || "$4.99"}`;
-      setStatus("Secure Stripe checkout is ready.", "ready");
+      button.textContent = authenticated ? `Buy Plus for ${payload.plus?.price?.display || "$4.99"}` : "Sign in to buy Plus";
+      setStatus(authenticated ? "Signed in. Secure Stripe checkout is ready." : "Sign in by email before opening secure checkout.", "ready");
     } catch {
       setStatus("Checkout availability could not be confirmed. The free maker still works.", "error");
     }
   }
 
   async function startCheckout() {
+    if (!authenticated) {
+      location.assign("/login?next=plus");
+      return;
+    }
     button.disabled = true;
     button.textContent = "Opening secure checkout…";
     setStatus("Creating a Stripe Checkout Session…", "ready");
@@ -39,6 +54,10 @@
         body: JSON.stringify({ product: "plus_starter_pack" }),
       });
       const payload = await readJson(response);
+      if (response.status === 401) {
+        location.assign("/login?next=plus");
+        return;
+      }
       if (!response.ok) throw new Error(payload?.error?.message || "Secure checkout could not be opened.");
       const checkoutUrl = new URL(payload.url);
       if (checkoutUrl.protocol !== "https:" || checkoutUrl.hostname !== "checkout.stripe.com") {

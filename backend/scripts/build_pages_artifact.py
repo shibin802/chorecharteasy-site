@@ -24,6 +24,7 @@ ROOT_FILES = (
     "404.html",
     "checkout-success.html",
     "checkout-cancelled.html",
+    "login.html",
     "printable-chore-chart.html",
     "chore-randomizer.html",
     "chores-for-3-year-olds.html",

@@ -131,9 +131,8 @@ function expectedOrigin(request, env) {
 
 function assertSameOrigin(request, env) {
   const origin = request.headers.get("Origin");
-  const requestOrigin = new URL(request.url).origin;
   const configuredOrigin = expectedOrigin(request, env);
-  if (!origin || (origin !== requestOrigin && origin !== configuredOrigin)) {
+  if (!origin || origin !== configuredOrigin) {
     throw new ApiError(403, "origin_not_allowed", "This request origin is not allowed.");
   }
 }
@@ -141,6 +140,16 @@ function assertSameOrigin(request, env) {
 function isLoopbackRequest(request) {
   const hostname = new URL(request.url).hostname;
   return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "[::1]" || hostname === "::1";
+}
+
+function emailDeliveryConfigured(env) {
+  return typeof env?.RESEND_API_KEY === "string"
+    && env.RESEND_API_KEY.startsWith("re_")
+    && env.RESEND_API_KEY.length >= 20
+    && typeof env?.AUTH_FROM_EMAIL === "string"
+    && env.AUTH_FROM_EMAIL.length <= 160
+    && env.AUTH_FROM_EMAIL.includes("@")
+    && !/[\r\n]/u.test(env.AUTH_FROM_EMAIL);
 }
 
 function bytesToHex(bytes) {
@@ -247,17 +256,16 @@ function membership(request, env) {
   const hasDatabase = Boolean(env?.DB && typeof env.DB.prepare === "function");
   const hasSessionSecret = typeof env?.SESSION_SECRET === "string" && env.SESSION_SECRET.length >= 32;
   const hasRateLimitSalt = typeof env?.RATE_LIMIT_SALT === "string" && env.RATE_LIMIT_SALT.length >= 32;
-  const localAuthReady = featureEnabled(env, "AUTH_ENABLED")
-    && featureEnabled(env, "AUTH_DEV_BYPASS")
-    && isLoopbackRequest(request)
+  const authReady = featureEnabled(env, "AUTH_ENABLED")
     && hasDatabase
     && hasSessionSecret
-    && hasRateLimitSalt;
+    && hasRateLimitSalt
+    && ((featureEnabled(env, "AUTH_DEV_BYPASS") && isLoopbackRequest(request)) || emailDeliveryConfigured(env));
   const earlyAccessReady = featureEnabled(env, "EARLY_ACCESS_ENABLED") && hasDatabase && hasRateLimitSalt;
   return jsonResponse({
     ok: true,
     freeMaker: { requiresAccount: false, cloudDrafts: false },
-    accounts: { enabled: localAuthReady, method: "email_magic_link" },
+    accounts: { enabled: authReady, method: "email_magic_link" },
     earlyAccess: { enabled: earlyAccessReady },
     familyPack: { status: "planned", chargeToday: false, purchaseOrReservation: false },
     plus: {
@@ -280,6 +288,7 @@ async function createCheckout(request, env) {
   if (body.product !== PLUS_PRODUCT) {
     throw new ApiError(422, "invalid_product", "This product is not available.");
   }
+  const user = await requireAuthenticatedUser(request, env);
   const origin = expectedOrigin(request, env);
   const stripe = stripeClient(env);
   const price = await stripe.prices.retrieve(env.STRIPE_PRICE_ID);
@@ -289,10 +298,12 @@ async function createCheckout(request, env) {
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
     line_items: [{ price: env.STRIPE_PRICE_ID, quantity: 1 }],
+    client_reference_id: user.id,
+    customer_email: user.email,
     success_url: `${origin}/checkout-success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/checkout-cancelled`,
-    metadata: { product: PLUS_PRODUCT, site: "chorecharteasy.com" },
-    payment_intent_data: { metadata: { product: PLUS_PRODUCT, site: "chorecharteasy.com" } },
+    metadata: { product: PLUS_PRODUCT, site: "chorecharteasy.com", user_id: user.id },
+    payment_intent_data: { metadata: { product: PLUS_PRODUCT, site: "chorecharteasy.com", user_id: user.id } },
     integration_identifier: integrationIdentifier(),
   });
   if (typeof session.url !== "string" || !session.url.startsWith("https://checkout.stripe.com/")) {
@@ -306,11 +317,15 @@ async function checkoutSessionStatus(request, env) {
   if (!checkoutConfigured(env)) {
     throw new ApiError(503, "checkout_unavailable", "Payment confirmation is temporarily unavailable.");
   }
+  const user = await requireAuthenticatedUser(request, env);
   const sessionId = new URL(request.url).searchParams.get("session_id") || "";
   if (!/^cs_(?:test_|live_)?[A-Za-z0-9]+$/u.test(sessionId) || sessionId.length > 160) {
     throw new ApiError(422, "invalid_session", "The checkout confirmation link is invalid.");
   }
   const session = await stripeClient(env).checkout.sessions.retrieve(sessionId);
+  if (session.client_reference_id !== user.id || session.metadata?.user_id !== user.id) {
+    throw new ApiError(403, "checkout_not_owned", "This checkout does not belong to the signed-in account.");
+  }
   return jsonResponse({
     ok: true,
     paid: session.payment_status === "paid",
@@ -398,7 +413,8 @@ async function requestMagicLink(request, env) {
   if (request.method !== "POST") methodNotAllowed(["POST"]);
   requireFeature(env, "AUTH_ENABLED");
   assertSameOrigin(request, env);
-  if (!featureEnabled(env, "AUTH_DEV_BYPASS") || !isLoopbackRequest(request)) {
+  const developmentBypass = featureEnabled(env, "AUTH_DEV_BYPASS") && isLoopbackRequest(request);
+  if (!developmentBypass && !emailDeliveryConfigured(env)) {
     throw new ApiError(503, "email_delivery_unconfigured", "Email sign-in is not available yet.");
   }
   const db = requireDatabase(env);
@@ -418,21 +434,63 @@ async function requestMagicLink(request, env) {
     INSERT INTO login_tokens (id, email, email_hash, token_hash, requested_at, expires_at, consumed_at)
     VALUES (?, ?, ?, ?, ?, ?, NULL)
   `).bind(tokenId, email, emailHash, tokenHash, now, now + ttl).run();
-  const verifyUrl = new URL("/api/auth/verify", request.url);
+  const verifyUrl = new URL("/api/auth/verify", expectedOrigin(request, env));
   verifyUrl.searchParams.set("token", rawToken);
-  return jsonResponse({
-    ok: true,
-    accepted: true,
-    message: "Development magic link created.",
-    debug: { token: rawToken, verifyUrl: verifyUrl.toString() },
-  }, 202);
+  if (developmentBypass) {
+    return jsonResponse({
+      ok: true,
+      accepted: true,
+      message: "Development magic link created.",
+      debug: { token: rawToken, verifyUrl: verifyUrl.toString() },
+    }, 202);
+  }
+  try {
+    await sendMagicLinkEmail(env, email, verifyUrl.toString());
+  } catch {
+    await db.prepare("DELETE FROM login_tokens WHERE id = ?").bind(tokenId).run();
+    throw new ApiError(503, "email_delivery_failed", "The sign-in email could not be sent. Please try again later.");
+  }
+  return jsonResponse({ ok: true, accepted: true, message: "Check your email for a sign-in link." }, 202);
+}
+
+async function sendMagicLinkEmail(env, email, verifyUrl) {
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      from: env.AUTH_FROM_EMAIL,
+      to: [email],
+      subject: "Sign in to ChoreChartEasy",
+      text: `Use this one-time link to sign in to ChoreChartEasy. It expires in 15 minutes:\n\n${verifyUrl}\n\nIf you did not request this email, you can ignore it.`,
+      html: `<p>Use this one-time link to sign in to ChoreChartEasy. It expires in 15 minutes.</p><p><a href="${verifyUrl.replaceAll("&", "&amp;")}">Sign in to ChoreChartEasy</a></p><p>If you did not request this email, you can ignore it.</p>`,
+    }),
+  });
+  if (!response.ok) throw new Error("Email provider rejected the request");
 }
 
 function authRedirect(env, request, parameter) {
   const target = new URL(expectedOrigin(request, env));
   target.pathname = "/";
   target.search = parameter;
+  target.hash = "plus";
   return target.toString();
+}
+
+async function requireAuthenticatedUser(request, env) {
+  const token = parseCookies(request)[SESSION_COOKIE];
+  if (!token) throw new ApiError(401, "authentication_required", "Sign in before continuing to checkout.");
+  const db = requireDatabase(env);
+  const sessionSecret = requireSecret(env, "SESSION_SECRET");
+  const now = Math.floor(Date.now() / 1000);
+  const tokenHash = await hmacHex(sessionSecret, token);
+  const row = await db.prepare(`
+    SELECT u.id, u.email FROM sessions s
+    JOIN users u ON u.id = s.user_id AND u.status = 'active'
+    WHERE s.token_hash = ? AND s.revoked_at IS NULL AND s.expires_at > ?
+    LIMIT 1
+  `).bind(tokenHash, now).first();
+  if (!row) throw new ApiError(401, "authentication_required", "Sign in before continuing to checkout.");
+  return row;
 }
 
 async function verifyMagicLink(request, env) {

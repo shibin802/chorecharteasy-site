@@ -8,9 +8,9 @@
 - 免费 Maker 不需要账号。
 - Chart title、nickname、task、checks 只在浏览器 localStorage，不进入 D1。
 - 不提供云草稿。
-- Family Pack 是 `planned`，不收费、不预订。
-- 没有 checkout 或 payment webhook。
-- Auth 只有 loopback 开发模式；未接生产邮件 provider。
+- Plus Starter Pack 结账代码已就绪，默认关闭。
+- Checkout Session 必须绑定登录用户；payment webhook 和自动权益开通仍待实现。
+- Auth 使用邮箱 Magic Link；本地可用 loopback bypass，生产邮件由 Resend 发送并默认关闭。
 
 ## 文件
 
@@ -35,10 +35,12 @@ backend/scripts/integration_local.py
 | GET | `/api/membership` | 开放 | 机器可读能力状态 |
 | POST | `/api/feedback` | 开放 | 无账号产品反馈；不收邮箱、儿童资料或图表内容 |
 | POST | `/api/early-access` | 关闭 | 成人邮箱兴趣列表 |
-| POST | `/api/auth/request-link` | 关闭 | 开发态 Magic Link |
+| POST | `/api/auth/request-link` | 关闭 | 邮箱 Magic Link；生产由 Resend 发送 |
 | GET | `/api/auth/verify` | 关闭 | 一次性 token → session |
-| GET | `/api/me` | 开放 | 可选 session；首页不自动调用 |
+| GET | `/api/me` | 开放 | 可选 session；前端读取登录和权益状态 |
 | POST | `/api/logout` | 开放 | 撤销服务端 session |
+| POST | `/api/checkout` | 关闭 | 登录用户创建 Stripe Checkout Session |
+| GET | `/api/checkout-session` | 关闭 | 同一登录用户确认 Stripe Checkout Session |
 
 完整字段、错误码和数据分类：`backend/contracts/api-v1.json`。
 
@@ -54,6 +56,8 @@ backend/scripts/integration_local.py
 - Feedback 只存类型、消息、页面路径、时间和随机 reference；使用不含用户标识的全站限流，不存邮箱、IP、账号或图表字段。
 - 错误响应不返回 stack、SQL 或 PII。
 - 生产 `AUTH_DEV_BYPASS` 必须为 `false`；代码同时限制 bypass 只能在 loopback 使用。
+- 生产 Magic Link 由 Resend API 发送；API key 仅存在 Cloudflare encrypted secret 中。
+- Checkout Session 同时写入 `client_reference_id` 和 `metadata.user_id`，成功确认要求匹配当前 session 用户。
 
 ## 本地运行
 
@@ -98,17 +102,17 @@ python3 backend/scripts/integration_local.py --base http://127.0.0.1:8790
 ## 生产准备顺序
 
 1. Owner 确认是否允许偏离 Lean PRD，启用账号或 Early Access 数据收集。
-2. 法律确认运营主体、联系邮箱、邮件服务商、保留/删除、退订流程。
+2. 法律确认运营主体、联系邮箱、Resend、账号保留/删除和支付数据流程。
 3. 创建 production/preview 独立 D1，绑定名均为 `DB`。
 4. 设置 Cloudflare Pages Variables/Secrets；不要提交 `.dev.vars`。
 5. 先以四个 feature flag 全 false 部署 Preview。
 6. 对 Preview 远端 migration、API、Headers、日志和数据删除做 QA。
-7. Early Access 和 Auth 分别单独启用，不能一次全开。
+7. 验证 Resend sender domain，设置 `RESEND_API_KEY` 与 `AUTH_FROM_EMAIL`，单独启用并验证 Auth。
 8. 支付继续保持关闭，直到付费 Gate、退款和 entitlement 生命周期完整。
 
 ## 当前不能做的生产操作
 
 - 远端 D1 create/migration：缺 `CLOUDFLARE_ACCOUNT_ID` 且未获部署确认。
-- Auth：没有生产邮件 provider、法律披露和删除流程。
+- Auth：代码已接 Resend，但 sender domain、API secret、法律披露和删除流程仍需生产配置与复核。
 - Early Access：营销 consent/退订/保留期未批准。
 - Family Pack：没有批准的资产包、R2 交付、支付和退款合同。

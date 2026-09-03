@@ -151,7 +151,7 @@ def run(base: str):
     encoded = urllib.parse.quote(token, safe="")
     status, headers, _ = call(base, "GET", f"/api/auth/verify?token={encoded}")
     expect(status == 302, "verify redirect")
-    expect(headers.get("Location") == base + "/?signed_in=1", "safe verify redirect")
+    expect(headers.get("Location") == base + "/?signed_in=1#plus", "safe verify redirect")
     set_cookie = headers.get("Set-Cookie") or ""
     for attribute in ("cce_session=", "HttpOnly", "Secure", "SameSite=Lax", "Path=/"):
         expect(attribute in set_cookie, f"session cookie {attribute}")

@@ -24,6 +24,7 @@ class DeploymentArtifactContract(unittest.TestCase):
                 "index.html",
                 "checkout-success.html",
                 "checkout-cancelled.html",
+                "login.html",
                 "_headers",
                 "assets/site.css",
                 "assets/site.js",

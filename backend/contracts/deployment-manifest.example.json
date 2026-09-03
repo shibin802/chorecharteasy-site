@@ -21,6 +21,7 @@
     "PUBLIC_ORIGIN": "https://chorecharteasy.com",
     "AUTH_ENABLED": "false",
     "AUTH_DEV_BYPASS": "false",
+    "AUTH_FROM_EMAIL": "ChoreChartEasy <login@chorecharteasy.com>",
     "EARLY_ACCESS_ENABLED": "false",
     "PAYMENTS_ENABLED": "false",
     "SESSION_TTL_SECONDS": "2592000",
@@ -36,11 +37,16 @@
       "name": "RATE_LIMIT_SALT",
       "requiredWhen": "AUTH_ENABLED=true or EARLY_ACCESS_ENABLED=true",
       "minimumBytes": 32
+    },
+    {
+      "name": "RESEND_API_KEY",
+      "requiredWhen": "AUTH_ENABLED=true outside loopback development",
+      "minimumBytes": 20
     }
   ],
   "hardBlocks": [
     "Do not set AUTH_DEV_BYPASS=true outside loopback development.",
-    "Do not enable auth until a reviewed email provider and legal disclosure exist.",
+    "Do not enable auth until the Resend sender domain and legal disclosure are reviewed.",
     "Do not enable early access until consent copy, unsubscribe, deletion, and retention are approved.",
     "Do not add payment endpoints until the paid-interest gate and payment lifecycle review pass."
   ]

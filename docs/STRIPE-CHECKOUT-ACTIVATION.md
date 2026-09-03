@@ -22,17 +22,29 @@ Set these in the Cloudflare Pages **Production** environment. Keep preview payme
 | `STRIPE_PRICE_ID` | Production one-time Price ID for exactly `$4.99 USD` |
 | `PAYMENTS_ENABLED` | Keep `false` until every launch check passes; then set `true` |
 
+Email sign-in must be enabled before payments:
+
+| Variable | Value |
+| --- | --- |
+| `AUTH_ENABLED` | Keep `false` until login email delivery is tested; then set `true` |
+| `AUTH_DEV_BYPASS` | `false` in production |
+| `AUTH_FROM_EMAIL` | A sender on the verified domain, such as `ChoreChartEasy <login@chorecharteasy.com>` |
+| `RESEND_API_KEY` | Resend API key stored as an encrypted secret |
+| `SESSION_SECRET` | Random secret of at least 32 bytes, stored as an encrypted secret |
+| `RATE_LIMIT_SALT` | Separate random secret of at least 32 bytes, stored as an encrypted secret |
+
 The restricted key needs **Checkout Sessions: Write** to create sessions and **Checkout Sessions: Read** to confirm them. It also needs **Prices: Read** so the server can verify the configured Price is active, one-time, USD, and exactly $4.99 before creating a session. Product, Price, Payment Link, and Subscription permissions alone do not authorize dynamic Checkout Sessions.
 
 ## Launch checks
 
 1. Confirm the three premium themes, reward-goal print strip, and household-use terms are actually deliverable.
-2. Replace the current free-only Terms and Refund Policy with reviewed language covering seller identity, digital delivery, refunds, support, and mandatory consumer rights.
+2. Update the Privacy Policy for account email, sessions, Resend, Stripe, retention, deletion requests, and user rights. Replace the current free-only Terms and Refund Policy with reviewed language covering seller identity, digital delivery, refunds, support, and mandatory consumer rights.
 3. Create the matching production Product and one-time `$4.99 USD` Price in Stripe.
-4. Add the three variables above while leaving `PAYMENTS_ENABLED=false`.
-5. Deploy and confirm `/api/membership` reports `payments.enabled: false`.
-6. Enable payments, complete one low-value live purchase, verify the browser reaches `/checkout-success`, and confirm the payment in Stripe.
-7. Refund that launch verification payment from Stripe if it is only a test.
+4. Verify the sender domain in Resend, configure the login variables, enable `AUTH_ENABLED`, and complete one email sign-in.
+5. Add the Stripe variables while leaving `PAYMENTS_ENABLED=false`.
+6. Deploy and confirm `/api/membership` reports accounts enabled and payments disabled.
+7. Enable payments, sign in, complete one low-value live purchase, verify the browser reaches `/checkout-success`, and confirm the payment in Stripe.
+8. Refund that launch verification payment from Stripe if it is only a test.
 
 ## Current scope limit
 

@@ -55,6 +55,7 @@ class BackendArtifactContractTests(unittest.TestCase):
         self.assertEqual(props["PAYMENTS_ENABLED"]["default"], "false")
         self.assertEqual(set(props["PAYMENTS_ENABLED"]["enum"]), {"true", "false"})
         self.assertTrue(props["STRIPE_SECRET_KEY"]["secret"])
+        self.assertTrue(props["RESEND_API_KEY"]["secret"])
         self.assertRegex(props["STRIPE_PRICE_ID"]["pattern"], r"price_")
         self.assertNotIn("CREEM_API_KEY", contract.get("required", []))
 
@@ -105,6 +106,8 @@ class BackendArtifactContractTests(unittest.TestCase):
         self.assertIn("STRIPE_SECRET_KEY", stripe_source)
         self.assertIn("STRIPE_PRICE_ID", stripe_source)
         self.assertIn("checkout.stripe.com", source)
+        self.assertIn("requireAuthenticatedUser(request, env)", source)
+        self.assertIn("https://api.resend.com/emails", source)
         self.assertNotIn("payment_method_types", source)
         self.assertNotIn("/api/webhook/creem", source)
         self.assertNotIn("accounts.google.com", source)

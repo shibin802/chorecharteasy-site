@@ -363,6 +363,7 @@
     lastFocusedElement = document.activeElement;
     if (!dialog.open) dialog.showModal();
     document.body.classList.add("dialog-open");
+    window.ChorePrintAccess?.record("print_preview_opened", chart);
     window.ChoreConsent?.track("print_preview_opened", { paper: chart.paper });
   }
 
@@ -377,6 +378,7 @@
     await window.ChorePrintAccess?.refresh();
     updatePrintSheet();
     window.ChoreConsent?.track("print_clicked", { paper: chart.paper, starter: chart.starter, task_count: chart.tasks.length });
+    window.ChorePrintAccess?.record("print_requested", chart);
     window.print();
   }
 

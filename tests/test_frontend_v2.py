@@ -430,9 +430,9 @@ class FrontendV2Contract(unittest.TestCase):
         public_pages = [path for path in ROOT.glob("*.html") if path.name not in {"billing-test.html"}]
         for page in public_pages:
             html = page.read_text(encoding="utf-8")
-            feedback_css_version = "20260919-feedback-v2"
+            feedback_css_version = "20260919-feedback-v3"
             self.assertIn(f"/assets/feedback.css?v={feedback_css_version}", html, page.name)
-            self.assertIn("/assets/feedback.js?v=20260919-feedback-v2", html, page.name)
+            self.assertIn("/assets/feedback.js?v=20260919-feedback-v3", html, page.name)
 
         script = self.text("assets/feedback.js")
         for fragment in ("/api/feedback", "data-feedback-kind", "aria-checked", "maxlength=\"1000\"", "Reference:"):

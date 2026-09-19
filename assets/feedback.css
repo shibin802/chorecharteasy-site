@@ -17,7 +17,7 @@ body:has(#consent-banner) .site-feedback-trigger{bottom:72px}
 .site-feedback-kind{min-height:62px;display:grid;place-items:center;gap:5px;padding:9px 4px;border:1px solid #c9d7d1;border-radius:10px;background:#fff;color:#526a70;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer}
 .site-feedback-kind:hover{background:#f2f7f3;border-color:#8ca8a0}
 .site-feedback-kind[aria-checked="true"]{border-color:#1f6d62;color:#1f6d62;background:#e9f4f0;box-shadow:inset 0 0 0 1px #1f6d62}
-.site-feedback-symbol{font-size:20px;line-height:1}
+.site-feedback-symbol{display:grid;place-items:center;min-height:28px;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:24px;line-height:1.15}
 .site-feedback-field textarea{display:block;width:100%;min-height:124px;resize:vertical;padding:13px 14px;border:1px solid #aebfba;border-radius:10px;background:#fff;color:#17313a;font-family:inherit;font-size:16px;line-height:1.5}
 .site-feedback-field textarea::placeholder{color:#71817f}
 .site-feedback-dialog :is(button,a,textarea):focus-visible,.site-feedback-trigger:focus-visible{outline:3px solid #73b6a6;outline-offset:3px}

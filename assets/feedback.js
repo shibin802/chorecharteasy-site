@@ -13,10 +13,10 @@
           <fieldset>
             <legend>I’d like to share…</legend>
             <div class="site-feedback-kinds" role="radiogroup" aria-label="Feedback type">
-              <button class="site-feedback-kind" type="button" role="radio" aria-checked="false" data-feedback-kind="idea"><span class="site-feedback-symbol" aria-hidden="true">+</span>Idea</button>
-              <button class="site-feedback-kind" type="button" role="radio" aria-checked="false" data-feedback-kind="problem"><span class="site-feedback-symbol" aria-hidden="true">!</span>Problem</button>
-              <button class="site-feedback-kind" type="button" role="radio" aria-checked="false" data-feedback-kind="helpful"><span class="site-feedback-symbol" aria-hidden="true">✓</span>Helpful</button>
-              <button class="site-feedback-kind" type="button" role="radio" aria-checked="false" data-feedback-kind="other"><span class="site-feedback-symbol" aria-hidden="true">…</span>Other</button>
+              <button class="site-feedback-kind" type="button" role="radio" aria-checked="false" data-feedback-kind="idea"><span class="site-feedback-symbol" aria-hidden="true">💡</span>Idea</button>
+              <button class="site-feedback-kind" type="button" role="radio" aria-checked="false" data-feedback-kind="problem"><span class="site-feedback-symbol" aria-hidden="true">🐛</span>Problem</button>
+              <button class="site-feedback-kind" type="button" role="radio" aria-checked="false" data-feedback-kind="helpful"><span class="site-feedback-symbol" aria-hidden="true">🙌</span>Helpful</button>
+              <button class="site-feedback-kind" type="button" role="radio" aria-checked="false" data-feedback-kind="other"><span class="site-feedback-symbol" aria-hidden="true">💬</span>Other</button>
             </div>
           </fieldset>
           <label class="site-feedback-field" for="site-feedback-message"><span>Your message</span><textarea id="site-feedback-message" name="message" rows="4" aria-describedby="site-feedback-hint site-feedback-count" maxlength="1000" required placeholder="What happened, or what would make this easier?"></textarea></label>

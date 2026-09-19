@@ -46,17 +46,25 @@ export async function subscribe(request, env, h) {
   // Query Stripe too: an earlier successful checkout may still be waiting for its webhook.
   const existing = await stripe.subscriptions.list({customer:customer.customer_id,status:'all',limit:100});
   if (existing.data.some(s=>!['canceled','incomplete_expired'].includes(s.status))) throw new h.ApiError(409,'subscription_exists','You already have a subscription. Manage it from your account.');
-  if (customer.checkout_url && customer.checkout_expires_at > now + 60) return h.jsonResponse({ok:true,url:customer.checkout_url,testMode:true});
+  if (customer.checkout_url && customer.checkout_expires_at > now) return h.jsonResponse({ok:true,url:customer.checkout_url,testMode:true});
   const claim = await env.DB.prepare('UPDATE billing_customers SET lock_until = ? WHERE user_id = ? AND lock_until < ?').bind(now+90,me.user.id,now).run();
   if (!claim.meta?.changes) throw new h.ApiError(409,'checkout_in_progress','Checkout is being prepared. Please try again shortly.');
   try {
+    // Persist the attempt before contacting Stripe. Retries after a timeout reuse its
+    // key; completed/expired sessions retire it so a new checkout gets a new key.
+    let attempt = await env.DB.prepare('SELECT * FROM billing_checkout_attempts WHERE user_id=?').bind(me.user.id).first();
+    if (!attempt || attempt.price_id !== price.id || (attempt.expires_at && attempt.expires_at <= now) || (!attempt.expires_at && attempt.created_at + 86500 <= now)) {
+      attempt = { id: crypto.randomUUID(), price_id: price.id };
+      await env.DB.prepare('INSERT INTO billing_checkout_attempts (user_id,id,price_id,created_at) VALUES (?,?,?,?) ON CONFLICT(user_id) DO UPDATE SET id=excluded.id,price_id=excluded.price_id,created_at=excluded.created_at,checkout_id=NULL,expires_at=0').bind(me.user.id,attempt.id,price.id,now).run();
+    }
     const origin = new URL(env.PUBLIC_ORIGIN).origin;
     const session = await stripe.checkout.sessions.create({mode:'subscription',customer:customer.customer_id,
       line_items:[{price:price.id,quantity:1}],client_reference_id:me.user.id,
       metadata:{application:'chorecharteasy',user_id:me.user.id},subscription_data:{metadata:{application:'chorecharteasy',user_id:me.user.id}},
       integration_identifier:'chorecharteasy_llqgpsod',success_url:`${origin}/account?subscription=returned`,cancel_url:`${origin}/pricing?checkout=cancelled`
-    },{idempotencyKey:`cce-monthly-${me.user.id}-${price.id}-${Math.floor(now/1800)}`});
+    },{idempotencyKey:`cce-monthly-${attempt.id}`});
     if (session.livemode || !session.url?.startsWith('https://checkout.stripe.com/')) throw new Error('Unexpected checkout mode');
+    await env.DB.prepare('UPDATE billing_checkout_attempts SET checkout_id=?,expires_at=? WHERE user_id=? AND id=?').bind(session.id,session.expires_at,me.user.id,attempt.id).run();
     await env.DB.prepare('UPDATE billing_customers SET checkout_id=?,checkout_url=?,checkout_expires_at=?,lock_until=0 WHERE user_id=?').bind(session.id,session.url,session.expires_at,me.user.id).run();
     return h.jsonResponse({ok:true,url:session.url,testMode:true});
   } catch(error) { await env.DB.prepare('UPDATE billing_customers SET lock_until=0 WHERE user_id=?').bind(me.user.id).run(); throw error; }
@@ -99,7 +107,10 @@ export async function subscriptionEvent(event,env) {
   }
   if(event.type.startsWith('checkout.session.') && event.data.object.mode==='subscription') {
     const sub=event.data.object.subscription; await syncSubscription(env,typeof sub==='string'?sub:sub?.id);
-    if (['checkout.session.completed','checkout.session.expired'].includes(event.type)) await env.DB.prepare('UPDATE billing_customers SET checkout_id=NULL,checkout_url=NULL,checkout_expires_at=0 WHERE checkout_id=?').bind(event.data.object.id).run();
+    if (['checkout.session.completed','checkout.session.expired'].includes(event.type)) {
+      await env.DB.prepare('UPDATE billing_customers SET checkout_id=NULL,checkout_url=NULL,checkout_expires_at=0 WHERE checkout_id=?').bind(event.data.object.id).run();
+      await env.DB.prepare('DELETE FROM billing_checkout_attempts WHERE checkout_id=?').bind(event.data.object.id).run();
+    }
     return true;
   }
   return false;

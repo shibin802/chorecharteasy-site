@@ -4,7 +4,7 @@ import {DatabaseSync} from 'node:sqlite';
 import {readFileSync} from 'node:fs';
 import {subscriptionAccess,syncSubscription,subscribe,billingPortal,subscriptionPlan,subscriptionEvent} from '../functions/_lib/subscriptions.mjs';
 const sql=new DatabaseSync(':memory:');
-for(const file of ['0001_initial.sql','0005_subscriptions.sql'])sql.exec(readFileSync(new URL('../backend/migrations/'+file,import.meta.url),'utf8'));
+for(const file of ['0001_initial.sql','0005_subscriptions.sql','0006_checkout_attempts.sql'])sql.exec(readFileSync(new URL('../backend/migrations/'+file,import.meta.url),'utf8'));
 sql.exec("INSERT INTO users VALUES ('u1','one@example.test','h1','active',0,0,NULL),('u2','two@example.test','h2','active',0,0,NULL)");
 function prepare(q,v=[]){return {bind:(...a)=>prepare(q,a),first:async()=>sql.prepare(q).get(...v)||null,run:async()=>({meta:{changes:sql.prepare(q).run(...v).changes}})}}
 const env={DB:{prepare},PUBLIC_ORIGIN:'https://example.test',STRIPE_TEST_ENABLED:'true',STRIPE_SECRET_KEY:'rk_test_fake',STRIPE_WEBHOOK_SECRET:'whsec_fake',STRIPE_PRICE_ID:'price_legacy',SUBSCRIPTIONS_ENABLED:'true',STRIPE_SUBSCRIPTION_PRICE_ID:'price_monthly',STRIPE_SUBSCRIPTION_PRODUCT_ID:'prod_plus'};
@@ -32,4 +32,28 @@ test('verified paid subscription grants only its owner, survives scheduled cance
  latest.status='active';latest.metadata.user_id='u2';await assert.rejects(()=>syncSubscription(env,'sub_monthly'),/owner mismatch/);latest.metadata.user_id='u1';
  latest.items.data[0].price={...price,product:'prod_other'};await syncSubscription(env,'sub_monthly');assert.equal((await subscriptionAccess(env,'u1')).plan,'free');
  assert.equal((await subscriptionAccess({...env,SUBSCRIPTIONS_ENABLED:'false'},'u1')).plan,'free');
+});
+test('checkout attempts survive uncertain failures and rotate after finished sessions',async()=>{
+ existing=[];signedIn=true;user='u1';
+ sql.exec('DELETE FROM billing_checkout_attempts; UPDATE billing_customers SET checkout_id=NULL,checkout_url=NULL,checkout_expires_at=0,lock_until=0');
+ const originalFetch=globalThis.fetch,keys=[];let fail=true,count=0;
+ globalThis.fetch=async(input,init)=>{
+  if(!String(input).includes('/v1/checkout/sessions'))return originalFetch(input,init);
+  keys.push(new Headers(init.headers).get('idempotency-key'));
+  if(fail)return Response.json({error:{message:'Try again',type:'api_error'}},{status:400});
+  count++;
+  return Response.json({id:'cs_attempt_'+count,url:'https://checkout.stripe.com/c/attempt'+count,livemode:false,expires_at:end});
+ };
+ try {
+  await assert.rejects(()=>subscribe(req(),env,h));
+  fail=false;await subscribe(req(),env,h);
+  assert.equal(keys[0],keys[1],'retry must reuse the persisted attempt');
+  await subscriptionEvent({type:'checkout.session.expired',data:{object:{id:'cs_attempt_1',mode:'subscription'}}},env);
+  await subscribe(req(),env,h);assert.notEqual(keys[1],keys[2],'expired checkout must get a fresh attempt');
+  // Delayed delivery for the old session must not remove the new attempt.
+  await subscriptionEvent({type:'checkout.session.expired',data:{object:{id:'cs_attempt_1',mode:'subscription'}}},env);
+  assert.equal(sql.prepare('SELECT checkout_id FROM billing_checkout_attempts WHERE user_id=?').get('u1').checkout_id,'cs_attempt_2');
+  await subscriptionEvent({type:'checkout.session.completed',data:{object:{id:'cs_attempt_2',mode:'subscription'}}},env);
+  await subscribe(req(),env,h);assert.notEqual(keys[2],keys[3],'completed checkout must get a fresh attempt');
+ }finally{globalThis.fetch=originalFetch;}
 });

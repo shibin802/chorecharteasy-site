@@ -43,7 +43,7 @@ jobs:
           else
             database="chorecharteasy-production"
           fi
-          for migration in backend/migrations/0001_initial.sql backend/migrations/0002_feedback.sql backend/migrations/0003_google_auth.sql backend/migrations/0004_stripe_test.sql backend/migrations/0005_subscriptions.sql; do
+          for migration in backend/migrations/0001_initial.sql backend/migrations/0002_feedback.sql backend/migrations/0003_google_auth.sql backend/migrations/0004_stripe_test.sql backend/migrations/0005_subscriptions.sql backend/migrations/0006_checkout_attempts.sql; do
             npx --yes wrangler@4.80.0 d1 execute "$database" --remote --file="$migration"
           done
 

@@ -87,6 +87,15 @@ test('verified Google identity creates a secure session; challenge replay fails;
   assert.notEqual(sql.prepare('SELECT token_hash FROM sessions LIMIT 1').get().token_hash, sessionCookie.split('=')[1]);
 });
 
+test('signed-in login preparation redirects without creating another nonce', async () => {
+ const before=sql.prepare('SELECT count(*) n FROM auth_nonces').get().n;
+ const response=await call('/api/auth/google/challenge',{method:'POST',body:{},cookie:sessionCookie});
+ assert.equal((await response.json()).authenticated,true);
+ assert.equal(sql.prepare('SELECT count(*) n FROM auth_nonces').get().n,before);
+ const stale=await call('/api/auth/google/challenge',{method:'POST',body:{},cookie:'cce_session=expired'});
+ assert.ok((await stale.json()).nonce);
+});
+
 test('feedback stores optional email, defaults to the verified session, and permits clearing it', async () => {
  const base={kind:'idea',message:'A useful improvement',page:'/'};
  for (const [body,cookie,expected] of [[base,undefined,null],[{...base,email:'Reply@Example.com'},undefined,'reply@example.com'],[base,sessionCookie,sql.prepare('SELECT email FROM users LIMIT 1').get().email],[{...base,email:''},sessionCookie,null]]) {

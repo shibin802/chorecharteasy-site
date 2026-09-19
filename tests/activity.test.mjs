@@ -27,3 +27,9 @@ test('verified Stripe records retain invoice amounts and idempotency without mix
  await recordBillingEvent({...event,id:'evt_other',data:{object:{...event.data.object,customer:'cus_unknown'}}},env);
  assert.equal(sql.prepare("SELECT COUNT(*) n FROM user_activity WHERE source='stripe'").get().n,1);
 });
+
+test('randomizer print uses browser-selected paper without collecting assignment content',async()=>{
+ await printActivity(req({...data,id:crypto.randomUUID(),paper:'browser-default',starter:'randomizer',taskCount:12}),env,h);
+ const row=sql.prepare("SELECT * FROM user_activity WHERE starter='randomizer'").get();
+ assert.equal(row.paper,'browser-default');assert.equal(row.task_count,12);
+});

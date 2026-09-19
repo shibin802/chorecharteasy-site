@@ -12,7 +12,7 @@ const jwk = { ...await exportJWK(publicKey), kid: 'test-key', alg: 'RS256', use:
 const origin = 'https://chorecharteasy.test';
 const env = { AUTH_ENABLED: 'true', GOOGLE_CLIENT_ID: 'client.test', SESSION_SECRET: 's'.repeat(40), RATE_LIMIT_SALT: 'r'.repeat(40), PUBLIC_ORIGIN: origin };
 const sql = new DatabaseSync(':memory:');
-for (const file of ['0001_initial.sql', '0002_feedback.sql', '0003_google_auth.sql', '0004_stripe_test.sql']) {
+for (const file of ['0001_initial.sql', '0002_feedback.sql', '0003_google_auth.sql', '0004_stripe_test.sql', '0008_user_activity.sql']) {
   const migration = readFileSync(new URL(`../backend/migrations/${file}`, import.meta.url), 'utf8');
   sql.exec(migration); sql.exec(migration);
 }
@@ -82,6 +82,14 @@ test('verified Google identity creates a secure session; challenge replay fails;
   assert.equal((await (await call('/api/me', { cookie: sessionCookie })).json()).authenticated, true);
   assert.equal((await call('/api/auth/google', { method: 'POST', cookie: c.cookie, body })).status, 401);
   assert.notEqual(sql.prepare('SELECT token_hash FROM sessions LIMIT 1').get().token_hash, sessionCookie.split('=')[1]);
+});
+
+test('authenticated print route validates JSON and persists to D1', async () => {
+  const body={id:crypto.randomUUID(),type:'print_requested',paper:'a4',starter:'weekly',taskCount:5};
+  const response=await call('/api/activity/print',{method:'POST',cookie:sessionCookie,body});
+  assert.equal(response.status,200,JSON.stringify(await response.json()));
+  assert.equal(sql.prepare("SELECT count(*) n FROM user_activity WHERE source='browser'").get().n,1);
+  assert.equal((await call('/api/activity/print',{method:'POST',cookie:sessionCookie,body:{...body,userId:'other'}})).status,400);
 });
 
 test('Stripe checkout requires a session and uses only the server price; webhook signature and idempotency are enforced', async () => {

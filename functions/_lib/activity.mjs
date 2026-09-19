@@ -17,8 +17,8 @@ export async function printActivity(request,env,h) {
   const data=await h.readActivity(request);
   if(!/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(data.id||'') ||
      !['print_preview_opened','print_requested'].includes(data.type) ||
-     !['letter','a4'].includes(data.paper) || !['weekly','morning','blank'].includes(data.starter) ||
-     !Number.isInteger(data.taskCount) || data.taskCount<0 || data.taskCount>100)
+     !['letter','a4','browser-default'].includes(data.paper) || !['weekly','morning','blank','randomizer'].includes(data.starter) ||
+     !Number.isInteger(data.taskCount) || data.taskCount<0 || data.taskCount>10000)
     throw new h.ApiError(400,'invalid_activity','Invalid print event.');
   const now=Math.floor(Date.now()/1000);
   await h.checkRateLimit(env.DB,await h.pseudonymousBucket(request,env,'print_activity',me.user.id),120,3600,now);

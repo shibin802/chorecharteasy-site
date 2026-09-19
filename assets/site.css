@@ -67,7 +67,7 @@ h3{font-size:1.35rem}
 .workbench-intro h1{max-width:470px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.4rem,2.8vw,2.5rem);line-height:1.05}
 .workbench-intro .hero-copy{max-width:450px;margin-top:24px;font-size:1.07rem}
 .workbench-primary{min-height:64px;margin-top:26px;padding-inline:34px;font-size:1.18rem}
-.first-draft-note{margin:8px 0 0 56px;color:var(--teal);font-weight:700;font-size:.88rem}
+.first-draft-note{margin:10px 0 0;text-align:left;color:var(--teal);font-weight:700;font-size:.88rem}
 .workbench-benefits{display:grid;gap:16px;margin:24px 0 0;padding:24px 0;border-top:1px solid var(--line);list-style:none}
 .workbench-benefits li{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:center}
 .workbench-benefits svg{width:28px;color:var(--teal)}

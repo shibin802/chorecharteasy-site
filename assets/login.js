@@ -2,16 +2,34 @@ import { api, safeReturn } from './auth-common.js';
 const status = document.getElementById('account-status');
 const retry = document.getElementById('retry-google');
 const target = safeReturn(new URLSearchParams(location.search).get('next'));
-let scriptPromise;
-function loadGoogle() {
-  if (!scriptPromise) scriptPromise = new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = 'https://accounts.google.com/gsi/client';
-    script.onload = resolve;
-    script.onerror = () => { scriptPromise = null; script.remove(); reject(new Error('Google could not load. Check your connection and try again.')); };
-    document.head.append(script);
-  });
-  return scriptPromise;
+const googleAssets = new Map();
+function loadGoogleAsset(kind, url) {
+  if (googleAssets.has(url)) return googleAssets.get(url);
+  const promise = new Promise((resolve, reject) => {
+    const element = document.createElement(kind);
+    if (kind === 'link') { element.rel = 'stylesheet'; element.href = url; }
+    else element.src = url;
+    const fail = () => {
+      clearTimeout(timer);
+      element.onload = element.onerror = null;
+      element.remove();
+      reject(new Error('Google could not load. Check your connection and try again.'));
+    };
+    const timer = setTimeout(fail, 10000);
+    element.onload = () => { clearTimeout(timer); element.onload = element.onerror = null; resolve(); };
+    element.onerror = fail;
+    document.head.append(element);
+  }).catch(error => { googleAssets.delete(url); throw error; });
+  googleAssets.set(url, promise);
+  return promise;
+}
+async function loadGoogle() {
+  // GIS inserts a fallback SVG before its iframe is ready. Its stylesheet must
+  // already be loaded or the unstyled SVG expands to the full container width.
+  await Promise.all([
+    loadGoogleAsset('link', 'https://accounts.google.com/gsi/style'),
+    loadGoogleAsset('script', 'https://accounts.google.com/gsi/client')
+  ]);
 }
 async function prepare() {
   retry.hidden = true;

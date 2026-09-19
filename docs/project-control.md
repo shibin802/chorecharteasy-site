@@ -186,3 +186,10 @@
 - Price still comes from Stripe's server-side plan endpoint; no price, billing permission, production setting, or entitlement change.
 - No invented reviews, subscriber counts, scarcity, or conversion guarantees. The effect on paid conversion is unmeasured; current Plus value remains watermark removal.
 - Validation: guest return-to-pricing and billing recovery tests; preview comparison labels/keyboard radio controls, FAQ, 320/390/768/1440px bounds and screenshots. Deployment evidence will be shown in this task after the preview completes.
+
+## 2026-09-19 Google button loading fix
+
+- Reproduced the reported giant Google G by delaying Google stylesheet and iframe requests: unstyled fallback SVG became 308×308px and expanded its host to 358px.
+- Load Google's supported stylesheet before rendering its button; reserve a 44px host and bound the fallback icon. Asset failures/timeouts offer retry and retry only the failed asset.
+- Browser verification: delayed stylesheet leaves a stable 44px loading area, then a 20px fallback icon; blocked stylesheet shows retry without an oversized icon; normal iframe rendering works. Regression suite: 12 Node + 47 Python tests pass.
+- Preview branch only; OAuth scopes, customer data and billing settings unchanged.

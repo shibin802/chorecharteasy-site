@@ -541,6 +541,7 @@ async function currentUser(request, env) {
     ok: true,
     authenticated: true,
     user: { id: row.user_id, email: row.email },
+    billingAccount: Boolean(plusAccess.billingAccount),
     membership: plusAccess.plan === 'plus' ? plusAccess : {
       plan: activeFamilyPack ? "family_pack" : "free",
       status: activeFamilyPack ? "active" : "none",

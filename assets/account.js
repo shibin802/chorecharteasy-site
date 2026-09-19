@@ -8,6 +8,8 @@ async function load() {
     document.getElementById('account-email').textContent = me.user.email;
     document.getElementById('account-avatar').textContent = me.user.email.charAt(0).toUpperCase();
     document.getElementById('account-details').hidden = false;
+    document.getElementById('manage-billing').hidden = !me.billingAccount;
+    document.getElementById('refresh-plan').hidden = !new URLSearchParams(location.search).has('subscription');
     document.getElementById('account-plan').textContent = me.membership.plan === 'plus' ? 'Plus' : 'Free';
     document.getElementById('upgrade-plan').hidden = me.membership.plan === 'plus';
     document.getElementById('subscription-status').textContent = me.membership.plan === 'plus' ? (me.membership.cancelAtPeriodEnd ? 'Ends ' : 'Current paid period ends ') + new Date(me.membership.expiresAt * 1000).toLocaleDateString() : 'Free prints include a watermark. Upgrade to Plus to remove it.';

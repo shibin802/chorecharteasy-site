@@ -8,8 +8,9 @@ export async function subscriptionAccess(env, userId) {
   if (!subscriptionReady(env)) return { plan: 'free', status: 'none', entitlements: [] };
   const now = Math.floor(Date.now() / 1000);
   const row = await env.DB.prepare("SELECT * FROM billing_subscriptions WHERE user_id = ? AND status = 'active' AND paid_until > ? ORDER BY paid_until DESC LIMIT 1").bind(userId, now).first();
-  return row ? { plan: 'plus', status: 'active', entitlements: ['watermark_free_print'], expiresAt: row.paid_until, cancelAtPeriodEnd: Boolean(row.cancel_at_period_end), testMode: true }
-    : { plan: 'free', status: 'none', entitlements: [] };
+  const customer = await env.DB.prepare('SELECT customer_id FROM billing_customers WHERE user_id=?').bind(userId).first();
+  return row ? { billingAccount: Boolean(customer), plan: 'plus', status: 'active', entitlements: ['watermark_free_print'], expiresAt: row.paid_until, cancelAtPeriodEnd: Boolean(row.cancel_at_period_end), testMode: true }
+    : { billingAccount: Boolean(customer), plan: 'free', status: 'none', entitlements: [] };
 }
 async function requireMember(request, env, h) {
   h.assertSameOrigin(request, env);
@@ -97,7 +98,9 @@ export async function subscriptionEvent(event,env) {
     await syncSubscription(env,typeof sub==='string'?sub:sub?.id); return true;
   }
   if(event.type.startsWith('checkout.session.') && event.data.object.mode==='subscription') {
-    const sub=event.data.object.subscription; await syncSubscription(env,typeof sub==='string'?sub:sub?.id); return true;
+    const sub=event.data.object.subscription; await syncSubscription(env,typeof sub==='string'?sub:sub?.id);
+    if (['checkout.session.completed','checkout.session.expired'].includes(event.type)) await env.DB.prepare('UPDATE billing_customers SET checkout_id=NULL,checkout_url=NULL,checkout_expires_at=0 WHERE checkout_id=?').bind(event.data.object.id).run();
+    return true;
   }
   return false;
 }

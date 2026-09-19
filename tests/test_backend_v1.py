@@ -118,7 +118,7 @@ class BackendArtifactContractTests(unittest.TestCase):
         self.assertIn('checkRateLimit(db, "feedback:global", 120, 10 * 60, now)', source)
         self.assertIn("assertSameOrigin(request, env)", source)
         self.assertIn("feedback_submissions", source)
-        self.assertNotRegex(source, r"ALLOWED_FEEDBACK_FIELDS[^\n]*email")
+        self.assertRegex(source, r"ALLOWED_FEEDBACK_FIELDS[^\n]*email")
 
     def test_dev_seed_is_obviously_non_production(self):
         seed = DEV_SEED.read_text().lower()

@@ -42,3 +42,5 @@ body:has(#consent-banner) .site-feedback-trigger{bottom:72px}
 body.site-feedback-open{overflow:hidden}
 @media(max-width:600px){.site-feedback-trigger{right:12px;bottom:max(12px,env(safe-area-inset-bottom));font-size:13px}body:has(#consent-banner) .site-feedback-trigger{display:none}.site-feedback-dialog{width:calc(100% - 24px);max-height:calc(100dvh - 24px);border-radius:16px}.site-feedback-inner{padding:26px 20px 22px}.site-feedback-kinds{gap:6px}.site-feedback-kind{font-size:12px}.site-feedback-description{font-size:14px}}
 @media print{.site-feedback-trigger,.site-feedback-dialog{display:none!important}}
+
+.site-feedback-email{display:block;margin-top:18px}.site-feedback-email small{font-weight:400;color:#637771}.site-feedback-email input{width:100%;min-height:44px;padding:10px 14px;border:1px solid #aebfba;border-radius:10px;background:#fff;color:#17313a;font:inherit;font-size:16px}.site-feedback-email input[aria-invalid="true"]{border-color:#b53d27}

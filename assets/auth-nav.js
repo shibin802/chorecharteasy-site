@@ -28,7 +28,8 @@ api('/api/me').then(me => {
       try { await api('/api/logout', {}); location.reload(); }
       catch { message.hidden = false; message.textContent = 'Could not sign out. Try again.'; logout.disabled = false; }
     });
-    panel.append(email, account, logout, message); details.append(summary, panel); slot.replaceChildren(details);
+    const pricing = document.createElement('a'); pricing.href = '/pricing'; pricing.textContent = 'Plans & billing';
+    panel.append(email, account, pricing, logout, message); details.append(summary, panel); slot.replaceChildren(details);
     details.addEventListener('keydown', event => { if (event.key === 'Escape') { details.open = false; summary.focus(); } });
     document.addEventListener('click', event => { if (!details.contains(event.target)) details.open = false; });
   }

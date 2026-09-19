@@ -355,7 +355,8 @@
     });
   }
 
-  function openPrintPreview() {
+  async function openPrintPreview() {
+    await window.ChorePrintAccess?.refresh();
     updatePrintSheet();
     saveDraft();
     const dialog = $("#print-dialog");
@@ -372,7 +373,8 @@
     if (lastFocusedElement instanceof HTMLElement) lastFocusedElement.focus();
   }
 
-  function printChart() {
+  async function printChart() {
+    await window.ChorePrintAccess?.refresh();
     updatePrintSheet();
     window.ChoreConsent?.track("print_clicked", { paper: chart.paper, starter: chart.starter, task_count: chart.tasks.length });
     window.print();

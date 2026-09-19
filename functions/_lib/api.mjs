@@ -1,3 +1,4 @@
+import { subscriptionAccess, subscriptionPlan, subscribe, billingPortal } from './subscriptions.mjs';
 import { verifyGoogleCredential } from './google.mjs';
 import { testBillingReady, testCheckout, testWebhook } from './billing.mjs';
 
@@ -534,12 +535,13 @@ async function currentUser(request, env) {
   if (now - Number(row.last_seen_at || 0) > 24 * 60 * 60) {
     await db.prepare("UPDATE sessions SET last_seen_at = ? WHERE id = ?").bind(now, row.session_id).run();
   }
+  const plusAccess = await subscriptionAccess(env, row.user_id);
   const activeFamilyPack = row.membership_plan === "family_pack" && row.membership_status === "active" && (!row.expires_at || Number(row.expires_at) > now);
   return jsonResponse({
     ok: true,
     authenticated: true,
     user: { id: row.user_id, email: row.email },
-    membership: {
+    membership: plusAccess.plan === 'plus' ? plusAccess : {
       plan: activeFamilyPack ? "family_pack" : "free",
       status: activeFamilyPack ? "active" : "none",
       entitlements: activeFamilyPack ? ["family_pack_download"] : [],
@@ -571,6 +573,9 @@ export async function handleApiRequest({ request, env }) {
   try {
     const path = new URL(request.url).pathname.replace(/\/$/u, "") || "/";
     const billingHelpers = { ApiError, assertSameOrigin, currentUser, jsonResponse, checkRateLimit, pseudonymousBucket };
+    if (path === '/api/billing/plan') return await subscriptionPlan(request, env, billingHelpers);
+    if (path === '/api/billing/subscribe') return await subscribe(request, env, billingHelpers);
+    if (path === '/api/billing/portal') return await billingPortal(request, env, billingHelpers);
     if (path === '/api/billing/checkout') return await testCheckout(request, env, billingHelpers);
     if (path === '/api/billing/webhook') return await testWebhook(request, env, billingHelpers);
     if (path === '/api/billing/orders') {

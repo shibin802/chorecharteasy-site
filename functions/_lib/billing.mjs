@@ -1,3 +1,4 @@
+import { subscriptionEvent } from './subscriptions.mjs';
 import Stripe from 'stripe';
 
 // Sandbox only until the merchant specifies the product, delivery and refund terms.
@@ -62,6 +63,7 @@ export async function testWebhook(request, env, helpers) {
       300, Stripe.createSubtleCryptoProvider());
   } catch { throw new ApiError(400, 'invalid_signature', 'Invalid webhook signature.'); }
   if (event.livemode) throw new ApiError(400, 'wrong_mode', 'Only test events are accepted.');
+  if (await subscriptionEvent(event, env)) return jsonResponse({ ok: true });
   const supported = ['checkout.session.completed', 'checkout.session.async_payment_succeeded', 'checkout.session.expired', 'checkout.session.async_payment_failed'];
   if (!supported.includes(event.type)) return jsonResponse({ ok: true });
   const session = event.data.object;

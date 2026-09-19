@@ -150,3 +150,6 @@ h3{font-size:1.35rem}
 @media(max-width:760px){.workbench-grid{width:min(100% - 32px,1360px)}.quick-start .starter-list{grid-template-columns:1fr}}
 @media(max-width:480px){.workbench-grid{width:min(100% - 28px,1360px)}.quick-start .starter-list{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
+/* Foreground text remains visible even when print backgrounds are disabled. */
+.print-sheet{position:relative}.print-watermark{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;pointer-events:none;overflow:hidden;z-index:3}.print-watermark span{font:700 clamp(22px,4vw,38px)/1.4 system-ui,sans-serif;color:#657976;opacity:.24;transform:rotate(-24deg);white-space:nowrap}.watermark-free .print-watermark{display:none!important}.print-access-note{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 24px;background:#edf3ee;font-size:.85rem}.print-access-note a{font-weight:700}@media print{.print-sheet{position:relative!important}.print-access-note{display:none!important}.print-watermark span{-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:32px}}

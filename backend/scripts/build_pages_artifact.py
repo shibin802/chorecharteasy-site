@@ -23,6 +23,7 @@ ROOT_FILES = (
     "index.html",
     "account.html",
     "login.html",
+    "pricing.html",
     "billing-test.html",
     "404.html",
     "printable-chore-chart.html",

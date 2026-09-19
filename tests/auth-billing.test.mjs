@@ -16,6 +16,9 @@ for (const file of ['0001_initial.sql', '0002_feedback.sql', '0003_google_auth.s
   const migration = readFileSync(new URL(`../backend/migrations/${file}`, import.meta.url), 'utf8');
   sql.exec(migration); sql.exec(migration);
 }
+sql.exec(readFileSync(new URL('../backend/migrations/0010_feedback_email.sql', import.meta.url), 'utf8'));
+const syncEmail = readFileSync(new URL('../backend/migrations/0011_feedback_email_sync.sql', import.meta.url), 'utf8');
+sql.exec(syncEmail); sql.exec(syncEmail);
 function prepared(query, values = []) {
   return { bind: (...args) => prepared(query, args),
     first: async () => sql.prepare(query).get(...values) || null,
@@ -91,6 +94,7 @@ test('feedback stores optional email, defaults to the verified session, and perm
   assert.equal(response.status,201);
   const {reference}=await response.json();
   assert.equal(sql.prepare('SELECT email FROM feedback_details WHERE reference=?').get(reference).email,expected);
+  assert.equal(sql.prepare('SELECT email FROM feedback_submissions WHERE reference=?').get(reference).email,expected);
  }
  const count=sql.prepare('SELECT count(*) n FROM feedback_submissions').get().n;
  for(const email of ['invalid',42,'a'.repeat(255)+'@example.com']) assert.equal((await call('/api/feedback',{method:'POST',body:{...base,email}})).status,422);

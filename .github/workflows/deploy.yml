@@ -46,6 +46,12 @@ jobs:
           for migration in backend/migrations/0001_initial.sql backend/migrations/0002_feedback.sql backend/migrations/0003_google_auth.sql backend/migrations/0004_stripe_test.sql backend/migrations/0005_subscriptions.sql backend/migrations/0006_checkout_attempts.sql backend/migrations/0007_refund_requests.sql backend/migrations/0008_user_activity.sql backend/migrations/0009_feedback_contacts.sql; do
             npx --yes wrangler@4.80.0 d1 execute "$database" --remote --file="$migration"
           done
+          npx --yes wrangler@4.80.0 d1 execute "$database" --remote --command="PRAGMA table_info(feedback_submissions)" --json > /tmp/feedback-columns.json
+          has_email=$(python3 -c 'import json; data=json.load(open("/tmp/feedback-columns.json")); print(int(any(row["name"] == "email" for result in data for row in result["results"])))')
+          if [ "$has_email" = "0" ]; then
+            npx --yes wrangler@4.80.0 d1 execute "$database" --remote --file=backend/migrations/0010_feedback_email.sql
+          fi
+          npx --yes wrangler@4.80.0 d1 execute "$database" --remote --file=backend/migrations/0011_feedback_email_sync.sql
 
       - name: Build minimal Pages artifact
         run: |

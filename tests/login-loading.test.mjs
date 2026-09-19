@@ -14,10 +14,10 @@ test('Google button waits for its stylesheet and retries a failed asset without 
   setTimeout:fn=>{timers.set(++tid,fn);return tid;},clearTimeout:id=>timers.delete(id),
   document:{getElementById:id=>elements[id],createElement:tag=>({tag,remove(){this.removed=true;}}),head:{append:el=>pending.push(el)}},
   window:{google:{accounts:{id:{initialize(){},renderButton(){rendered++;}}}}},
-  api:async path=>path==='/api/me'?accountPending:{clientId:'test',nonce:'test'}
+  api:async path=>{assert.equal(path,'/api/auth/google/challenge','no separate account request');return accountPending;}
  });
  await flush();assert.equal(pending.length,2,'Google assets start before the account response');
- assert.equal(rendered,0);resolveAccount({authenticated:false});await flush();
+ assert.equal(rendered,0);resolveAccount({clientId:'test',nonce:'test'});await flush();
  pending.find(e=>e.tag==='script').onload();await flush();assert.equal(rendered,0,'script alone cannot expose an unstyled fallback');
  pending.find(e=>e.tag==='link').onerror();await flush();assert.equal(rendered,0);assert.equal(elements['retry-google'].hidden,false);
  const retry=elements['retry-google'].click();await flush();assert.equal(pending.length,3,'loaded script reused; failed stylesheet retried');

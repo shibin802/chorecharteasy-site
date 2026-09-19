@@ -279,6 +279,10 @@ async function googleChallenge(request, env) {
   if (request.method !== 'POST') methodNotAllowed(['POST']);
   assertSameOrigin(request, env);
   if (!googleReady(env)) throw new ApiError(503, 'feature_unavailable', 'Google sign-in is not available yet.');
+  if (parseCookies(request)[SESSION_COOKIE]) {
+    const me = await (await currentUser(new Request(request.url, {headers:request.headers}), env)).json();
+    if (me.authenticated) return jsonResponse({ok:true, authenticated:true});
+  }
   const now = Math.floor(Date.now() / 1000);
   const db = requireDatabase(env);
   await checkRateLimit(db, await pseudonymousBucket(request, env, 'google_challenge'), 30, 3600, now);

@@ -1,3 +1,4 @@
+import { billingHistory, requestRefund } from './refunds.mjs';
 import { subscriptionAccess, subscriptionPlan, subscribe, billingPortal } from './subscriptions.mjs';
 import { verifyGoogleCredential } from './google.mjs';
 import { testBillingReady, testCheckout, testWebhook } from './billing.mjs';
@@ -573,7 +574,9 @@ export async function handleApiRequest({ request, env }) {
   const requestId = crypto.randomUUID();
   try {
     const path = new URL(request.url).pathname.replace(/\/$/u, "") || "/";
-    const billingHelpers = { ApiError, assertSameOrigin, currentUser, jsonResponse, checkRateLimit, pseudonymousBucket };
+    const billingHelpers = { ApiError, assertSameOrigin, currentUser, jsonResponse, checkRateLimit, pseudonymousBucket, readJson: request => parseJsonObject(request, new Set(["invoiceId","reason"])) };
+    if (path === '/api/billing/history') return await billingHistory(request, env, billingHelpers);
+    if (path === '/api/billing/refund-requests') return await requestRefund(request, env, billingHelpers);
     if (path === '/api/billing/plan') return await subscriptionPlan(request, env, billingHelpers);
     if (path === '/api/billing/subscribe') return await subscribe(request, env, billingHelpers);
     if (path === '/api/billing/portal') return await billingPortal(request, env, billingHelpers);

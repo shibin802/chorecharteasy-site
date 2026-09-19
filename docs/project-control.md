@@ -193,3 +193,7 @@
 - Load Google's supported stylesheet before rendering its button; reserve a 44px host and bound the fallback icon. Asset failures/timeouts offer retry and retry only the failed asset.
 - Browser verification: delayed stylesheet leaves a stable 44px loading area, then reveals the completed Google iframe (the transient fallback stays hidden); blocked stylesheet shows retry without an oversized icon; normal iframe rendering works. Regression suite: 12 Node + 47 Python tests pass.
 - Preview branch only; OAuth scopes, customer data and billing settings unchanged.
+
+
+## Account and refund requests — 2026-09-19
+Account now shows account ID, membership and paid period, latest 24 Stripe invoices and a persistent, owner-scoped refund request history. Refund submissions verify the Stripe invoice customer server-side and deduplicate by invoice. Review is manual via the preview D1 queue (docs/refund-operations.md); no automatic refund, cancellation or email notification. Preview only. Tests cover authentication, origin, ownership, paid/test eligibility and duplicate submission.

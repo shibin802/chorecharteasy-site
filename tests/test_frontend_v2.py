@@ -265,7 +265,7 @@ class FrontendV2Contract(unittest.TestCase):
         home = self.text("index.html")
         self.assertIn('href="/assets/site.css?v=20260919-pricing"', home)
         self.assertIn('src="/assets/consent.js?v=20260823-consent-copy-v2"', home)
-        self.assertIn('src="/assets/site.js?v=20260919-activity-v2"', home)
+        self.assertIn('src="/assets/site.js?v=20260919-pdf-name-v1"', home)
         headers = self.text("_headers")
         self.assertIn("Content-Security-Policy:", headers)
         self.assertIn("script-src 'self' https://www.googletagmanager.com https://plausible.shipsolo.io", headers)
@@ -337,7 +337,7 @@ class FrontendV2Contract(unittest.TestCase):
                 self.assertIn('src="/assets/consent.js?v=20260823-consent-copy-v2"', html, path.name)
                 self.assertNotIn('src="/assets/consent.js"', html, path.name)
             if "/assets/site.js" in html:
-                site_js_version = "20260919-activity-v2" if path.name == "index.html" else "20260822-ux-v1"
+                site_js_version = "20260919-pdf-name-v1" if path.name == "index.html" else "20260822-ux-v1"
                 self.assertIn(f'src="/assets/site.js?v={site_js_version}"', html, path.name)
                 self.assertNotIn('src="/assets/site.js"', html, path.name)
             if "/assets/pages/chore-randomizer.js" in html:

@@ -374,11 +374,18 @@
     if (lastFocusedElement instanceof HTMLElement) lastFocusedElement.focus();
   }
 
+  let pageTitleBeforePrint = null;
+  function setPrintTitle() {
+    if (pageTitleBeforePrint === null) pageTitleBeforePrint = document.title;
+    document.title = chart.starter === "morning" ? "morning-routine" : chart.starter === "blank" ? "chore-chart" : "weekly-chore-chart";
+  }
+
   async function printChart() {
     await window.ChorePrintAccess?.refresh();
     updatePrintSheet();
     window.ChoreConsent?.track("print_clicked", { paper: chart.paper, starter: chart.starter, task_count: chart.tasks.length });
     window.ChorePrintAccess?.record("print_requested", chart);
+    setPrintTitle();
     window.print();
   }
 
@@ -462,10 +469,13 @@
     $$('[data-clear-local]').forEach(button => button.addEventListener("click", () => { window.ChoreConsent?.track("draft_cleared", { source: "footer" }); clearDraft(); }));
     $$(".mobile-menu a").forEach(link => link.addEventListener("click", () => $(".mobile-nav").removeAttribute("open")));
     window.addEventListener("beforeprint", () => {
+      setPrintTitle();
       updatePrintSheet();
       document.body.classList.add("printing");
     });
     window.addEventListener("afterprint", () => {
+      if (pageTitleBeforePrint !== null) document.title = pageTitleBeforePrint;
+      pageTitleBeforePrint = null;
       document.body.classList.remove("printing");
       window.ChoreConsent?.track("afterprint_returned", { paper: chart.paper });
     });

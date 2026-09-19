@@ -177,3 +177,12 @@
 - Browser sweep: 14 public pages at 390/562/1440px, no JavaScript exceptions or unexpected first-party HTTP errors; guide header residual overflow found during sweep is repaired in this follow-up.
 - Release verdict: preview-only functional acceptance, pending final deployed guide-header check. No claim of production payment readiness, real-device physical print validation, or server-enforced watermark protection. Client-side watermarks can be bypassed by modifying browser styles; server-rendered PDFs are a separate hardening project.
 - Evidence and final acceptance report: current task `outputs/qa-report.md`; runtime run IDs and final commit recorded there after deployment completes.
+
+## 2026-09-19 Pricing conversion presentation
+
+- User requested a more compelling Pricing page while retaining the existing USD monthly price and Google/Stripe preview flow.
+- Message: watermark-free printed charts; main page shows a switchable Free/Plus illustrative chart alongside one Plus card, with the Free option as a separate secondary row.
+- CTA now describes upgrading (guest: Get Plus with Google; signed-in Free: Get watermark-free prints; Plus: Manage subscription). Google/Stripe next steps, automatic monthly renewal, cancellation and sandbox notice remain adjacent to the action.
+- Price still comes from Stripe's server-side plan endpoint; no price, billing permission, production setting, or entitlement change.
+- No invented reviews, subscriber counts, scarcity, or conversion guarantees. The effect on paid conversion is unmeasured; current Plus value remains watermark removal.
+- Validation: guest return-to-pricing and billing recovery tests; preview comparison labels/keyboard radio controls, FAQ, 320/390/768/1440px bounds and screenshots. Deployment evidence will be shown in this task after the preview completes.

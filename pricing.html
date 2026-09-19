@@ -1,1 +1,91 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,follow"><title>Pricing | ChoreChartEasy</title><meta name="description" content="Make and print chore charts for free with a watermark. Choose Plus for watermark-free printing at $1 USD per month."><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/assets/site.css?v=20260822-consent-bar-v1"><link rel="stylesheet" href="/assets/account.css?v=4"><script type="module" src="/assets/pricing.js"></script></head><body><header class="site-header"><div class="wrap header-inner"><a class="brand" href="/"><img src="/favicon.svg" alt="" width="38" height="38"><span>ChoreChartEasy</span></a><nav class="account-header-nav" aria-label="Main navigation"><a href="/#chart-maker">Chart maker</a><span data-auth-slot></span></nav></div></header><main class="wrap pricing-main"><div class="pricing-intro"><p class="auth-eyebrow">SIMPLE PRICING</p><h1>Your chart. Your choice.</h1><p>Start free. Upgrade when you want a clean, watermark-free print.</p></div><p class="preview-billing-note" id="billing-mode">Preview checkout uses Stripe test mode. No real payment will be taken.</p><div class="pricing-grid"><section class="price-card"><h2>Free</h2><p class="price-amount">$0</p><p>Everything you need to make your chart.</p><ul><li>Edit age-based tasks and routines</li><li>Print on US Letter or A4</li><li>Prints include a ChoreChartEasy watermark</li></ul><a class="button button-secondary" href="/#chart-maker">Make a free chart</a></section><section class="price-card plus"><p class="auth-eyebrow">CLEAN PRINTS</p><h2>Plus</h2><p class="price-amount"><span id="monthly-price">$1</span> <small>USD / month</small></p><p>Keep the focus on your family's routine.</p><ul><li>Everything in Free</li><li>Watermark-free printing and Save as PDF</li><li>Cancel renewal from your account</li></ul><button class="button button-primary" id="subscribe" type="button" disabled>Loading…</button><p><button class="button button-secondary" id="manage-existing-billing" type="button" hidden>Manage billing or update payment</button></p><p class="subscription-status" id="pricing-status" role="status"></p></section></div><section class="pricing-details"><h2>A few things to know</h2><p>Plus is a monthly subscription that renews automatically until canceled. Cancel before renewal to stop the next charge; watermark-free printing stays available until the end of your paid period.</p><p>Google sign-in is required for Plus. Your charts still stay in this browser; Plus does not add cloud storage.</p><p>The price shown at checkout is the price you agree to. Free users can continue editing and printing with a watermark.</p></section></main><footer class="auth-footer"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/refund">Cancellation &amp; refunds</a><a href="/contact">Help</a></footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,follow">
+  <title>Plus: Watermark-free Chore Charts | ChoreChartEasy</title>
+  <meta name="description" content="Give your weekly chore chart a clean finish. ChoreChartEasy Plus removes watermarks from prints and PDFs. Monthly billing, cancel renewal anytime.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/site.css?v=20260822-consent-bar-v1">
+  <link rel="stylesheet" href="/assets/account.css?v=4">
+  <link rel="stylesheet" href="/assets/pricing.css?v=20260919">
+  <script type="module" src="/assets/pricing.js"></script>
+</head>
+<body class="plans-page">
+<header class="site-header"><div class="wrap header-inner">
+  <a class="brand" href="/"><img src="/favicon.svg" alt="" width="38" height="38"><span>ChoreChartEasy</span></a>
+  <nav class="account-header-nav" aria-label="Main navigation"><a href="/#chart-maker">Chart maker</a><span data-auth-slot></span></nav>
+</div></header>
+<main class="wrap plans-main">
+  <div class="plans-heading">
+    <p class="plans-kicker">A LITTLE UPGRADE FOR YOUR WEEKLY ROUTINE</p>
+    <h1><span>A fresh week.</span> <span>A clean chart.</span></h1>
+    <p>Your chores, their little wins. Give your fridge a chart<br class="desktop-break"> without a watermark across it.</p>
+  </div>
+  <div class="upgrade-layout">
+    <section class="print-proof" aria-labelledby="proof-heading">
+      <h2 id="proof-heading">Same chart. A cleaner finish.</h2>
+      <p class="proof-instruction">Switch the preview to see the difference.</p>
+      <fieldset class="print-comparison">
+        <legend class="sr-only">Compare Free and Plus print examples</legend>
+        <input class="sr-only preview-free" type="radio" name="print-example" id="preview-free" value="free">
+        <input class="sr-only preview-plus" type="radio" name="print-example" id="preview-plus" value="plus" checked>
+        <div class="preview-toggle">
+          <label for="preview-free">Free <span>with watermark</span></label>
+          <label for="preview-plus">Plus <span>watermark-free</span></label>
+        </div>
+        <div class="preview-stage">
+          <div class="sample-paper">
+            <div class="sample-heading"><span class="sample-week">ONE WEEK, ONE LITTLE STEP AT A TIME</span><h3>Sam’s Weekly<br>Chore Chart</h3></div>
+            <table class="sample-table" aria-label="Example weekly chore chart">
+              <thead><tr><th scope="col">Chore / task</th><th scope="col">M</th><th scope="col">T</th><th scope="col">W</th><th scope="col">T</th><th scope="col">F</th><th scope="col">S</th><th scope="col">S</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Make the bed</th><td>✓</td><td>✓</td><td>□</td><td>□</td><td>□</td><td>□</td><td>□</td></tr>
+                <tr><th scope="row">Put toys away</th><td>✓</td><td>□</td><td>□</td><td>□</td><td>□</td><td>□</td><td>□</td></tr>
+                <tr><th scope="row">Help set the table</th><td>✓</td><td>✓</td><td>□</td><td>□</td><td>□</td><td>□</td><td>□</td></tr>
+                <tr><th scope="row">Pack school bag</th><td>✓</td><td>□</td><td>□</td><td>□</td><td>□</td><td>□</td><td>□</td></tr>
+              </tbody>
+            </table>
+            <div class="sample-watermark" aria-hidden="true"><span>ChoreChartEasy · FREE</span><span>ChoreChartEasy · FREE</span></div>
+            <p class="sample-footer">Made for the fridge. Ready for the week.</p>
+          </div>
+          <p class="preview-caption"><span class="caption-plus">Just their chart. No watermark.</span><span class="caption-free">Free prints include the ChoreChartEasy watermark.</span></p>
+        </div>
+      </fieldset>
+      <p class="example-note">Illustrative preview. Your printed chart uses your own title and tasks.</p>
+    </section>
+    <section class="upgrade-card" aria-labelledby="plus-heading">
+      <div class="plus-card-top"><span class="plus-badge">ChoreChartEasy Plus</span><span class="plus-flower" aria-hidden="true">✳</span></div>
+      <h2 id="plus-heading">Make it fridge-ready.</h2>
+      <p class="upgrade-intro">A clean print for every fresh start.</p>
+      <div class="upgrade-price"><span id="monthly-price">$1</span><span>USD / month</span></div>
+      <p class="price-context">One simple monthly plan.</p>
+      <p class="sandbox-note" id="billing-mode"><span aria-hidden="true">◉</span> Test preview — no real payment will be taken.</p>
+      <button class="button button-primary upgrade-button" id="subscribe" type="button" disabled>Loading your plan…</button>
+      <p class="checkout-step" id="checkout-step">Sign in with Google, then check out securely with Stripe.</p>
+      <p class="renewal-note">Billed monthly. Renews automatically.<br>Cancel renewal anytime from your account.</p>
+      <ul class="plus-benefits">
+        <li><span aria-hidden="true">✓</span><div><strong>No watermark on your charts</strong><small>Keep the focus on the tasks and checkmarks.</small></div></li>
+        <li><span aria-hidden="true">✓</span><div><strong>Clean prints and saved PDFs</strong><small>Use US Letter or A4, just like the free maker.</small></div></li>
+        <li><span aria-hidden="true">✓</span><div><strong>Make a new chart when life changes</strong><small>Edit and reprint while your Plus plan is active.</small></div></li>
+      </ul>
+      <button class="billing-recovery" id="manage-existing-billing" type="button" hidden>Manage billing or update payment</button>
+      <p class="subscription-status" id="pricing-status" role="status"></p>
+    </section>
+  </div>
+  <section class="free-option" aria-labelledby="free-heading">
+    <div><h2 id="free-heading">Just getting started? Free is still here.</h2><p>Edit every task and print for $0. Your prints and PDFs include a watermark.</p></div>
+    <a href="/#chart-maker">Keep making free charts <span aria-hidden="true">→</span></a>
+  </section>
+  <section class="plans-faq" aria-labelledby="faq-heading">
+    <div><p class="plans-kicker">BEFORE YOU UPGRADE</p><h2 id="faq-heading">A few good questions.</h2><p>Small plan. Clear terms.</p></div>
+    <div class="faq-list">
+      <details><summary>What changes when I upgrade?</summary><p>Plus removes the ChoreChartEasy watermark from prints and PDFs made with the chart maker and chore randomizer while your plan is active. Editing and age-based starters are already free.</p></details>
+      <details><summary>Can I cancel whenever I want?</summary><p>Yes. Open your account and choose Manage subscription to cancel renewal. You keep watermark-free printing until your current paid period ends. After that, you can continue using the free maker with watermarked prints.</p></details>
+      <details><summary>Will my charts be saved to my account?</summary><p>No. Your chart stays in this browser, which keeps one active draft. Plus does not add cloud storage or device syncing. Print or save your current chart as a PDF before making another.</p></details>
+      <details><summary>Do I need a Google account?</summary><p>Yes, for Plus. Google sign-in connects your subscription to your account. You can use the free maker without signing in.</p></details>
+    </div>
+  </section>
+</main>
+<footer class="auth-footer"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/refund">Cancellation &amp; refunds</a><a href="/contact">Help</a></footer>
+</body></html>

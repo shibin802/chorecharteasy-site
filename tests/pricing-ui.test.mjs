@@ -5,7 +5,7 @@ import vm from 'node:vm';
 
 const source = readFileSync(new URL('../assets/pricing.js', import.meta.url), 'utf8').replace(/^import .*;$/gm, '');
 async function page(me, action) {
-  const elements = Object.fromEntries(['subscribe', 'manage-existing-billing', 'pricing-status', 'monthly-price'].map(id => [id, { addEventListener(type, handler) { this.click = handler; } }]));
+  const elements = Object.fromEntries(['subscribe', 'manage-existing-billing', 'pricing-status', 'monthly-price', 'checkout-step'].map(id => [id, { addEventListener(type, handler) { this.click = handler; } }]));
   const calls = [], redirects = [];
   vm.runInNewContext(source, {
     document: { getElementById: id => elements[id] }, Intl, URL,
@@ -23,7 +23,7 @@ async function page(me, action) {
 test('existing free billing accounts can recover payments without blocking resubscription', async () => {
   const p = await page({ authenticated: true, billingAccount: true, membership: { plan: 'free' } }, path => ({ url: path.endsWith('/portal') ? 'https://billing.stripe.com/session' : 'https://checkout.stripe.com/session' }));
   assert.equal(p.elements['manage-existing-billing'].hidden, false);
-  assert.equal(p.elements.subscribe.textContent, 'Subscribe to Plus');
+  assert.equal(p.elements.subscribe.textContent, 'Get watermark-free prints');
   await p.elements['manage-existing-billing'].click();
   assert.equal(p.calls.at(-1), '/api/billing/portal');
   assert.equal(p.redirects.at(-1), 'https://billing.stripe.com/session');

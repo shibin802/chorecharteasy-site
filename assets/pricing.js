@@ -11,8 +11,9 @@ async function load() {
     signedIn = me.authenticated;
     plus = me.membership?.plan === 'plus';
     document.getElementById('monthly-price').textContent = new Intl.NumberFormat('en-US', {style:'currency', currency:'USD', maximumFractionDigits:2}).format(plan.amount / 100);
-    button.textContent = plus ? 'Manage subscription' : signedIn ? 'Subscribe to Plus' : 'Continue with Google';
+    button.textContent = plus ? 'Manage subscription' : signedIn ? 'Get watermark-free prints' : 'Get Plus with Google';
     button.disabled = !plan.enabled;
+    document.getElementById('checkout-step').textContent = plus ? 'View your plan, payment details, or cancellation options.' : signedIn ? 'Secure checkout with Stripe.' : 'Sign in with Google, then check out securely with Stripe.';
     billingButton.hidden = !signedIn || !me.billingAccount || plus;
     status.textContent = !plan.enabled ? 'Subscription checkout is being prepared. Please check back soon.'
       : plus ? (me.membership.cancelAtPeriodEnd ? 'Your Plus plan ends at the end of your paid period. Renewal is canceled.' : 'Your Plus subscription is active.') : '';

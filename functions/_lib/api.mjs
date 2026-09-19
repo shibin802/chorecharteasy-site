@@ -1,3 +1,8 @@
+import { billingHistory, requestRefund } from './refunds.mjs';
+import { subscriptionAccess, subscriptionPlan, subscribe, billingPortal } from './subscriptions.mjs';
+import { verifyGoogleCredential } from './google.mjs';
+import { testBillingReady, testCheckout, testWebhook } from './billing.mjs';
+
 const API_VERSION = "v1";
 const SESSION_COOKIE = "cce_session";
 const MAX_BODY_BYTES = 4096;
@@ -254,11 +259,78 @@ function membership(request, env) {
   return jsonResponse({
     ok: true,
     freeMaker: { requiresAccount: false, cloudDrafts: false },
-    accounts: { enabled: localAuthReady, method: "email_magic_link" },
+    accounts: { enabled: localAuthReady || googleReady(env), method: googleReady(env) ? "google" : "email_magic_link" },
     earlyAccess: { enabled: earlyAccessReady },
     familyPack: { status: "planned", chargeToday: false, purchaseOrReservation: false },
     payments: { enabled: PAYMENTS_ENABLED && featureEnabled(env, "PAYMENTS_ENABLED") },
+    testPayments: { enabled: testBillingReady(env) },
   });
+}
+
+function googleReady(env) {
+  return featureEnabled(env, 'AUTH_ENABLED') && Boolean(env?.GOOGLE_CLIENT_ID)
+    && Boolean(env?.DB) && typeof env?.SESSION_SECRET === 'string' && env.SESSION_SECRET.length >= 32
+    && typeof env?.RATE_LIMIT_SALT === 'string' && env.RATE_LIMIT_SALT.length >= 32;
+}
+
+async function googleChallenge(request, env) {
+  if (request.method !== 'POST') methodNotAllowed(['POST']);
+  assertSameOrigin(request, env);
+  if (!googleReady(env)) throw new ApiError(503, 'feature_unavailable', 'Google sign-in is not available yet.');
+  const now = Math.floor(Date.now() / 1000);
+  const db = requireDatabase(env);
+  await checkRateLimit(db, await pseudonymousBucket(request, env, 'google_challenge'), 30, 3600, now);
+  const nonce = randomToken();
+  await db.prepare('DELETE FROM auth_nonces WHERE expires_at <= ?').bind(now).run();
+  await db.prepare('INSERT INTO auth_nonces (nonce_hash, expires_at) VALUES (?, ?)')
+    .bind(await hmacHex(env.SESSION_SECRET, nonce), now + 600).run();
+  return jsonResponse({ ok: true, clientId: env.GOOGLE_CLIENT_ID, nonce }, 200, {
+    'Set-Cookie': `cce_google_nonce=${nonce}; Path=/api/auth/google; HttpOnly; Secure; SameSite=Strict; Max-Age=600`,
+  });
+}
+
+async function googleLogin(request, env) {
+  if (request.method !== 'POST') methodNotAllowed(['POST']);
+  assertSameOrigin(request, env);
+  if (!googleReady(env)) throw new ApiError(503, 'feature_unavailable', 'Google sign-in is not available yet.');
+  const db = requireDatabase(env);
+  const now = Math.floor(Date.now() / 1000);
+  await checkRateLimit(db, await pseudonymousBucket(request, env, 'google_login'), 30, 3600, now);
+  const body = await parseJsonObject(request, new Set(['credential', 'adult']));
+  const nonce = parseCookies(request).cce_google_nonce;
+  if (body.adult !== true) throw new ApiError(422, 'adult_required', 'Accounts are for adults only.');
+  if (!nonce || typeof body.credential !== 'string') throw new ApiError(401, 'invalid_identity', 'Please restart sign-in.');
+  let identity;
+  try { identity = await verifyGoogleCredential(body.credential, env.GOOGLE_CLIENT_ID, nonce); }
+  catch { throw new ApiError(401, 'invalid_identity', 'Google sign-in could not be verified. Please try again.'); }
+  const email = normalizeEmail(identity.email);
+  if (!email) throw new ApiError(401, 'invalid_identity', 'Google did not provide a valid email.');
+  const consumed = await db.prepare('DELETE FROM auth_nonces WHERE nonce_hash = ? AND expires_at > ? RETURNING nonce_hash')
+    .bind(await hmacHex(env.SESSION_SECRET, nonce), now).first();
+  if (!consumed) throw new ApiError(401, 'invalid_identity', 'Please restart sign-in.');
+  let user = await db.prepare('SELECT u.id, u.status FROM google_identities g JOIN users u ON u.id = g.user_id WHERE g.subject = ?')
+    .bind(identity.subject).first();
+  if (!user) {
+    const emailHash = await sha256Hex(email);
+    const existing = await db.prepare('SELECT id FROM users WHERE email_hash = ?').bind(emailHash).first();
+    if (existing) throw new ApiError(409, 'account_link_required', 'This email already has an account. Contact support to link it.');
+    const id = crypto.randomUUID();
+    await db.batch([
+      db.prepare("INSERT INTO users (id, email, email_hash, status, created_at, updated_at) VALUES (?, ?, ?, 'active', ?, ?)")
+        .bind(id, email, emailHash, now, now),
+      db.prepare('INSERT INTO google_identities (subject, user_id) VALUES (?, ?)').bind(identity.subject, id),
+    ]);
+    user = { id, status: 'active' };
+  }
+  if (user.status !== 'active') throw new ApiError(403, 'account_unavailable', 'This account is unavailable.');
+  const token = randomToken();
+  const ttl = parsePositiveInt(env.SESSION_TTL_SECONDS, DEFAULT_SESSION_TTL_SECONDS, 3600, DEFAULT_SESSION_TTL_SECONDS);
+  await db.prepare('INSERT INTO sessions (id, user_id, token_hash, created_at, last_seen_at, expires_at) VALUES (?, ?, ?, ?, ?, ?)')
+    .bind(crypto.randomUUID(), user.id, await hmacHex(env.SESSION_SECRET, token), now, now, now + ttl).run();
+  const headers = new Headers(commonHeaders());
+  headers.append('Set-Cookie', sessionCookie(token, ttl));
+  headers.append('Set-Cookie', 'cce_google_nonce=; Path=/api/auth/google; HttpOnly; Secure; SameSite=Strict; Max-Age=0');
+  return new Response(JSON.stringify({ ok: true, authenticated: true }), { headers });
 }
 
 async function earlyAccess(request, env) {
@@ -464,12 +536,14 @@ async function currentUser(request, env) {
   if (now - Number(row.last_seen_at || 0) > 24 * 60 * 60) {
     await db.prepare("UPDATE sessions SET last_seen_at = ? WHERE id = ?").bind(now, row.session_id).run();
   }
+  const plusAccess = await subscriptionAccess(env, row.user_id);
   const activeFamilyPack = row.membership_plan === "family_pack" && row.membership_status === "active" && (!row.expires_at || Number(row.expires_at) > now);
   return jsonResponse({
     ok: true,
     authenticated: true,
     user: { id: row.user_id, email: row.email },
-    membership: {
+    billingAccount: Boolean(plusAccess.billingAccount),
+    membership: plusAccess.plan === 'plus' ? plusAccess : {
       plan: activeFamilyPack ? "family_pack" : "free",
       status: activeFamilyPack ? "active" : "none",
       entitlements: activeFamilyPack ? ["family_pack_download"] : [],
@@ -500,12 +574,29 @@ export async function handleApiRequest({ request, env }) {
   const requestId = crypto.randomUUID();
   try {
     const path = new URL(request.url).pathname.replace(/\/$/u, "") || "/";
+    const billingHelpers = { ApiError, assertSameOrigin, currentUser, jsonResponse, checkRateLimit, pseudonymousBucket, readJson: request => parseJsonObject(request, new Set(["invoiceId","reason"])) };
+    if (path === '/api/billing/history') return await billingHistory(request, env, billingHelpers);
+    if (path === '/api/billing/refund-requests') return await requestRefund(request, env, billingHelpers);
+    if (path === '/api/billing/plan') return await subscriptionPlan(request, env, billingHelpers);
+    if (path === '/api/billing/subscribe') return await subscribe(request, env, billingHelpers);
+    if (path === '/api/billing/portal') return await billingPortal(request, env, billingHelpers);
+    if (path === '/api/billing/checkout') return await testCheckout(request, env, billingHelpers);
+    if (path === '/api/billing/webhook') return await testWebhook(request, env, billingHelpers);
+    if (path === '/api/billing/orders') {
+      if (request.method !== 'GET') methodNotAllowed(['GET']);
+      const me = await (await currentUser(request, env)).json();
+      if (!me.authenticated) throw new ApiError(401, 'sign_in_required', 'Please sign in first.');
+      const rows = await requireDatabase(env).prepare('SELECT id, amount, currency, status, created_at FROM test_orders WHERE user_id = ? ORDER BY created_at DESC LIMIT 10').bind(me.user.id).all();
+      return jsonResponse({ ok: true, testMode: true, orders: rows.results });
+    }
     if (path === "/api/health") return await health(request, env);
     if (path === "/api/membership") return membership(request, env);
     if (path === "/api/feedback") return await submitFeedback(request, env);
     if (path === "/api/early-access") return await earlyAccess(request, env);
     if (path === "/api/auth/request-link") return await requestMagicLink(request, env);
     if (path === "/api/auth/verify") return await verifyMagicLink(request, env);
+    if (path === "/api/auth/google/challenge") return await googleChallenge(request, env);
+    if (path === "/api/auth/google") return await googleLogin(request, env);
     if (path === "/api/me") return await currentUser(request, env);
     if (path === "/api/logout") return await logout(request, env);
     throw new ApiError(404, "not_found", "The API route was not found.");

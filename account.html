@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,follow"><title>Your account | ChoreChartEasy</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css?v=20260822-consent-bar-v1">
+<link rel="stylesheet" href="/assets/account.css?v=4">
+<script type="module" src="/assets/account.js"></script>
+</head><body><header class="site-header"><div class="wrap header-inner"><a class="brand" href="/"><img src="/favicon.svg" alt="" width="38" height="38"><span>ChoreChartEasy</span></a><nav class="account-header-nav" aria-label="Main navigation"><a href="/#chart-maker">Chart maker</a><span data-auth-slot></span></nav></div></header><main class="wrap account-main"><p class="auth-eyebrow">YOUR ACCOUNT</p><h1>Account settings</h1><p class="account-subtitle">View your membership, payments and refund requests.</p>
+<p id="account-status" class="auth-status" role="status" aria-live="polite">Loading your account…</p>
+<section id="account-details" class="account-card" hidden aria-labelledby="profile-heading"><div class="profile-heading"><span class="account-avatar" aria-hidden="true" id="account-avatar">G</span><div><h2 id="profile-heading">Your profile</h2><span class="connected-label">Connected with Google</span></div></div>
+<dl class="account-fields"><div><dt>Email address</dt><dd id="account-email"></dd></div><div><dt>Account ID</dt><dd id="account-id"></dd></div><div><dt>Plan</dt><dd id="account-plan">Free</dd></div></dl>
+<p id="subscription-status" class="subscription-status" role="status"></p><div class="account-actions"><a class="button button-secondary" id="upgrade-plan" href="/pricing">Get Plus</a><button class="button button-secondary" id="manage-billing" type="button">Manage subscription</button><button class="button button-secondary" id="refresh-plan" type="button">Refresh plan</button><a class="button button-primary" href="/#chart-maker">Go to chart maker</a><button id="sign-out" type="button" class="button button-secondary">Sign out</button></div></section>
+<section id="billing-details" class="account-card billing-details" hidden aria-labelledby="billing-heading">
+<h2 id="billing-heading">Payments &amp; refund requests</h2>
+<p class="auth-fineprint">Submitting a request does not cancel renewal or issue a refund. Requests are reviewed manually.</p>
+<p id="billing-status" role="status" aria-live="polite"></p>
+<button id="reload-billing" class="button button-secondary" type="button">Refresh payments</button>
+<div id="payment-list"></div>
+<form id="refund-form" hidden>
+<h3>Request a refund</h3><p id="refund-payment"></p>
+<label for="refund-reason">Why are you requesting a refund?</label>
+<textarea id="refund-reason" required minlength="10" maxlength="1000" rows="4" placeholder="Describe the billing issue. Do not include card details or passwords."></textarea>
+<p class="auth-fineprint">Your request will be saved with your account and invoice. Applying does not guarantee approval. <a href="/refund">Refund information</a></p>
+<div class="account-actions"><button id="submit-refund" class="button button-primary" type="submit">Submit request</button><button id="cancel-refund" class="button button-secondary" type="button">Cancel</button></div>
+</form>
+<div id="refund-history"></div>
+<p class="auth-fineprint">For older invoices, use Manage subscription. For help with a request, email <a href="mailto:support@chorecharteasy.com">support@chorecharteasy.com</a> with your request number.</p>
+</section>
+<aside class="account-local"><h2>Your charts stay on this device</h2><p>Signing in does not upload or back up your charts. You can keep making and printing charts without an account.</p></aside>
+<p class="auth-fineprint">Need help or want to delete your account? <a href="/contact">Contact support</a>.</p></main>
+<footer class="auth-footer"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/contact">Help</a></footer>
+</body></html>

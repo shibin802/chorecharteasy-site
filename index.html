@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Free Printable Chore Chart Maker for Kids | ChoreChartEasy</title>
-  <meta name="description" content="Make a free printable chore chart for kids ages 3–12. Start with age-based ideas, edit every task, and print on US Letter or A4—no sign-up.">
+  <meta name="description" content="Make a free printable chore chart for kids ages 3–12. Start with age-based ideas, edit every task, and print on US Letter or A4 with a watermark.">
   <link rel="canonical" href="https://chorecharteasy.com/">
   <meta name="theme-color" content="#F6F1E7">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Free Printable Chore Chart Maker for Kids | ChoreChartEasy">
-  <meta property="og:description" content="Start with age-based chore ideas, edit every task, and print on US Letter or A4—no sign-up.">
+  <meta property="og:description" content="Start with age-based chore ideas, edit every task, and print on US Letter or A4 with a watermark.">
   <meta property="og:url" content="https://chorecharteasy.com/">
   <meta property="og:site_name" content="ChoreChartEasy">
   <meta property="og:image" content="https://chorecharteasy.com/assets/social/chorecharteasy-og.png">
@@ -22,11 +22,12 @@
   <link rel="preload" href="/assets/fonts/bricolage-grotesque-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/atkinson-hyperlegible-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/atkinson-hyperlegible-700.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/site.css?v=20260823-print-preview-v1">
+  <link rel="stylesheet" href="/assets/site.css?v=20260919-pricing">
   <link rel="stylesheet" href="/assets/feedback.css?v=20260822-workbench-v2">
   <script defer src="/assets/consent.js?v=20260823-consent-copy-v2"></script>
   <script defer src="/assets/feedback.js?v=20260822-feedback-v1"></script>
-  <script defer src="/assets/site.js?v=20260823-print-preview-v1"></script>
+  <script defer src="/assets/print-access.js"></script>
+  <script defer src="/assets/site.js?v=20260919-pricing"></script>
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -60,7 +61,7 @@
       {
         "@type":"FAQPage",
         "mainEntity":[
-          {"@type":"Question","name":"Is ChoreChartEasy free?","acceptedAnswer":{"@type":"Answer","text":"Yes. You can choose a starter, edit the tasks, preview the chart, and print or save it as a PDF without creating an account or entering payment information."}},
+          {"@type":"Question","name":"Is ChoreChartEasy free?","acceptedAnswer":{"@type":"Answer","text":"Yes. You can make and print charts for free with a ChoreChartEasy watermark. Plus is a monthly subscription for watermark-free printing."}},
           {"@type":"Question","name":"Do I need an account?","acceptedAnswer":{"@type":"Answer","text":"No. The free chart maker does not require an account, and children should not create one. One active draft is stored in this browser so you can return on the same device."}},
           {"@type":"Question","name":"What ages does the chart maker support?","acceptedAnswer":{"@type":"Answer","text":"The starting library covers ages 3–12 in four groups: 3–4, 5–6, 7–9, and 10–12. The suggestions are starting points, so an adult should adjust every task to the child’s abilities and home environment."}},
           {"@type":"Question","name":"Can I print on US Letter and A4 paper?","acceptedAnswer":{"@type":"Answer","text":"Yes. Preview the chart, choose US Letter or A4, and use your browser’s print controls to print or save as PDF. Check your printer’s scale and margin settings before printing."}},
@@ -72,6 +73,8 @@
   }
   </script>
   <script defer data-domain="chorecharteasy.com" src="https://plausible.shipsolo.io/js/script.js"></script>
+<link rel="stylesheet" href="/assets/account.css?v=4">
+<script type="module" src="/assets/auth-nav.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -86,9 +89,10 @@
         <a href="#how-it-works">How it works</a>
         <a href="#print-examples">Print examples</a>
         <a href="#guides">Age guides</a>
-        <a href="#faq">FAQ</a>
+        <a href="/pricing">Pricing</a>
         <a class="button button-primary" href="#chart-maker" data-track="header">Make a chart</a>
       </nav>
+      <span data-auth-slot><a class="auth-sign-in" href="/login">Sign in</a></span>
       <details class="mobile-nav">
         <summary aria-label="Open navigation">
           <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -98,7 +102,7 @@
           <a href="#how-it-works">How it works</a>
           <a href="#print-examples">Print examples</a>
           <a href="#guides">Age guides</a>
-          <a href="#faq">FAQ</a>
+          <a href="/pricing">Pricing</a>
         </nav>
       </details>
     </div>
@@ -108,7 +112,7 @@
     <section class="workbench-hero" id="chart-maker">
       <div class="workbench-grid">
         <aside class="workbench-intro" aria-labelledby="page-title">
-          <p class="eyebrow">Free printable tool · No sign-up · Ages 3–12</p>
+          <p class="eyebrow">Free printable tool · Ages 3–12</p>
           <h1 id="page-title">Make a printable chore chart that fits your child’s age</h1>
           <p class="hero-copy">Choose an age group, edit every task, and print a clear weekly chart on US Letter or A4.</p>
           <button class="button button-primary workbench-primary" type="button" data-start="weekly" data-track="hero_primary">Make my free chart</button>
@@ -201,7 +205,7 @@
 
             <div class="adult-note">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M8.3 14.8A7 7 0 1 1 15.7 14.8c-.9.7-1.4 1.6-1.5 2.2h-4.4c-.1-.6-.6-1.5-1.5-2.2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-              <span><strong>Tip:</strong> Click any chore to edit. Add, remove, or reorder tasks to fit your routine.</span>
+              <span><strong>Tip:</strong> Click any chore to edit. Add or remove tasks to fit your routine.</span>
             </div>
 
             <div id="editor-announcer" class="sr-only" aria-live="polite"></div>
@@ -278,7 +282,7 @@
       <div class="narrow">
         <span class="kicker">FAQ</span><h2>Frequently asked questions</h2>
         <div class="faq">
-          <details><summary>Is ChoreChartEasy free?</summary><p>Yes. You can choose a starter, edit the tasks, preview the chart, and print or save it as a PDF without creating an account or entering payment information.</p></details>
+          <details><summary>Is ChoreChartEasy free?</summary><p>Yes. You can make and print charts for free with a ChoreChartEasy watermark. Plus is a monthly subscription for watermark-free printing.</p></details>
           <details><summary>Do I need an account?</summary><p>No. The free chart maker does not require an account, and children should not create one. One active draft is stored in this browser so you can return on the same device.</p></details>
           <details><summary>What ages does the chart maker support?</summary><p>The starting library covers ages 3–12 in four groups: 3–4, 5–6, 7–9, and 10–12. The suggestions are starting points, so an adult should adjust every task to the child’s abilities and home environment.</p></details>
           <details><summary>Can I print on US Letter and A4 paper?</summary><p>Yes. Preview the chart, choose US Letter or A4, and use your browser’s print controls to print or save as PDF. Check your printer’s scale and margin settings before printing.</p></details>
@@ -304,8 +308,9 @@
 
   <dialog class="dialog" id="print-dialog" aria-labelledby="print-dialog-title">
     <div class="dialog-head"><h2 id="print-dialog-title">Print preview</h2><div class="dialog-actions"><button class="button button-primary" id="print-now" type="button">Print or save PDF</button><button class="icon-button" id="close-print" type="button" aria-label="Close print preview">×</button></div></div>
+    <div class="print-access-note"><span data-print-plan>Free · Includes a ChoreChartEasy watermark</span> <a href="/pricing" data-print-upgrade>Remove watermark with Plus</a></div>
     <div class="dialog-body">
-      <article class="print-sheet" id="print-sheet" data-paper="letter">
+      <article class="print-sheet" id="print-sheet" data-paper="letter"><div class="print-watermark" aria-hidden="true"><span>ChoreChartEasy · FREE</span><span>ChoreChartEasy · FREE</span><span>ChoreChartEasy · FREE</span></div>
         <header class="print-head"><h2 id="print-title">My Weekly Chore Chart</h2><div class="print-meta">Weekly checklist</div></header>
         <table class="print-table"><thead><tr id="print-days"></tr></thead><tbody id="print-rows"></tbody></table>
         <footer class="print-footer"><span>ChoreChartEasy</span><span>Review tasks and supervise as needed.</span></footer>

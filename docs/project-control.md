@@ -166,3 +166,34 @@
 - 不得假设 `support@chorecharteasy.com` 已端到端验证。
 - 不得启用 Early Access、Auth 或 Payments；Production D1 已绑定，但公开写能力保持关闭。
 - 不得把本次 Owner 风险接受描述为专业法律审查完成。
+
+## 2026-09-19 Google/Stripe preview functional QA
+
+- Candidate branch: `feat/google-stripe`; production remains unchanged. Current preview uses Google sign-in and Stripe sandbox only.
+- Functional testing found and repaired: phone task deletion overlapped by the task input; intermediate-width maker overflow; guide header sign-in squeezed outside viewport; absent direct billing recovery on Pricing for Free users with existing billing accounts; fixed time-window Checkout idempotency reusing ended sessions; canceled-renewal status copy; unsupported reorder-task copy.
+- Backend fix persists a Checkout attempt identifier, reuses it on retry, rotates after completion/expiry, and ignores late events for older attempts. Migration `0006_checkout_attempts.sql` is included before preview deployment.
+- Verified real browser Google logout/sign-in and Plus retention, free draft editing/restore/A4/checkbox/delete, free-watermarked PDF, Plus watermark-free preview, randomizer deduplication/clear, guest login return route and account protection, 404 behavior. Sandbox subscription purchase and period-end cancellation were completed in this session before this QA turn.
+- Regression suite: 11 Node + 47 Python tests pass. Independent review covers billing ownership, cancellation/expiry, checkout retries and Pricing recovery. Migration replay twice with foreign keys enabled passes.
+- Browser sweep: 14 public pages at 390/562/1440px, no JavaScript exceptions or unexpected first-party HTTP errors; guide header residual overflow found during sweep is repaired in this follow-up.
+- Release verdict: preview-only functional acceptance, pending final deployed guide-header check. No claim of production payment readiness, real-device physical print validation, or server-enforced watermark protection. Client-side watermarks can be bypassed by modifying browser styles; server-rendered PDFs are a separate hardening project.
+- Evidence and final acceptance report: current task `outputs/qa-report.md`; runtime run IDs and final commit recorded there after deployment completes.
+
+## 2026-09-19 Pricing conversion presentation
+
+- User requested a more compelling Pricing page while retaining the existing USD monthly price and Google/Stripe preview flow.
+- Message: watermark-free printed charts; main page shows a switchable Free/Plus illustrative chart alongside one Plus card, with the Free option as a separate secondary row.
+- CTA now describes upgrading (guest: Get Plus with Google; signed-in Free: Get watermark-free prints; Plus: Manage subscription). Google/Stripe next steps, automatic monthly renewal, cancellation and sandbox notice remain adjacent to the action.
+- Price still comes from Stripe's server-side plan endpoint; no price, billing permission, production setting, or entitlement change.
+- No invented reviews, subscriber counts, scarcity, or conversion guarantees. The effect on paid conversion is unmeasured; current Plus value remains watermark removal.
+- Validation: guest return-to-pricing and billing recovery tests; preview comparison labels/keyboard radio controls, FAQ, 320/390/768/1440px bounds and screenshots. Deployment evidence will be shown in this task after the preview completes.
+
+## 2026-09-19 Google button loading fix
+
+- Reproduced the reported giant Google G by delaying Google stylesheet and iframe requests: unstyled fallback SVG became 308×308px and expanded its host to 358px.
+- Load Google's supported stylesheet before rendering its button; reserve a 44px host and bound the fallback icon. Asset failures/timeouts offer retry and retry only the failed asset.
+- Browser verification: delayed stylesheet leaves a stable 44px loading area, then reveals the completed Google iframe (the transient fallback stays hidden); blocked stylesheet shows retry without an oversized icon; normal iframe rendering works. Regression suite: 12 Node + 47 Python tests pass.
+- Preview branch only; OAuth scopes, customer data and billing settings unchanged.
+
+
+## Account and refund requests — 2026-09-19
+Account now shows account ID, membership and paid period, latest 24 Stripe invoices and a persistent, owner-scoped refund request history. Refund submissions verify the Stripe invoice customer server-side and deduplicate by invoice. Review is manual via the preview D1 queue (docs/refund-operations.md); no automatic refund, cancellation or email notification. Preview only. Tests cover authentication, origin, ownership, paid/test eligibility and duplicate submission.

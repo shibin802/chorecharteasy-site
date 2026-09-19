@@ -1,6 +1,6 @@
 # ChoreChartEasy backend v1
 
-状态：本地实现完成；生产保持关闭。
+状态：Google 登录与 Stripe 测试支付已实现，待外部配置和真实联调；正式收款保持关闭。
 架构：Cloudflare Pages Functions（同源 `/api/*`）+ D1。
 
 ## 产品边界
@@ -9,8 +9,8 @@
 - Chart title、nickname、task、checks 只在浏览器 localStorage，不进入 D1。
 - 不提供云草稿。
 - Family Pack 是 `planned`，不收费、不预订。
-- 没有 checkout 或 payment webhook。
-- Auth 只有 loopback 开发模式；未接生产邮件 provider。
+- 提供 Stripe 测试 Checkout 和验签 webhook；不支持真实收款，不授予付费权益。
+- Auth 支持可选成人 Google 登录；原 Magic Link 仅限 loopback 开发。
 
 ## 文件
 
@@ -112,3 +112,23 @@ python3 backend/scripts/integration_local.py --base http://127.0.0.1:8790
 - Auth：没有生产邮件 provider、法律披露和删除流程。
 - Early Access：营销 consent/退订/保留期未批准。
 - Family Pack：没有批准的资产包、R2 交付、支付和退款合同。
+
+
+## Google 登录与 Stripe 测试接入（2026-09-19）
+
+账户页面 `/account` 不加载分析工具。Google GIS 仅在成人勾选并点击登录后加载。后端校验 Google 签名、签发者、client ID、过期时间和一次性 nonce；使用 Google `sub` 识别身份，已有邮箱账户不会自动合并。
+
+先执行全部 `backend/migrations/*.sql`。GitHub Actions 使用 Node 22、`npm ci` 和 `npm run check`，再构建 Pages Functions。
+
+Cloudflare 环境配置：
+- `PUBLIC_ORIGIN`：本环境的固定 HTTPS 站点 origin。
+- `GOOGLE_CLIENT_ID`：本站 Google Web 客户端公开 ID；Google 配置允许的 JavaScript origin 必须与该环境一致。使用 GIS callback 模式，无需 client secret 或授权回调 URL。
+- `SESSION_SECRET`、`RATE_LIMIT_SALT`：分别随机生成至少 32 字符，通过 Cloudflare 加密 Secret 配置。
+- `AUTH_ENABLED=true`，`AUTH_DEV_BYPASS=false`。
+- Stripe 联调：`STRIPE_TEST_ENABLED=true`、`STRIPE_PRICE_ID` 为一次性测试价格；`STRIPE_SECRET_KEY` 为仅满足 Price 读取、Checkout Session 创建的受限测试密钥；`STRIPE_WEBHOOK_SECRET` 为测试事件签名密钥。
+- Webhook URL：本环境 `/api/billing/webhook`；订阅 `checkout.session.completed`、`checkout.session.async_payment_succeeded`、`checkout.session.async_payment_failed`、`checkout.session.expired`。
+- `PAYMENTS_ENABLED=false`。测试入口拒绝 live key / live price / live event。
+
+当前范围没有确定正式商品、金额、币种、交付资产及退款生命周期，所以不能以本实现开启真实收费。测试订单表独立于正式会员权益。浏览器从 Stripe 返回后以已验签 webhook 更新的订单状态为准。
+
+本地验证：`npm run check`。Google JWKS 和 Stripe API 使用测试替身，SQLite 使用真实迁移；因此通过本地测试不等于真实供应商联调通过。

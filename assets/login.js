@@ -54,11 +54,15 @@ async function prepare() {
   const button = document.getElementById('google-button');
   button.setAttribute('aria-busy', 'true');
   button.replaceChildren();
+  // Start third-party downloads while the account and challenge requests run.
+  // Handle rejection immediately, including when an authenticated user redirects.
+  const googleReady = loadGoogle().then(() => ({ok:true}), error => ({error}));
   try {
     const me = await api('/api/me');
     if (me.authenticated) { location.replace(target); return; }
     const challenge = await api('/api/auth/google/challenge', {});
-    await loadGoogle();
+    const loaded = await googleReady;
+    if (loaded.error) throw loaded.error;
     window.google.accounts.id.initialize({ client_id: challenge.clientId, nonce: challenge.nonce, auto_select: false,
       callback: async ({ credential }) => {
         status.textContent = 'Signing you in…';

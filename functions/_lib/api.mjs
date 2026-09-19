@@ -283,9 +283,11 @@ async function googleChallenge(request, env) {
   const db = requireDatabase(env);
   await checkRateLimit(db, await pseudonymousBucket(request, env, 'google_challenge'), 30, 3600, now);
   const nonce = randomToken();
-  await db.prepare('DELETE FROM auth_nonces WHERE expires_at <= ?').bind(now).run();
-  await db.prepare('INSERT INTO auth_nonces (nonce_hash, expires_at) VALUES (?, ?)')
-    .bind(await hmacHex(env.SESSION_SECRET, nonce), now + 600).run();
+  const nonceHash = await hmacHex(env.SESSION_SECRET, nonce);
+  await db.batch([
+    db.prepare('DELETE FROM auth_nonces WHERE expires_at <= ?').bind(now),
+    db.prepare('INSERT INTO auth_nonces (nonce_hash, expires_at) VALUES (?, ?)').bind(nonceHash, now + 600),
+  ]);
   return jsonResponse({ ok: true, clientId: env.GOOGLE_CLIENT_ID, nonce }, 200, {
     'Set-Cookie': `cce_google_nonce=${nonce}; Path=/api/auth/google; HttpOnly; Secure; SameSite=Strict; Max-Age=600`,
   });

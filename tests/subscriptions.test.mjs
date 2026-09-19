@@ -4,7 +4,7 @@ import {DatabaseSync} from 'node:sqlite';
 import {readFileSync} from 'node:fs';
 import {subscriptionAccess,syncSubscription,subscribe,billingPortal,subscriptionPlan,subscriptionEvent} from '../functions/_lib/subscriptions.mjs';
 const sql=new DatabaseSync(':memory:');
-for(const file of ['0001_initial.sql','0005_subscriptions.sql','0006_checkout_attempts.sql'])sql.exec(readFileSync(new URL('../backend/migrations/'+file,import.meta.url),'utf8'));
+for(const file of ['0001_initial.sql','0005_subscriptions.sql','0006_checkout_attempts.sql','0008_user_activity.sql'])sql.exec(readFileSync(new URL('../backend/migrations/'+file,import.meta.url),'utf8'));
 sql.exec("INSERT INTO users VALUES ('u1','one@example.test','h1','active',0,0,NULL),('u2','two@example.test','h2','active',0,0,NULL)");
 function prepare(q,v=[]){return {bind:(...a)=>prepare(q,a),first:async()=>sql.prepare(q).get(...v)||null,run:async()=>({meta:{changes:sql.prepare(q).run(...v).changes}})}}
 const env={DB:{prepare},PUBLIC_ORIGIN:'https://example.test',STRIPE_TEST_ENABLED:'true',STRIPE_SECRET_KEY:'rk_test_fake',STRIPE_WEBHOOK_SECRET:'whsec_fake',STRIPE_PRICE_ID:'price_legacy',SUBSCRIPTIONS_ENABLED:'true',STRIPE_SUBSCRIPTION_PRICE_ID:'price_monthly',STRIPE_SUBSCRIPTION_PRODUCT_ID:'prod_plus'};

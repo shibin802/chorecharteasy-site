@@ -1,3 +1,4 @@
+import { recordActivity, recordBillingEvent } from './activity.mjs';
 import { stripeClient, billingReady, isLiveBilling } from './billing.mjs';
 
 export function subscriptionReady(env) {
@@ -46,7 +47,10 @@ export async function subscribe(request, env, h) {
   // Query Stripe too: an earlier successful checkout may still be waiting for its webhook.
   const existing = await stripe.subscriptions.list({customer:customer.customer_id,status:'all',limit:100});
   if (existing.data.some(s=>!['canceled','incomplete_expired'].includes(s.status))) throw new h.ApiError(409,'subscription_exists','You already have a subscription. Manage it from your account.');
-  if (customer.checkout_url && customer.checkout_expires_at > now) return h.jsonResponse({ok:true,url:customer.checkout_url,testMode:!isLiveBilling(env)});
+  if (customer.checkout_url && customer.checkout_expires_at > now) {
+    await recordActivity(env,{id:`checkout-open:${crypto.randomUUID()}`,userId:me.user.id,type:'checkout.opened',source:'server',resourceId:customer.checkout_id,status:'open',amount:price.unit_amount,currency:price.currency,live:isLiveBilling(env)});
+    return h.jsonResponse({ok:true,url:customer.checkout_url,testMode:!isLiveBilling(env)});
+  }
   const claim = await env.DB.prepare('UPDATE billing_customers SET lock_until = ? WHERE user_id = ? AND lock_until < ?').bind(now+90,me.user.id,now).run();
   if (!claim.meta?.changes) throw new h.ApiError(409,'checkout_in_progress','Checkout is being prepared. Please try again shortly.');
   try {
@@ -64,6 +68,7 @@ export async function subscribe(request, env, h) {
       integration_identifier:'chorecharteasy_llqgpsod',success_url:`${origin}/account?subscription=returned`,cancel_url:`${origin}/pricing?checkout=cancelled`
     },{idempotencyKey:`cce-monthly-${attempt.id}`});
     if (session.livemode !== isLiveBilling(env) || !session.url?.startsWith('https://checkout.stripe.com/')) throw new Error('Unexpected checkout mode');
+    await recordActivity(env,{id:`checkout:${session.id}`,userId:me.user.id,type:'checkout.created',source:'server',resourceId:session.id,status:'open',amount:price.unit_amount,currency:price.currency,live:isLiveBilling(env)});
     await env.DB.prepare('UPDATE billing_checkout_attempts SET checkout_id=?,expires_at=? WHERE user_id=? AND id=?').bind(session.id,session.expires_at,me.user.id,attempt.id).run();
     await env.DB.prepare('UPDATE billing_customers SET checkout_id=?,checkout_url=?,checkout_expires_at=?,lock_until=0 WHERE user_id=?').bind(session.id,session.url,session.expires_at,me.user.id).run();
     return h.jsonResponse({ok:true,url:session.url,testMode:!isLiveBilling(env)});
@@ -99,6 +104,7 @@ export async function syncSubscription(env,id) {
     .bind(sub.id,owner.user_id,customerId,sub.status,paidUntil,(sub.cancel_at_period_end || sub.cancel_at)?1:0,observed).run();
 }
 export async function subscriptionEvent(event,env) {
+  await recordBillingEvent(event,env);
   if(event.type.startsWith('customer.subscription.')) { await syncSubscription(env,event.data.object.id); return true; }
   if(event.type.startsWith('invoice.')) {
     const invoice=event.data.object;

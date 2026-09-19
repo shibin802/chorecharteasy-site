@@ -298,7 +298,7 @@ class FrontendV2Contract(unittest.TestCase):
         home = self.text("index.html")
         script = self.text("assets/site.js")
         self.assertNotIn('id="print-paper-label"', home)
-        self.assertIn('<div class="print-meta">Weekly checklist</div>', home)
+        self.assertNotIn('Weekly checklist', home)
         self.assertNotIn("print-paper-label", script)
 
     def test_mobile_layout_guards_common_393px_iphones(self):

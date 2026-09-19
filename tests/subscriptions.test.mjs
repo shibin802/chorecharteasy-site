@@ -8,9 +8,9 @@ for(const file of ['0001_initial.sql','0005_subscriptions.sql','0006_checkout_at
 sql.exec("INSERT INTO users VALUES ('u1','one@example.test','h1','active',0,0,NULL),('u2','two@example.test','h2','active',0,0,NULL)");
 function prepare(q,v=[]){return {bind:(...a)=>prepare(q,a),first:async()=>sql.prepare(q).get(...v)||null,run:async()=>({meta:{changes:sql.prepare(q).run(...v).changes}})}}
 const env={DB:{prepare},PUBLIC_ORIGIN:'https://example.test',STRIPE_TEST_ENABLED:'true',STRIPE_SECRET_KEY:'rk_test_fake',STRIPE_WEBHOOK_SECRET:'whsec_fake',STRIPE_PRICE_ID:'price_legacy',SUBSCRIPTIONS_ENABLED:'true',STRIPE_SUBSCRIPTION_PRICE_ID:'price_monthly',STRIPE_SUBSCRIPTION_PRODUCT_ID:'prod_plus'};
-let latest,existing=[],payload,customer='cus_one';const end=Math.floor(Date.now()/1000)+86400;
+let live=false;let latest,existing=[],payload,customer='cus_one';const end=Math.floor(Date.now()/1000)+86400;
 const price={id:'price_monthly',product:'prod_plus',livemode:false,active:true,type:'recurring',unit_amount:100,currency:'usd',recurring:{interval:'month',interval_count:1}};
-globalThis.fetch=async(input,init)=>{const url=String(input);if(url.includes('/v1/prices/'))return Response.json(price);if(url.includes('/v1/customers'))return Response.json({id:customer,livemode:false});if(url.includes('/v1/subscriptions/sub_'))return Response.json(latest);if(url.includes('/v1/subscriptions?'))return Response.json({data:existing});if(url.includes('/v1/checkout/sessions')){payload=new URLSearchParams(init.body);return Response.json({id:'cs_test_monthly',url:'https://checkout.stripe.com/c/test',livemode:false,expires_at:end});}if(url.includes('/v1/billing_portal/sessions')){payload=new URLSearchParams(init.body);return Response.json({url:'https://billing.stripe.com/test'});}throw Error(url);};
+globalThis.fetch=async(input,init)=>{const url=String(input);if(url.includes('/v1/prices/'))return Response.json(price);if(url.includes('/v1/customers'))return Response.json({id:customer,livemode:live});if(url.includes('/v1/subscriptions/sub_'))return Response.json(latest);if(url.includes('/v1/subscriptions?'))return Response.json({data:existing});if(url.includes('/v1/checkout/sessions')){payload=new URLSearchParams(init.body);return Response.json({id:'cs_test_monthly',url:'https://checkout.stripe.com/c/test',livemode:live,expires_at:end});}if(url.includes('/v1/billing_portal/sessions')){payload=new URLSearchParams(init.body);return Response.json({url:'https://billing.stripe.com/test'});}throw Error(url);};
 class ApiError extends Error{constructor(status,code,message){super(message);this.status=status;this.code=code}}
 let signedIn=true,user='u1';const h={ApiError,assertSameOrigin:r=>{if(r.headers.get('Origin')!=='https://example.test')throw new ApiError(403,'origin','Wrong origin');},currentUser:async()=>Response.json({authenticated:signedIn,user:{id:user}}),checkRateLimit:async()=>{},pseudonymousBucket:async()=>'',jsonResponse:Response.json};
 const req=(method='POST')=>new Request('https://example.test/api/billing/subscribe',{method,headers:{Origin:'https://example.test'}});
@@ -56,4 +56,17 @@ test('checkout attempts survive uncertain failures and rotate after finished ses
   await subscriptionEvent({type:'checkout.session.completed',data:{object:{id:'cs_attempt_2',mode:'subscription'}}},env);
   await subscribe(req(),env,h);assert.notEqual(keys[2],keys[3],'completed checkout must get a fresh attempt');
  }finally{globalThis.fetch=originalFetch;}
+});
+
+test('live subscription checkout and paid entitlement are isolated from sandbox data',async()=>{
+ const production={...env,STRIPE_MODE:'live',STRIPE_LIVE_ENABLED:'true',STRIPE_TEST_ENABLED:'false',STRIPE_SECRET_KEY:'rk_live_fixture',PUBLIC_ORIGIN:'https://chorecharteasy.com'};
+ sql.exec("INSERT INTO users VALUES ('u3','live@example.test','h3','active',0,0,NULL)");
+ const oldUser=user;user='u3';customer='cus_live';live=true;price.livemode=true;existing=[];
+ try {
+  const response=await(await subscribe(req(),production,h)).json();assert.equal(response.testMode,false);
+  latest={id:'sub_live',customer:'cus_live',livemode:true,metadata:{application:'chorecharteasy',user_id:'u3'},status:'active',latest_invoice:{status:'paid'},items:{data:[{price,current_period_end:end}]}};
+  await syncSubscription(production,'sub_live');assert.equal((await subscriptionAccess(production,'u3')).plan,'plus');assert.equal((await subscriptionAccess(production,'u3')).testMode,false);
+  latest.status='canceled';await syncSubscription(production,'sub_live');assert.equal((await subscriptionAccess(production,'u3')).plan,'free');
+  latest.status='active';latest.livemode=false;await syncSubscription(production,'sub_live');assert.equal((await subscriptionAccess(production,'u3')).plan,'free');
+ }finally{user=oldUser;live=false;price.livemode=false;customer='cus_one';}
 });

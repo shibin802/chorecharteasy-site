@@ -5,7 +5,7 @@ import vm from 'node:vm';
 
 const source = readFileSync(new URL('../assets/pricing.js', import.meta.url), 'utf8').replace(/^import .*;$/gm, '');
 async function page(me, action) {
-  const elements = Object.fromEntries(['subscribe', 'manage-existing-billing', 'pricing-status', 'monthly-price', 'checkout-step'].map(id => [id, { addEventListener(type, handler) { this.click = handler; } }]));
+  const elements = Object.fromEntries(['subscribe', 'manage-existing-billing', 'pricing-status', 'monthly-price', 'checkout-step', 'billing-mode'].map(id => [id, { addEventListener(type, handler) { this.click = handler; } }]));
   const calls = [], redirects = [];
   vm.runInNewContext(source, {
     document: { getElementById: id => elements[id] }, Intl, URL,

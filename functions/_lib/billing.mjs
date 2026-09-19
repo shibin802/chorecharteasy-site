@@ -1,16 +1,23 @@
 import { subscriptionEvent } from './subscriptions.mjs';
 import Stripe from 'stripe';
 
-// Sandbox only until the merchant specifies the product, delivery and refund terms.
-export function testBillingReady(env) {
-  return env?.STRIPE_TEST_ENABLED === 'true'
-    && /^(rk|sk)_test_/.test(env.STRIPE_SECRET_KEY || '')
-    && /^price_/.test(env.STRIPE_PRICE_ID || '')
-    && Boolean(env.STRIPE_WEBHOOK_SECRET && env.DB && env.PUBLIC_ORIGIN);
+// Explicit live opt-in; preview deployments cannot use a live key.
+export function billingMode(env) {
+  if (env?.STRIPE_MODE) return ['test', 'live'].includes(env.STRIPE_MODE) ? env.STRIPE_MODE : null;
+  return env?.STRIPE_TEST_ENABLED === 'true' ? 'test' : null;
 }
-
+export const isLiveBilling = env => billingMode(env) === 'live';
+export function billingReady(env) {
+  const mode = billingMode(env);
+  if (!mode || !new RegExp(`^(rk|sk)_${mode}_`).test(env.STRIPE_SECRET_KEY || '')) return false;
+  if (mode === 'live' && (env.STRIPE_LIVE_ENABLED !== 'true' || env.PUBLIC_ORIGIN !== 'https://chorecharteasy.com' || env.STRIPE_TEST_ENABLED === 'true')) return false;
+  return Boolean(env.STRIPE_WEBHOOK_SECRET && env.DB && env.PUBLIC_ORIGIN);
+}
+export function testBillingReady(env) {
+  return billingMode(env) === 'test' && billingReady(env) && /^price_/.test(env.STRIPE_PRICE_ID || '');
+}
 export function stripeClient(env) {
-  if (!testBillingReady(env)) throw new Error('Billing is not configured');
+  if (!billingReady(env)) throw new Error('Billing is not configured');
   return new Stripe(env.STRIPE_SECRET_KEY, { httpClient: Stripe.createFetchHttpClient(), maxNetworkRetries: 2 });
 }
 
@@ -54,7 +61,7 @@ export async function testCheckout(request, env, helpers) {
 export async function testWebhook(request, env, helpers) {
   const { ApiError, jsonResponse } = helpers;
   if (request.method !== 'POST') throw new ApiError(405, 'method_not_allowed', 'Use POST.', { Allow: 'POST' });
-  if (!testBillingReady(env)) throw new ApiError(503, 'billing_unavailable', 'Test billing is unavailable.');
+  if (!billingReady(env)) throw new ApiError(503, 'billing_unavailable', 'Billing is unavailable.');
   const raw = await request.text();
   if (new TextEncoder().encode(raw).length > 262144) throw new ApiError(413, 'payload_too_large', 'Webhook too large.');
   let event;
@@ -62,8 +69,9 @@ export async function testWebhook(request, env, helpers) {
     event = await stripeClient(env).webhooks.constructEventAsync(raw, request.headers.get('stripe-signature') || '', env.STRIPE_WEBHOOK_SECRET,
       300, Stripe.createSubtleCryptoProvider());
   } catch { throw new ApiError(400, 'invalid_signature', 'Invalid webhook signature.'); }
-  if (event.livemode) throw new ApiError(400, 'wrong_mode', 'Only test events are accepted.');
+  if (event.livemode !== isLiveBilling(env)) throw new ApiError(400, 'wrong_mode', 'Event mode does not match this environment.');
   if (await subscriptionEvent(event, env)) return jsonResponse({ ok: true });
+  if (isLiveBilling(env)) return jsonResponse({ ok: true });
   const supported = ['checkout.session.completed', 'checkout.session.async_payment_succeeded', 'checkout.session.expired', 'checkout.session.async_payment_failed'];
   if (!supported.includes(event.type)) return jsonResponse({ ok: true });
   const session = event.data.object;

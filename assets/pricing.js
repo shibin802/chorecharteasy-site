@@ -8,6 +8,7 @@ async function load() {
   try {
     const [plan, me] = await Promise.all([api('/api/billing/plan'), api('/api/me')]);
     ready = true;
+    document.getElementById('billing-mode').hidden = !plan.enabled || !plan.testMode;
     signedIn = me.authenticated;
     plus = me.membership?.plan === 'plus';
     document.getElementById('monthly-price').textContent = new Intl.NumberFormat('en-US', {style:'currency', currency:'USD', maximumFractionDigits:2}).format(plan.amount / 100);

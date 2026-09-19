@@ -17,7 +17,7 @@ const req=(method='POST')=>new Request('https://example.test/api/billing/subscri
 test('monthly checkout verifies price, user, origin and duplicate subscription; portal binds server customer',async()=>{
  signedIn=false;await assert.rejects(()=>subscribe(req(),env,h),{status:401});signedIn=true;
  await assert.rejects(()=>subscribe(new Request('https://example.test',{method:'POST'}),env,h),{status:403});
- const result=await subscribe(req(),env,h);assert.equal(result.status,200);assert.equal(payload.get('mode'),'subscription');assert.equal(payload.get('adaptive_pricing[enabled]'),'false');assert.equal(payload.get('line_items[0][price]'),'price_monthly');assert.equal(payload.get('subscription_data[metadata][user_id]'),'u1');
+ const result=await subscribe(req(),env,h);assert.equal(result.status,200);assert.equal(payload.get('mode'),'subscription');assert.equal(payload.get('adaptive_pricing[enabled]'),'true');assert.equal(payload.get('line_items[0][price]'),'price_monthly');assert.equal(payload.get('subscription_data[metadata][user_id]'),'u1');
  existing=[{status:'active'}];await assert.rejects(()=>subscribe(req(),env,h),{code:'subscription_exists'});existing=[];
  await billingPortal(req(),env,h);assert.equal(payload.get('customer'),'cus_one');user='u2';await assert.rejects(()=>billingPortal(req(),env,h),{status:404});user='u1';
  price.type='one_time';await assert.rejects(()=>subscriptionPlan(req('GET'),env,h));price.type='recurring';
@@ -85,14 +85,12 @@ test('live subscription checkout and paid entitlement are isolated from sandbox 
  }finally{price.id=originalId;price.unit_amount=originalAmount;}
 });
 
-test('cached localized checkout rotates once to USD-only and then reuses the USD checkout',async()=>{
+test('USD-only cached checkout is replaced with local currency choices enabled',async()=>{
  existing=[];signedIn=true;user='u1';
- sql.exec("UPDATE billing_checkout_attempts SET id='legacy-localized' WHERE user_id='u1'");
+ sql.exec("UPDATE billing_checkout_attempts SET id='usd-previous-policy' WHERE user_id='u1'");
  payload=null;
  await subscribe(req(),env,h);
- assert.equal(payload.get('adaptive_pricing[enabled]'),'false');
- assert.ok(sql.prepare("SELECT id FROM billing_checkout_attempts WHERE user_id='u1'").get().id.startsWith('usd-'));
- payload=null;
- await subscribe(req(),env,h);
- assert.equal(payload,null,'USD-only checkout should be reused');
+ assert.equal(payload.get('adaptive_pricing[enabled]'),'true');
+ payload=null;await subscribe(req(),env,h);
+ assert.equal(payload,null,'compatible checkout is reused');
 });

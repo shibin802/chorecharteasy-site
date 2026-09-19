@@ -48,7 +48,7 @@ export async function subscribe(request, env, h) {
   const existing = await stripe.subscriptions.list({customer:customer.customer_id,status:'all',limit:100});
   if (existing.data.some(s=>!['canceled','incomplete_expired'].includes(s.status))) throw new h.ApiError(409,'subscription_exists','You already have a subscription. Manage it from your account.');
   const cachedAttempt = await env.DB.prepare('SELECT * FROM billing_checkout_attempts WHERE user_id=?').bind(me.user.id).first();
-  if (customer.checkout_url && customer.checkout_expires_at > now && cachedAttempt?.price_id === price.id && cachedAttempt.checkout_id === customer.checkout_id) {
+  if (customer.checkout_url && customer.checkout_expires_at > now && cachedAttempt?.id?.startsWith('usd-') && cachedAttempt.price_id === price.id && cachedAttempt.checkout_id === customer.checkout_id) {
     await recordActivity(env,{id:`checkout-open:${crypto.randomUUID()}`,userId:me.user.id,type:'checkout.opened',source:'server',resourceId:customer.checkout_id,status:'open',amount:price.unit_amount,currency:price.currency,live:isLiveBilling(env)});
     return h.jsonResponse({ok:true,url:customer.checkout_url,testMode:!isLiveBilling(env)});
   }
@@ -58,12 +58,13 @@ export async function subscribe(request, env, h) {
     // Persist the attempt before contacting Stripe. Retries after a timeout reuse its
     // key; completed/expired sessions retire it so a new checkout gets a new key.
     let attempt = await env.DB.prepare('SELECT * FROM billing_checkout_attempts WHERE user_id=?').bind(me.user.id).first();
-    if (!attempt || attempt.price_id !== price.id || (attempt.expires_at && attempt.expires_at <= now) || (!attempt.expires_at && attempt.created_at + 86500 <= now)) {
-      attempt = { id: crypto.randomUUID(), price_id: price.id };
+    if (!attempt || !attempt.id.startsWith('usd-') || attempt.price_id !== price.id || (attempt.expires_at && attempt.expires_at <= now) || (!attempt.expires_at && attempt.created_at + 86500 <= now)) {
+      attempt = { id: `usd-${crypto.randomUUID()}`, price_id: price.id };
       await env.DB.prepare('INSERT INTO billing_checkout_attempts (user_id,id,price_id,created_at) VALUES (?,?,?,?) ON CONFLICT(user_id) DO UPDATE SET id=excluded.id,price_id=excluded.price_id,created_at=excluded.created_at,checkout_id=NULL,expires_at=0').bind(me.user.id,attempt.id,price.id,now).run();
     }
     const origin = new URL(env.PUBLIC_ORIGIN).origin;
     const session = await stripe.checkout.sessions.create({mode:'subscription',customer:customer.customer_id,
+      adaptive_pricing:{enabled:false},
       line_items:[{price:price.id,quantity:1}],client_reference_id:me.user.id,
       metadata:{application:'chorecharteasy',user_id:me.user.id},subscription_data:{metadata:{application:'chorecharteasy',user_id:me.user.id}},
       integration_identifier:'chorecharteasy_llqgpsod',success_url:`${origin}/account?subscription=returned`,cancel_url:`${origin}/pricing?checkout=cancelled`

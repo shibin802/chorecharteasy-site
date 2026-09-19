@@ -23,7 +23,7 @@
     // Best effort: telemetry must never prevent printing. No chart text leaves the device.
     fetch('/api/activity/print', {method:'POST',credentials:'same-origin',keepalive:true,
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({id:crypto.randomUUID(),type,paper:chart.paper,starter:chart.starter,taskCount:chart.tasks.length})
+      body:JSON.stringify({id:crypto.randomUUID(),type,paper:chart.paper,starter:chart.starter,taskCount:chart.taskCount ?? chart.tasks.length})
     }).catch(() => {});
   }
   window.ChorePrintAccess = { refresh, record };

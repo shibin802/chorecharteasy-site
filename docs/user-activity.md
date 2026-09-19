@@ -20,6 +20,7 @@ ORDER BY occurred_at DESC;
 - `invoice.paid`: verified Stripe payment, including renewal. Amount is in minor currency units (USD 100 = $1). Do not sum both checkout amounts and invoice amounts.
 - `invoice.payment_failed`, `checkout.session.*`, `customer.subscription.*`: verified provider events, preserving original provider occurrence time. Events can arrive out of order; current entitlement remains in `billing_subscriptions`.
 - `print_preview_opened`: signed-in user opened preview.
+- Randomizer prints use `starter=randomizer` and `paper=browser-default` because paper is chosen in the browser dialog.
 - `print_requested`: signed-in user clicked Print or save PDF; not proof of actual printing, PDF saving, or dialog confirmation. Browser telemetry is best effort; network failures, blockers, direct browser Ctrl+P, or guest usage may not produce records.
 - `plan` on print events comes from the authenticated server membership, not client input. Browser event attributes are still client-reported, not a fraud-proof usage meter.
 - No child names, titles, task contents, raw IPs, card data or private checkout URLs are collected. Guests are not tracked by this feature.

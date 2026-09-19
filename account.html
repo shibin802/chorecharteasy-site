@@ -1,45 +1,17 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex,follow">
-  <title>Your account | ChoreChartEasy</title>
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/assets/site.css?v=20260822-consent-bar-v1">
-  <link rel="stylesheet" href="/assets/account.css">
-  <script defer src="/assets/account.js"></script>
-</head>
-<body>
-  <header class="site-header"><div class="wrap header-inner"><a class="brand" href="/">ChoreChartEasy</a><a href="/#chart-maker">Free chart maker</a></div></header>
-  <main class="wrap account-main">
-    <h1>Your account</h1>
-    <p>Optional accounts for parents and caregivers. Making and printing charts stays free, with no sign-in required.</p>
-    <p id="account-status" role="status" aria-live="polite">Loading account options…</p>
-    <section id="sign-in-panel" hidden aria-labelledby="sign-in-heading">
-      <h2 id="sign-in-heading">Sign in with Google</h2>
-      <p>We use your Google account identifier and verified email to create your account. We do not request access to Gmail, Drive, or your contacts.</p>
-      <p>Your chart, nickname, and tasks stay in this browser. Signing in does not provide cloud backup.</p>
-      <label><input id="adult-confirmation" type="checkbox"> I am an adult parent or caregiver.</label>
-      <p><a href="/privacy#accounts">Account privacy</a> · <a href="/terms">Terms</a></p>
-      <button class="button button-primary" id="prepare-google" type="button" disabled>Continue to Google sign-in</button>
-      <div id="google-button"></div>
-    </section>
-    <section id="signed-in-panel" hidden>
-      <h2>Signed in</h2>
-      <p id="account-email"></p>
-      <button class="button button-secondary" id="sign-out" type="button">Sign out</button>
-    </section>
-    <section id="test-billing-panel" hidden aria-labelledby="test-billing-heading">
-      <h2 id="test-billing-heading">Payment testing</h2>
-      <p><strong>Test mode only. No real payment or product purchase.</strong> Use Stripe test payment details. Test payments do not unlock paid features.</p>
-      <button class="button button-primary" id="test-checkout" type="button">Open Stripe test checkout</button>
-      <h3>Recent test payments</h3>
-      <p>A return from checkout is not payment confirmation. Status below is verified by the server.</p>
-      <button class="button button-secondary" id="refresh-orders" type="button">Refresh payment status</button>
-      <ul id="test-orders"></ul>
-    </section>
-    <p><a href="/">Return to the free chart maker</a> · <a href="/contact">Contact support</a></p>
-  </main>
-</body>
-</html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,follow"><title>Your account | ChoreChartEasy</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css?v=20260822-consent-bar-v1">
+<link rel="stylesheet" href="/assets/account.css?v=2">
+<script type="module" src="/assets/account.js"></script>
+</head><body><header class="site-header"><div class="wrap header-inner"><a class="brand" href="/"><img src="/favicon.svg" alt="" width="38" height="38"><span>ChoreChartEasy</span></a><nav class="account-header-nav" aria-label="Main navigation"><a href="/#chart-maker">Chart maker</a><span data-auth-slot></span></nav></div></header><main class="wrap account-main"><p class="auth-eyebrow">YOUR ACCOUNT</p><h1>Account settings</h1><p class="account-subtitle">Manage your sign-in and account details.</p>
+<p id="account-status" class="auth-status" role="status" aria-live="polite">Loading your account…</p>
+<section id="account-details" class="account-card" hidden aria-labelledby="profile-heading"><div class="profile-heading"><span class="account-avatar" aria-hidden="true" id="account-avatar">G</span><div><h2 id="profile-heading">Your profile</h2><span class="connected-label">Connected with Google</span></div></div>
+<dl class="account-fields"><div><dt>Email address</dt><dd id="account-email"></dd></div><div><dt>Plan</dt><dd>Free</dd></div></dl>
+<div class="account-actions"><a class="button button-primary" href="/#chart-maker">Go to chart maker</a><button id="sign-out" type="button" class="button button-secondary">Sign out</button></div></section>
+<aside class="account-local"><h2>Your charts stay on this device</h2><p>Signing in does not upload or back up your charts. You can keep making and printing charts without an account.</p></aside>
+<p class="auth-fineprint">Need help or want to delete your account? <a href="/contact">Contact support</a>.</p></main>
+<footer class="auth-footer"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/contact">Help</a></footer>
+</body></html>

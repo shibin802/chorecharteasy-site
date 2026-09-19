@@ -41,8 +41,8 @@ export async function testCheckout(request, env, helpers) {
     metadata: { application: 'chorecharteasy', user_id: me.user.id },
     payment_intent_data: { metadata: { application: 'chorecharteasy', user_id: me.user.id } },
     integration_identifier: 'chorecharteasy_llqgpsod',
-    success_url: `${origin}/account.html?checkout=returned`,
-    cancel_url: `${origin}/account.html?checkout=cancelled`,
+    success_url: `${origin}/billing-test?checkout=returned`,
+    cancel_url: `${origin}/billing-test?checkout=cancelled`,
   }, { idempotencyKey });
   if (session.livemode || !session.url?.startsWith('https://checkout.stripe.com/')) throw new Error('Unexpected checkout mode');
   await env.DB.prepare("INSERT INTO test_orders (id, user_id, price_id, amount, currency, status, checkout_url, expires_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, 'pending', ?, ?, ?, ?) ON CONFLICT(id) DO NOTHING")

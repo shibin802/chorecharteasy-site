@@ -83,9 +83,9 @@ footer a{color:#fff}
 @media(max-width:760px){
   body{font-size:16px}
   .wrap{width:min(100% - 32px,1060px)}
-  .site-header{min-height:64px}
+  .site-header{min-height:64px;flex-wrap:wrap;gap:12px;padding-block:12px}
   header nav{display:none}
-  .header-cta{font-size:.9rem}
+  .header-cta{font-size:.9rem;order:3;flex-basis:100%;justify-content:center}
   .hero{padding:46px 0 42px}
   h1{font-size:clamp(2.45rem,13vw,3.8rem)}
   .article{margin-block:32px 48px;padding:24px}

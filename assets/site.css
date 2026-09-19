@@ -153,3 +153,9 @@ h3{font-size:1.35rem}
 
 /* Foreground text remains visible even when print backgrounds are disabled. */
 .print-sheet{position:relative}.print-watermark{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;pointer-events:none;overflow:hidden;z-index:3}.print-watermark span{font:700 clamp(22px,4vw,38px)/1.4 system-ui,sans-serif;color:#657976;opacity:.24;transform:rotate(-24deg);white-space:nowrap}.watermark-free .print-watermark{display:none!important}.print-access-note{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 24px;background:#edf3ee;font-size:.85rem}.print-access-note a{font-weight:700}@media print{.print-sheet{position:relative!important}.print-access-note{display:none!important}.print-watermark span{-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:32px}}
+
+/* Printing is the editor's primary action. */
+.print-chart-action{min-height:54px;min-width:168px;padding:12px 22px;font-size:1.05rem;white-space:nowrap;box-shadow:0 4px 0 rgba(126,43,24,.16)}
+.print-chart-action svg{flex-shrink:0}
+.print-chart-action:active{transform:translateY(1px);box-shadow:0 1px 0 rgba(126,43,24,.16)}
+@media(max-width:480px){.editor-heading-row{flex-wrap:wrap;gap:12px}.editor-heading-row .print-chart-action{width:100%;min-height:54px;padding:12px 18px}}

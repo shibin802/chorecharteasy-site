@@ -263,7 +263,7 @@ class FrontendV2Contract(unittest.TestCase):
 
     def test_shared_assets_and_security_headers(self):
         home = self.text("index.html")
-        self.assertIn('href="/assets/site.css?v=20260823-print-preview-v1"', home)
+        self.assertIn('href="/assets/site.css?v=20260919-cta-align"', home)
         self.assertIn('src="/assets/consent.js?v=20260823-consent-copy-v2"', home)
         self.assertIn('src="/assets/site.js?v=20260823-print-preview-v1"', home)
         headers = self.text("_headers")
@@ -327,7 +327,7 @@ class FrontendV2Contract(unittest.TestCase):
         for path in ROOT.glob("*.html"):
             html = path.read_text(encoding="utf-8")
             if "/assets/site.css" in html:
-                site_css_version = "20260823-print-preview-v1" if path.name == "index.html" else "20260822-consent-bar-v1"
+                site_css_version = "20260919-cta-align" if path.name == "index.html" else "20260822-consent-bar-v1"
                 self.assertIn(f'href="/assets/site.css?v={site_css_version}"', html, path.name)
                 self.assertNotIn('href="/assets/site.css"', html, path.name)
             if "/guide.css" in html:

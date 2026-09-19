@@ -31,10 +31,29 @@ async function loadGoogle() {
     loadGoogleAsset('script', 'https://accounts.google.com/gsi/client')
   ]);
 }
+function waitForGoogleButton(container) {
+  return new Promise((resolve, reject) => {
+    const ready = () => {
+      const frame = container.querySelector('iframe');
+      return frame && frame.getBoundingClientRect().height >= 30;
+    };
+    if (ready()) { resolve(); return; }
+    const observer = new MutationObserver(() => {
+      if (ready()) { clearTimeout(timer); observer.disconnect(); resolve(); }
+    });
+    const timer = setTimeout(() => {
+      observer.disconnect();
+      reject(new Error('Google could not load. Check your connection and try again.'));
+    }, 10000);
+    observer.observe(container, { childList: true, subtree: true, attributes: true });
+  });
+}
 async function prepare() {
   retry.hidden = true;
   status.textContent = 'Loading Google sign-in…';
-  document.getElementById('google-button').replaceChildren();
+  const button = document.getElementById('google-button');
+  button.setAttribute('aria-busy', 'true');
+  button.replaceChildren();
   try {
     const me = await api('/api/me');
     if (me.authenticated) { location.replace(target); return; }
@@ -52,6 +71,8 @@ async function prepare() {
       theme: 'outline', size: 'large', text: 'continue_with', shape: 'rectangular',
       width: Math.min(360, document.getElementById('google-button').clientWidth), locale: 'en'
     });
+    await waitForGoogleButton(button);
+    button.setAttribute('aria-busy', 'false');
     status.textContent = '';
   } catch (error) { status.textContent = error.message; retry.hidden = false; }
 }

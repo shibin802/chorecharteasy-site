@@ -191,5 +191,5 @@
 
 - Reproduced the reported giant Google G by delaying Google stylesheet and iframe requests: unstyled fallback SVG became 308×308px and expanded its host to 358px.
 - Load Google's supported stylesheet before rendering its button; reserve a 44px host and bound the fallback icon. Asset failures/timeouts offer retry and retry only the failed asset.
-- Browser verification: delayed stylesheet leaves a stable 44px loading area, then a 20px fallback icon; blocked stylesheet shows retry without an oversized icon; normal iframe rendering works. Regression suite: 12 Node + 47 Python tests pass.
+- Browser verification: delayed stylesheet leaves a stable 44px loading area, then reveals the completed Google iframe (the transient fallback stays hidden); blocked stylesheet shows retry without an oversized icon; normal iframe rendering works. Regression suite: 12 Node + 47 Python tests pass.
 - Preview branch only; OAuth scopes, customer data and billing settings unchanged.

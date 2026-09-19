@@ -12,7 +12,7 @@ const jwk = { ...await exportJWK(publicKey), kid: 'test-key', alg: 'RS256', use:
 const origin = 'https://chorecharteasy.test';
 const env = { AUTH_ENABLED: 'true', GOOGLE_CLIENT_ID: 'client.test', SESSION_SECRET: 's'.repeat(40), RATE_LIMIT_SALT: 'r'.repeat(40), PUBLIC_ORIGIN: origin };
 const sql = new DatabaseSync(':memory:');
-for (const file of ['0001_initial.sql', '0002_feedback.sql', '0003_google_auth.sql', '0004_stripe_test.sql', '0008_user_activity.sql']) {
+for (const file of ['0001_initial.sql', '0002_feedback.sql', '0003_google_auth.sql', '0004_stripe_test.sql', '0008_user_activity.sql', '0009_feedback_contacts.sql']) {
   const migration = readFileSync(new URL(`../backend/migrations/${file}`, import.meta.url), 'utf8');
   sql.exec(migration); sql.exec(migration);
 }
@@ -82,6 +82,19 @@ test('verified Google identity creates a secure session; challenge replay fails;
   assert.equal((await (await call('/api/me', { cookie: sessionCookie })).json()).authenticated, true);
   assert.equal((await call('/api/auth/google', { method: 'POST', cookie: c.cookie, body })).status, 401);
   assert.notEqual(sql.prepare('SELECT token_hash FROM sessions LIMIT 1').get().token_hash, sessionCookie.split('=')[1]);
+});
+
+test('feedback stores optional email, defaults to the verified session, and permits clearing it', async () => {
+ const base={kind:'idea',message:'A useful improvement',page:'/'};
+ for (const [body,cookie,expected] of [[base,undefined,null],[{...base,email:'Reply@Example.com'},undefined,'reply@example.com'],[base,sessionCookie,sql.prepare('SELECT email FROM users LIMIT 1').get().email],[{...base,email:''},sessionCookie,null]]) {
+  const response=await call('/api/feedback',{method:'POST',body,cookie});
+  assert.equal(response.status,201);
+  const {reference}=await response.json();
+  assert.equal(sql.prepare('SELECT email FROM feedback_details WHERE reference=?').get(reference).email,expected);
+ }
+ const count=sql.prepare('SELECT count(*) n FROM feedback_submissions').get().n;
+ for(const email of ['invalid',42,'a'.repeat(255)+'@example.com']) assert.equal((await call('/api/feedback',{method:'POST',body:{...base,email}})).status,422);
+ assert.equal(sql.prepare('SELECT count(*) n FROM feedback_submissions').get().n,count);
 });
 
 test('authenticated print route validates JSON and persists to D1', async () => {

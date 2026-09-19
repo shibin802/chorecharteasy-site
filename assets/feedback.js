@@ -22,7 +22,9 @@
           <label class="site-feedback-field" for="site-feedback-message"><span>Your message</span><textarea id="site-feedback-message" name="message" rows="4" aria-describedby="site-feedback-hint site-feedback-count" maxlength="1000" required placeholder="What happened, or what would make this easier?"></textarea></label>
           <label class="site-feedback-honeypot" aria-hidden="true">Website<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
           <div class="site-feedback-meta"><span id="site-feedback-hint">A few details are all we need.</span><span id="site-feedback-count">0 / 1,000</span></div>
-          <p class="site-feedback-privacy">Please leave out names, contact details, and children’s information or chart content. <a href="/privacy#support">How feedback is stored</a></p>
+          <label class="site-feedback-field site-feedback-email" for="site-feedback-email"><span>Email <small>(optional)</small></span><input id="site-feedback-email" type="email" name="email" maxlength="254" autocomplete="email" placeholder="you@example.com" aria-describedby="site-feedback-email-hint"></label>
+          <p class="site-feedback-meta" id="site-feedback-email-hint">If signed in, your account email is included by default. You can change or clear it. Used only to follow up on this feedback.</p>
+          <p class="site-feedback-privacy">Please leave names, children’s information, and chart content out of your message. <a href="/privacy#support">How feedback is stored</a></p>
           <div class="site-feedback-status" data-site-feedback-status role="status" aria-live="polite"></div>
           <button class="site-feedback-submit" type="submit">Send feedback <span aria-hidden="true">→</span></button>
           <p class="site-feedback-support">Need help with a payment? <a href="/account">Go to your account</a></p>
@@ -52,6 +54,17 @@
     const kinds = [...document.querySelectorAll("[data-feedback-kind]")];
     let selectedKind = null;
     let busy = false;
+    const email = document.getElementById("site-feedback-email");
+    let emailEdited = false;
+    email.addEventListener("input", () => { emailEdited = true; email.removeAttribute("aria-invalid"); });
+    async function fillAccountEmail() {
+      try {
+        const response = await fetch("/api/me", {cache:"no-store"});
+        if (!response.ok) return;
+        const me = await response.json();
+        if (!emailEdited) email.value = me.authenticated ? me.user.email : "";
+      } catch { /* Feedback remains available without the account lookup. */ }
+    }
 
     function setStatus(text = "", error = false) {
       status.textContent = text;
@@ -70,6 +83,7 @@
     }
 
     function openFeedback() {
+      void fillAccountEmail();
       if (success.hidden) setStatus();
       if (!dialog.open) dialog.showModal();
       document.body.classList.add("site-feedback-open");
@@ -122,6 +136,10 @@
         message.focus();
         return;
       }
+      if (email.value.trim() && !email.validity.valid) {
+        setStatus("Enter a valid email address or leave it blank.", true);
+        email.setAttribute("aria-invalid", "true"); email.focus(); return;
+      }
       busy = true;
       submit.disabled = true;
       form.setAttribute("aria-busy", "true");
@@ -131,7 +149,7 @@
         const response = await fetch("/api/feedback", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ kind: sentKind, message: text, page: location.pathname, website: form.elements.website.value })
+          body: JSON.stringify({ kind: sentKind, message: text, page: location.pathname, website: form.elements.website.value, ...(emailEdited ? {email:email.value.trim()} : {}) })
         });
         const result = await response.json().catch(() => ({}));
         if (!response.ok) throw new Error(response.status === 429 ? "rate_limited" : result?.error?.code || "unavailable");

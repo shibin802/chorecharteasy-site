@@ -12,7 +12,7 @@ const DEFAULT_SESSION_TTL_SECONDS = 30 * 24 * 60 * 60;
 const DEFAULT_MAGIC_LINK_TTL_SECONDS = 15 * 60;
 const ALLOWED_EARLY_ACCESS_FIELDS = new Set(["email", "consent", "source", "company"]);
 const ALLOWED_AUTH_FIELDS = new Set(["email"]);
-const ALLOWED_FEEDBACK_FIELDS = new Set(["kind", "message", "page", "website"]);
+const ALLOWED_FEEDBACK_FIELDS = new Set(["kind", "message", "page", "website", "email"]);
 const FEEDBACK_KINDS = new Set(["idea", "problem", "helpful", "other"]);
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PAYMENTS_ENABLED = false;
@@ -397,15 +397,28 @@ async function submitFeedback(request, env) {
     throw new ApiError(422, "invalid_feedback_page", "The feedback page is invalid.");
   }
 
+  let email = null;
+  if (Object.hasOwn(body, "email")) {
+    if (typeof body.email !== "string" || (body.email.trim() && !normalizeEmail(body.email))) {
+      throw new ApiError(422, "invalid_email", "Enter a valid email address or leave it blank.");
+    }
+    email = normalizeEmail(body.email);
+  } else {
+    const me = await (await currentUser(new Request(request.url, {headers: request.headers}), env)).json();
+    if (me.authenticated) email = normalizeEmail(me.user.email);
+  }
   const now = Math.floor(Date.now() / 1000);
   await checkRateLimit(db, "feedback:global", 120, 10 * 60, now);
   const id = crypto.randomUUID();
   const reference = `CCE-${id.replaceAll("-", "").slice(0, 8).toUpperCase()}`;
-  await db.prepare(`
+  const insertFeedback = db.prepare(`
     INSERT INTO feedback_submissions (
       id, reference, kind, message, page_path, status, created_at, reviewed_at, deleted_at
     ) VALUES (?, ?, ?, ?, ?, 'new', ?, NULL, NULL)
-  `).bind(id, reference, kind, message, page, now).run();
+  `).bind(id, reference, kind, message, page, now);
+  const writes = [insertFeedback];
+  if (email) writes.push(db.prepare('INSERT INTO feedback_contacts (feedback_id,email) VALUES (?,?)').bind(id,email));
+  await db.batch(writes);
   await audit(db, "feedback_submitted", "feedback_submission", id);
   return jsonResponse({ ok: true, accepted: true, reference }, 201);
 }

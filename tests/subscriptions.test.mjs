@@ -70,3 +70,17 @@ test('live subscription checkout and paid entitlement are isolated from sandbox 
   latest.status='active';latest.livemode=false;await syncSubscription(production,'sub_live');assert.equal((await subscriptionAccess(production,'u3')).plan,'free');
  }finally{user=oldUser;live=false;price.livemode=false;customer='cus_one';}
 });
+
+ test('price change creates a new recurring checkout instead of returning the old cached price',async()=>{
+ existing=[];signedIn=true;user='u1';
+ const originalId=price.id, originalAmount=price.unit_amount;
+ try {
+  price.id='price_monthly_299';price.unit_amount=299;
+  payload=null;
+  await subscribe(req(),{...env,STRIPE_SUBSCRIPTION_PRICE_ID:price.id},h);
+  assert.equal(payload.get('mode'),'subscription');
+  assert.equal(payload.get('line_items[0][price]'),'price_monthly_299');
+  const plan=await(await subscriptionPlan(req('GET'),env,h)).json();
+  assert.equal(plan.amount,299);assert.equal(plan.interval,'month');
+ }finally{price.id=originalId;price.unit_amount=originalAmount;}
+});

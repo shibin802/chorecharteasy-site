@@ -29,7 +29,7 @@ async function monthlyPrice(env) {
 }
 export async function subscriptionPlan(request, env, h) {
   if (request.method !== 'GET') throw new h.ApiError(405, 'method_not_allowed', 'Use GET.');
-  if (!subscriptionReady(env)) return h.jsonResponse({ok:true, enabled:false, amount:100, currency:'usd', interval:'month', testMode:!isLiveBilling(env)});
+  if (!subscriptionReady(env)) return h.jsonResponse({ok:true, enabled:false, amount:299, currency:'usd', interval:'month', testMode:!isLiveBilling(env)});
   const price = await monthlyPrice(env);
   return h.jsonResponse({ok:true, enabled:true, amount:price.unit_amount, currency:price.currency, interval:'month', testMode:!isLiveBilling(env)});
 }
@@ -47,7 +47,8 @@ export async function subscribe(request, env, h) {
   // Query Stripe too: an earlier successful checkout may still be waiting for its webhook.
   const existing = await stripe.subscriptions.list({customer:customer.customer_id,status:'all',limit:100});
   if (existing.data.some(s=>!['canceled','incomplete_expired'].includes(s.status))) throw new h.ApiError(409,'subscription_exists','You already have a subscription. Manage it from your account.');
-  if (customer.checkout_url && customer.checkout_expires_at > now) {
+  const cachedAttempt = await env.DB.prepare('SELECT * FROM billing_checkout_attempts WHERE user_id=?').bind(me.user.id).first();
+  if (customer.checkout_url && customer.checkout_expires_at > now && cachedAttempt?.price_id === price.id && cachedAttempt.checkout_id === customer.checkout_id) {
     await recordActivity(env,{id:`checkout-open:${crypto.randomUUID()}`,userId:me.user.id,type:'checkout.opened',source:'server',resourceId:customer.checkout_id,status:'open',amount:price.unit_amount,currency:price.currency,live:isLiveBilling(env)});
     return h.jsonResponse({ok:true,url:customer.checkout_url,testMode:!isLiveBilling(env)});
   }

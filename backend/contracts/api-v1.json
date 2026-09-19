@@ -9,8 +9,8 @@
     },
     "auth": {
       "enabledByDefault": false,
-      "method": "email_magic_link",
-      "productionDelivery": "blocked_until_provider_and_legal_review"
+      "method": "google",
+      "productionDelivery": "requires_google_client_configuration"
     },
     "earlyAccess": {
       "enabledByDefault": false,
@@ -34,6 +34,13 @@
       "requiresAccount": false,
       "acceptsEmail": false,
       "storage": "cloudflare_d1"
+    },
+    "testPayments": {
+      "enabledByDefault": false,
+      "mode": "test_only",
+      "checkoutEndpoint": "/api/billing/checkout",
+      "webhookEndpoint": "/api/billing/webhook",
+      "grantsEntitlements": false
     }
   },
   "session": {
@@ -48,29 +55,43 @@
     {
       "name": "account_email",
       "classification": "personal",
-      "storedIn": ["users", "login_tokens"],
+      "storedIn": [
+        "users",
+        "login_tokens"
+      ],
       "analyticsAllowed": false,
       "retention": "blocked_pending_legal_review"
     },
     {
       "name": "early_access_email",
       "classification": "personal_marketing",
-      "storedIn": ["early_access_signups"],
+      "storedIn": [
+        "early_access_signups"
+      ],
       "analyticsAllowed": false,
       "retention": "blocked_pending_legal_review"
     },
     {
       "name": "session_token_hash",
       "classification": "authentication",
-      "storedIn": ["sessions"],
+      "storedIn": [
+        "sessions"
+      ],
       "analyticsAllowed": false,
       "retention": "30_days_or_logout"
     },
     {
       "name": "product_feedback",
       "classification": "user_supplied_text",
-      "storedIn": ["feedback_submissions"],
-      "fields": ["kind", "message", "page_path", "created_at"],
+      "storedIn": [
+        "feedback_submissions"
+      ],
+      "fields": [
+        "kind",
+        "message",
+        "page_path",
+        "created_at"
+      ],
       "analyticsAllowed": false,
       "retention": "only_as_long_as_reasonably_needed_for_review_service_improvement_or_obligations"
     }
@@ -112,8 +133,18 @@
       "path": "/api/feedback",
       "auth": "none",
       "writes": true,
-      "requestFields": ["kind", "message", "page", "website"],
-      "acceptedKinds": ["idea", "problem", "helpful", "other"],
+      "requestFields": [
+        "kind",
+        "message",
+        "page",
+        "website"
+      ],
+      "acceptedKinds": [
+        "idea",
+        "problem",
+        "helpful",
+        "other"
+      ],
       "rateLimit": "120_per_10_minutes_global_without_user_identifier",
       "success": 201
     },
@@ -123,7 +154,12 @@
       "auth": "none",
       "writes": true,
       "featureFlag": "EARLY_ACCESS_ENABLED",
-      "requestFields": ["email", "consent", "source", "company"],
+      "requestFields": [
+        "email",
+        "consent",
+        "source",
+        "company"
+      ],
       "rateLimit": "10_per_hour_per_pseudonymous_ip_bucket",
       "success": 202
     },
@@ -133,7 +169,9 @@
       "auth": "none",
       "writes": true,
       "featureFlag": "AUTH_ENABLED",
-      "requestFields": ["email"],
+      "requestFields": [
+        "email"
+      ],
       "rateLimit": "5_per_15_minutes_per_email_and_ip",
       "success": 202
     },
@@ -143,7 +181,9 @@
       "auth": "one_time_token",
       "writes": true,
       "featureFlag": "AUTH_ENABLED",
-      "queryFields": ["token"],
+      "queryFields": [
+        "token"
+      ],
       "success": 302
     },
     {
@@ -159,6 +199,31 @@
       "auth": "optional_session",
       "writes": true,
       "success": 204
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/google/challenge",
+      "description": "Creates a short-lived browser-bound Google sign-in nonce"
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/google",
+      "description": "Verifies Google identity and creates an adult session"
+    },
+    {
+      "method": "POST",
+      "path": "/api/billing/checkout",
+      "description": "Creates authenticated Stripe test checkout for the server price"
+    },
+    {
+      "method": "POST",
+      "path": "/api/billing/webhook",
+      "description": "Verifies Stripe signatures and records test payment status idempotently"
+    },
+    {
+      "method": "GET",
+      "path": "/api/billing/orders",
+      "description": "Lists only the authenticated user test orders"
     }
   ]
 }

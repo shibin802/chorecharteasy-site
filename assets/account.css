@@ -1,0 +1,8 @@
+.account-main { max-width: 760px; padding-top: 48px; padding-bottom: 64px; }
+.account-main section { margin-block: 24px; padding: 24px; border: 1px solid #ded7ca; border-radius: 16px; background: #fffdf8; }
+.account-main p { margin-block: 16px; }
+.account-main h1 { font-size: clamp(2rem, 5vw, 3rem); }
+.account-main input { margin-right: 8px; }
+.account-main button:disabled { opacity: .55; cursor: not-allowed; }
+#google-button { margin-top: 20px; }
+[hidden] { display: none !important; }

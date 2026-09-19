@@ -122,7 +122,6 @@ class FrontendV2Contract(unittest.TestCase):
             "$4.99/month",
             "Pro Toolkit",
             "Pro Family",
-            "test checkout",
             "Lifetime",
             "COPPA compliant",
             "100% private",
@@ -161,11 +160,14 @@ class FrontendV2Contract(unittest.TestCase):
         self.assertIn('getElementById("close-consent")?.addEventListener("click", () => savePreference(false)', js)
         self.assertNotIn("ga-disable-", js)
 
-    def test_plausible_is_enabled_on_every_public_page(self):
+    def test_plausible_is_enabled_except_on_private_account_page(self):
         expected_src = "https://plausible.shipsolo.io/js/script.js"
         for path in ROOT.glob("*.html"):
             doc = self.parse(path.name)
             html = path.read_text(encoding="utf-8")
+            if path.name == "account.html":
+                self.assertNotIn(expected_src, doc.scripts)
+                continue
             self.assertIn(expected_src, doc.scripts, path.name)
             self.assertIn('data-domain="chorecharteasy.com"', html, path.name)
 
@@ -425,7 +427,7 @@ class FrontendV2Contract(unittest.TestCase):
         self.assertTrue(review.exists())
 
     def test_sitewide_feedback_is_real_minimized_and_disclosed(self):
-        public_pages = [path for path in ROOT.glob("*.html")]
+        public_pages = [path for path in ROOT.glob("*.html") if path.name != "account.html"]
         for page in public_pages:
             html = page.read_text(encoding="utf-8")
             feedback_css_version = "20260822-workbench-v2" if page.name == "index.html" else "20260822-feedback-v1"

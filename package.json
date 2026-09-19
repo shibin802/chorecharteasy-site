@@ -1,0 +1,29 @@
+{
+  "name": "chorecharteasy-site",
+  "version": "1.0.0",
+  "description": "ChoreChartEasy Pages Functions",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "node --test tests/auth-billing.test.mjs",
+    "check": "npm test && python3 -m unittest discover -s tests -v"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shibin802/chorecharteasy-site.git"
+  },
+  "keywords": [],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/shibin802/chorecharteasy-site/issues"
+  },
+  "homepage": "https://github.com/shibin802/chorecharteasy-site#readme",
+  "dependencies": {
+    "jose": "^6.2.12",
+    "stripe": "^22.6.2"
+  },
+  "private": true,
+  "type": "module"
+}

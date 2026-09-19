@@ -377,7 +377,11 @@
   let pageTitleBeforePrint = null;
   function setPrintTitle() {
     if (pageTitleBeforePrint === null) pageTitleBeforePrint = document.title;
-    document.title = chart.starter === "morning" ? "morning-routine" : chart.starter === "blank" ? "chore-chart" : "weekly-chore-chart";
+    const filename = (chart.title || "").trim()
+      .replace(/[<>:"/\\|?*\u0000-\u001f\u007f]/g, "-")
+      .replace(/\s+/gu, "-").replace(/-+/g, "-")
+      .replace(/^[.\-]+|[.\-]+$/g, "");
+    document.title = filename || "chore-chart";
   }
 
   async function printChart() {

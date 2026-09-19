@@ -35,6 +35,7 @@ export async function testCheckout(request, env, helpers) {
   const origin = new URL(env.PUBLIC_ORIGIN).origin;
   const session = await stripe.checkout.sessions.create({
     mode: 'payment',
+    adaptive_pricing: { enabled: false },
     line_items: [{ price: price.id, quantity: 1 }],
     client_reference_id: me.user.id,
     metadata: { application: 'chorecharteasy', user_id: me.user.id },

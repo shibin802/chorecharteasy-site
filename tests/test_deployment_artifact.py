@@ -22,6 +22,7 @@ class DeploymentArtifactContract(unittest.TestCase):
 
             for required in (
                 "index.html",
+                "how-to-save-chore-chart-as-pdf.html",
                 "_headers",
                 "assets/site.css",
                 "assets/site.js",

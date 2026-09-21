@@ -27,6 +27,7 @@ ROOT_FILES = (
     "billing-test.html",
     "404.html",
     "printable-chore-chart.html",
+    "how-to-save-chore-chart-as-pdf.html",
     "chore-randomizer.html",
     "chores-for-3-year-olds.html",
     "chores-for-5-year-olds.html",

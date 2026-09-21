@@ -28,50 +28,108 @@
   <script defer src="/assets/feedback.js?v=20260919-feedback-v4"></script>
   <script defer src="/assets/print-access.js?v=20260919-paid-print"></script>
   <script defer src="/assets/site.js?v=20260919-pdf-title-v2"></script>
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@graph":[
-      {
-        "@type":"Organization",
-        "@id":"https://chorecharteasy.com/#organization",
-        "name":"ChoreChartEasy",
-        "url":"https://chorecharteasy.com/"
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://chorecharteasy.com/#organization",
+      "name": "ChoreChartEasy",
+      "url": "https://chorecharteasy.com/"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://chorecharteasy.com/#website",
+      "name": "ChoreChartEasy",
+      "url": "https://chorecharteasy.com/",
+      "publisher": {
+        "@id": "https://chorecharteasy.com/#organization"
       },
-      {
-        "@type":"WebSite",
-        "@id":"https://chorecharteasy.com/#website",
-        "name":"ChoreChartEasy",
-        "url":"https://chorecharteasy.com/",
-        "publisher":{"@id":"https://chorecharteasy.com/#organization"},
-        "inLanguage":"en-US"
+      "inLanguage": "en-US"
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://chorecharteasy.com/#app",
+      "name": "ChoreChartEasy",
+      "url": "https://chorecharteasy.com/",
+      "isPartOf": {
+        "@id": "https://chorecharteasy.com/#website"
       },
-      {
-        "@type":"WebApplication",
-        "@id":"https://chorecharteasy.com/#app",
-        "name":"ChoreChartEasy",
-        "url":"https://chorecharteasy.com/",
-        "isPartOf":{"@id":"https://chorecharteasy.com/#website"},
-        "publisher":{"@id":"https://chorecharteasy.com/#organization"},
-        "applicationCategory":"LifestyleApplication",
-        "operatingSystem":"Any",
-        "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
-        "description":"A free browser-based maker for editable printable chore charts for kids ages 3–12."
+      "publisher": {
+        "@id": "https://chorecharteasy.com/#organization"
       },
-      {
-        "@type":"FAQPage",
-        "mainEntity":[
-          {"@type":"Question","name":"Is ChoreChartEasy free?","acceptedAnswer":{"@type":"Answer","text":"Yes. You can make and print charts for free with a ChoreChartEasy watermark. Plus is a monthly subscription for watermark-free printing."}},
-          {"@type":"Question","name":"Do I need an account?","acceptedAnswer":{"@type":"Answer","text":"No. The free chart maker does not require an account, and children should not create one. One active draft is stored in this browser so you can return on the same device."}},
-          {"@type":"Question","name":"What ages does the chart maker support?","acceptedAnswer":{"@type":"Answer","text":"The starting library covers ages 3–12 in four groups: 3–4, 5–6, 7–9, and 10–12. The suggestions are starting points, so an adult should adjust every task to the child’s abilities and home environment."}},
-          {"@type":"Question","name":"Can I print on US Letter and A4 paper?","acceptedAnswer":{"@type":"Answer","text":"Yes. Preview the chart, choose US Letter or A4, and use your browser’s print controls to print or save as PDF. Check your printer’s scale and margin settings before printing."}},
-          {"@type":"Question","name":"Where is my chart saved?","acceptedAnswer":{"@type":"Answer","text":"The chart maker is designed to keep one active draft in this browser. It is not cloud backup and will not automatically appear on another device. Clearing this site’s browser data removes the draft."}},
-          {"@type":"Question","name":"Are the chore suggestions right for every child?","acceptedAnswer":{"@type":"Answer","text":"No. They are general age-based starting ideas, not professional child-development or safety advice. An adult should consider the child’s abilities, supervision needs, tools, products, pets, allergies, and home environment."}}
-        ]
-      }
-    ]
-  }
-  </script>
+      "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "A free browser-based maker for editable printable chore charts for kids ages 3–12."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is ChoreChartEasy free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. You can make and print charts for free with a ChoreChartEasy watermark. Plus is a monthly subscription for watermark-free printing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need an account?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The free chart maker does not require an account, and children should not create one. One active draft is stored in this browser so you can return on the same device."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What ages does the chart maker support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The starting library covers ages 3–12 in four groups: 3–4, 5–6, 7–9, and 10–12. The suggestions are starting points, so an adult should adjust every task to the child’s abilities and home environment."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I print on US Letter and A4 paper?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Preview the chart, choose US Letter or A4, and use your browser’s print controls to print or save as PDF. Check your printer’s scale and margin settings before printing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where is my chart saved?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The chart maker is designed to keep one active draft in this browser. It is not cloud backup and will not automatically appear on another device. Clearing this site’s browser data removes the draft."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are the chore suggestions right for every child?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. They are general age-based starting ideas, not professional child-development or safety advice. An adult should consider the child’s abilities, supervision needs, tools, products, pets, allergies, and home environment."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I edit the days or add time-block columns?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The chart uses fixed Monday-to-Sunday columns. You can edit the title and task text, add or remove task rows, and tick the daily checkboxes. The maker does not offer editable day columns or time-block columns."
+          }
+        }
+      ]
+    }
+  ]
+}</script>
   <script defer data-domain="chorecharteasy.com" src="https://plausible.shipsolo.io/js/script.js"></script>
 <link rel="stylesheet" href="/assets/account.css?v=4">
 <script type="module" src="/assets/auth-nav.js"></script>
@@ -269,6 +327,7 @@
       <div class="wrap">
         <div class="section-head"><div><span class="kicker">Keep exploring</span><h2>Chore ideas and printable tools</h2></div><p>Choose a guide for your child’s age, your family setup, or the routine you want to print.</p></div>
         <nav class="guide-links" aria-label="Chore guides and tools">
+          <a class="guide-link" href="/how-to-save-chore-chart-as-pdf"><strong>Save a chart as PDF</strong><span>Follow the A4 and US Letter printing steps.</span></a>
           <a class="guide-link" href="/printable-chore-chart"><strong>Printable chore chart</strong><span>Edit a clean weekly chart before printing.</span></a>
           <a class="guide-link" href="/chores-for-3-year-olds"><strong>Chores for ages 3–4</strong><span>Small jobs with close adult help.</span></a>
           <a class="guide-link" href="/chores-for-5-year-olds"><strong>Chores for ages 5–6</strong><span>Practical routines to practice together.</span></a>
@@ -282,6 +341,7 @@
       <div class="narrow">
         <span class="kicker">FAQ</span><h2>Frequently asked questions</h2>
         <div class="faq">
+          <details><summary>Can I edit the days or add time-block columns?</summary><p>No. The chart uses fixed Monday-to-Sunday columns. You can edit the title and task text, add or remove task rows, and tick the daily checkboxes. The maker does not offer editable day columns or time-block columns.</p></details>
           <details><summary>Is ChoreChartEasy free?</summary><p>Yes. You can make and print charts for free with a ChoreChartEasy watermark. Plus is a monthly subscription for watermark-free printing.</p></details>
           <details><summary>Do I need an account?</summary><p>No. The free chart maker does not require an account, and children should not create one. One active draft is stored in this browser so you can return on the same device.</p></details>
           <details><summary>What ages does the chart maker support?</summary><p>The starting library covers ages 3–12 in four groups: 3–4, 5–6, 7–9, and 10–12. The suggestions are starting points, so an adult should adjust every task to the child’s abilities and home environment.</p></details>

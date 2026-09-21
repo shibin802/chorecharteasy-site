@@ -97,6 +97,8 @@ class SeoContract(unittest.TestCase):
 
     def test_visible_faqs_are_machine_readable_on_guide_pages(self):
         guides = (
+            "index.html",
+            "how-to-save-chore-chart-as-pdf.html",
             "chores-for-3-year-olds.html",
             "chores-for-5-year-olds.html",
             "chore-chart-for-multiple-kids.html",

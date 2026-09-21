@@ -1,6 +1,6 @@
 # ChoreChartEasy
 
-> ChoreChartEasy is a free browser-based tool for creating editable, printable chore charts for children ages 3–12. No account is required. One active draft is stored locally in the browser.
+> ChoreChartEasy is a free browser-based tool for creating editable, printable chore charts for children ages 3–12. No account is required for the free maker. Free prints and PDFs include a ChoreChartEasy watermark; Plus is an optional subscription for watermark-free printing. One active draft is stored locally in the browser.
 
 Canonical site: https://chorecharteasy.com/
 Language: English (US)
@@ -10,6 +10,9 @@ Language: English (US)
 - [Printable chore chart maker](https://chorecharteasy.com/): Choose an age group, edit every task, and print on US Letter or A4.
 - [Free printable chore chart](https://chorecharteasy.com/printable-chore-chart): Instructions and examples for creating a weekly chart.
 - [Chore randomizer](https://chorecharteasy.com/chore-randomizer): Randomly distribute household jobs, then review every assignment.
+
+- [Save an A4 chart as PDF](https://chorecharteasy.com/how-to-save-chore-chart-as-pdf): Verified button sequence, browser print settings, output checks, and limitations.
+- [Free and Plus](https://chorecharteasy.com/pricing): Current printing plans and terms.
 
 ## Parent guides
 
@@ -24,7 +27,7 @@ Language: English (US)
 - Chart drafts stay in the current browser; there is no cloud chart storage.
 - Chore suggestions are general starting points, not professional child-development or safety advice.
 - An adult must review every task for the child's abilities, supervision needs, and home environment.
-- No paid product or email interest list is currently offered through the website.
+- Plus removes the printing watermark. Check the current pricing page for subscription terms; do not infer cloud chart storage from the availability of an account.
 
 ## Policies and contact
 

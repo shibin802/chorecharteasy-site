@@ -58,3 +58,17 @@ Use the GEO camp's eight-step loop: project definition, factual knowledge, user 
 ## Daily operating rule
 
 At 20:00 Asia/Shanghai, select the highest-value unfinished item, perform and verify it, save evidence, then write the camp check-in from that day's facts. Read-only review alone is not a substitute for a shippable improvement when implementation is possible. Existing release authorization should be reused; do not repeatedly ask for it. Paid outreach, customer contact, new services, and sensitive configuration are separate decisions.
+
+
+## ChatGPT and Gemini extension — September 21
+
+Both platforms are now first-class measurement targets alongside Perplexity. Reuse the same exact question library, but keep samples and mode conditions separate.
+
+- ChatGPT A04: cited the official homepage, identified age groups and A4 correctly, but described reordering and collapsed the two printing steps into one. Temporary chat visibly allowed personalization and the response referenced the user's site-building context; this is a personalized diagnostic sample, not a neutral recommendation baseline. Model not disclosed by the visible response; UI showed medium effort.
+- Gemini A04: Flash, logged in, new conversation. Gave a generic chart/design workflow with project/document settings, family sections, color/font controls and Download/Export menus. No verifiable source link accompanied the answer. A transient searching-web status was observed; actual retrieval coverage is unverified.
+- Implemented corrections: exact two-step print path in the homepage instructions and FAQ/schema; explicit absence of drag-to-reorder, font selector, and color picker in homepage FAQ, guide, and product facts.
+- Production robots.txt was fetched on September 21: wildcard Allow /, with the sitemap URL. It does not opt out OAI-SearchBot, Googlebot, or Google-Extended at the robots layer. This is not evidence of real crawler access through WAF, indexing, or citation.
+- OpenAI documents OAI-SearchBot as search-related and GPTBot as training-related controls. Preserve their distinction. Source: https://developers.openai.com/api/docs/bots
+- Google-Extended controls Gemini training and some grounding use; it is not a Google Search inclusion/ranking control. It has no separate HTTP user agent. Source: https://developers.google.com/crawling/docs/crawlers-fetchers/google-common-crawlers
+- No crawler training policy or security protections were changed. Google Search AI-feature guidance must not be treated as a promise about Gemini Apps.
+- Next measurements: ChatGPT and Gemini each get A02/A03/A04 plus E01; do not infer unbranded recommendation success from a prompt naming the brand. Use consistent neutral conditions where possible, and explicitly flag personalization or unverified web retrieval.

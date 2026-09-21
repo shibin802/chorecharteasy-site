@@ -21,6 +21,10 @@ Language: English (US)
 - [Chore chart for multiple kids](https://chorecharteasy.com/chore-chart-for-multiple-kids)
 - [Morning routine chart for kids](https://chorecharteasy.com/morning-routine-chart-for-kids)
 
+## Printing workflow
+
+Choose A4 or US Letter in the editor. Click Print chart, then Print or save PDF in the site preview, then save using browser print controls. The first click does not automatically open the browser print dialog. The maker uses fixed Monday-to-Sunday columns and has no drag-to-reorder, font selector, or color picker.
+
 ## Product and safety boundaries
 
 - The current chart maker is free and requires no account.

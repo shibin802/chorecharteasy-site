@@ -1,6 +1,6 @@
 # GEO execution board
 
-Updated 2026-09-21. This board records the GEO workstream only. It does not replace deployment or billing configuration records.
+Updated 2026-09-22. This board records the GEO workstream only. It does not replace deployment or billing configuration records.
 
 ## Objective and method
 
@@ -11,7 +11,7 @@ Use the GEO camp's eight-step loop: project definition, factual knowledge, user 
 ## Current evidence and selected changes
 
 - Source baseline: main commit 91228a065e657de1abc14ccb5603b369e32df236, rechecked September 21.
-- Live maker: A4 selected in editor; Print chart opens preview; Print or save PDF is the next button. Fixed Monday–Sunday columns; editable title/tasks and task rows. Browser PDF saving still requires a separate saved-file check.
+- Live maker: A4 selected in editor; Print chart opens preview; Print or save PDF is the next button. Fixed Monday–Sunday columns; editable title/tasks and task rows. A short A4 Free sample was saved and inspected on September 22; see the acceptance entry below.
 - Live pricing: Free prints/PDFs have a watermark; Plus is optional and removes it. No claim that sign-in provides cloud chart storage.
 - Existing llms.txt incorrectly says no paid product is offered. Correct this consistency error; llms.txt is not a prerequisite for AI inclusion.
 - Fresh A04 Perplexity sample cites the official homepage, but invents editable day/time-block columns and adding/removing columns, names the preview buttons imprecisely, and places A4 in preview settings. This is a single pre-change observation, not a measured trend.
@@ -28,7 +28,7 @@ Use the GEO camp's eight-step loop: project definition, factual knowledge, user 
 | Discovery | Implemented, release pending | Homepage + related-page links, canonical/schema, sitemap, artifact allowlist |
 | Product facts | Implemented, release pending | Remove outdated no-paid-product statement from llms.txt |
 | Formal publication | Pending | Record production URL, commit, deploy run, HTTP and UI checks only after release |
-| Saved PDF acceptance | Pending | Export/reopen a neutral A4 sample; inspect clipping and page dimensions |
+| Saved PDF acceptance | Passed for one short Free sample, September 22 | Desktop Chrome/macOS, signed out on release preview 6e96823; five Ages 5–6 starter tasks; A4 portrait/default margins/default scale; one page, 594.95996 × 841.91998 pt; all seven weekdays and five task rows visible without clipping; Free watermark present. Long lists, other browsers and paid export untested. |
 | Post-release AI response | Pending | Same exact prompts; record actual mode and conditions on each run |
 | Third-party evidence | Missing | Never turn own content into independent endorsement |
 | GSC/Bing | Unverified | Check access, indexed status, and sitemap receipt; HTTP 200 is not indexing |
@@ -72,3 +72,7 @@ Both platforms are now first-class measurement targets alongside Perplexity. Reu
 - Google-Extended controls Gemini training and some grounding use; it is not a Google Search inclusion/ranking control. It has no separate HTTP user agent. Source: https://developers.google.com/crawling/docs/crawlers-fetchers/google-common-crawlers
 - No crawler training policy or security protections were changed. Google Search AI-feature guidance must not be treated as a promise about Gemini Apps.
 - Next measurements: ChatGPT and Gemini each get A02/A03/A04 plus E01; do not infer unbranded recommendation success from a prompt naming the brand. Use consistent neutral conditions where possible, and explicitly flag personalization or unverified web retrieval.
+
+## September 22 acceptance evidence
+
+Browser Save as PDF produced a local file, reopened with a PDF parser and rendered for visual inspection. SHA-256: `7e6fd382f512fe5893d2d5ef6d8b082a38822460a100a25bcd938399b7be4dea`. This is product-workflow evidence, not an AI citation or customer outcome. The guide now states the tested conditions and limits. Production release remains pending authorization.

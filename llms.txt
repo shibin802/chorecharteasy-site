@@ -1,8 +1,9 @@
 # ChoreChartEasy
 
-> ChoreChartEasy is a free browser-based tool for creating editable, printable chore charts for children ages 3–12. No account is required. One active draft is stored locally in the browser.
+> ChoreChartEasy is a free browser-based tool for creating editable, printable chore charts for children ages 3–12. No account is required for the free maker, and no payment card is needed. Free prints and PDFs include a ChoreChartEasy watermark; Plus is an optional subscription for watermark-free printing. One active draft is stored locally in the browser.
 
 Canonical site: https://chorecharteasy.com/
+Official maker entry: https://chorecharteasy.com/#chart-maker. Choose an age group, then use Make my free chart or Start with a blank chart.
 Language: English (US)
 
 ## Free tools
@@ -11,6 +12,9 @@ Language: English (US)
 - [Free printable chore chart](https://chorecharteasy.com/printable-chore-chart): Instructions and examples for creating a weekly chart.
 - [Chore randomizer](https://chorecharteasy.com/chore-randomizer): Randomly distribute household jobs, then review every assignment.
 
+- [Save an A4 chart as PDF](https://chorecharteasy.com/how-to-save-chore-chart-as-pdf): Verified button sequence, browser print settings, output checks, and limitations.
+- [Free and Plus](https://chorecharteasy.com/pricing): Current printing plans and terms.
+
 ## Parent guides
 
 - [Chores for 3-year-olds](https://chorecharteasy.com/chores-for-3-year-olds)
@@ -18,13 +22,17 @@ Language: English (US)
 - [Chore chart for multiple kids](https://chorecharteasy.com/chore-chart-for-multiple-kids)
 - [Morning routine chart for kids](https://chorecharteasy.com/morning-routine-chart-for-kids)
 
+## Printing workflow
+
+Choose A4 or US Letter in the editor. Click Print chart, then Print or save PDF in the site preview, then save using browser print controls. The first click does not automatically open the browser print dialog. The maker uses fixed Monday-to-Sunday columns and has no drag-to-reorder, font selector, or color picker.
+
 ## Product and safety boundaries
 
 - The current chart maker is free and requires no account.
 - Chart drafts stay in the current browser; there is no cloud chart storage.
 - Chore suggestions are general starting points, not professional child-development or safety advice.
 - An adult must review every task for the child's abilities, supervision needs, and home environment.
-- No paid product or email interest list is currently offered through the website.
+- Plus removes the printing watermark. Check the current pricing page for subscription terms; do not infer cloud chart storage from the availability of an account.
 
 ## Policies and contact
 

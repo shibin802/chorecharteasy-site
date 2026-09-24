@@ -28,7 +28,8 @@
   <script defer src="/assets/feedback.js?v=20260919-feedback-v4"></script>
   <script defer src="/assets/print-access.js?v=20260919-paid-print"></script>
   <script defer src="/assets/site.js?v=20260919-pdf-title-v2"></script>
-  <script type="application/ld+json">{
+  <script type="application/ld+json">
+{
   "@context": "https://schema.org",
   "@graph": [
     {
@@ -72,10 +73,18 @@
       "mainEntity": [
         {
           "@type": "Question",
+          "name": "What is the official ChoreChartEasy website, and where do I start?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The official ChoreChartEasy website is https://chorecharteasy.com/. The chart maker is on the homepage: choose an age group, then select Make my free chart or Start with a blank chart. Edit the tasks and title before printing."
+          }
+        },
+        {
+          "@type": "Question",
           "name": "Is ChoreChartEasy free?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. You can make and print charts for free with a ChoreChartEasy watermark. Plus is a monthly subscription for watermark-free printing."
+            "text": "The ChoreChartEasy maker at chorecharteasy.com costs $0 to use without an account or payment card. Free prints and saved PDFs include a ChoreChartEasy watermark. Plus is an optional monthly subscription that removes the watermark; see the pricing page for current terms."
           }
         },
         {
@@ -145,7 +154,8 @@
       ]
     }
   ]
-}</script>
+}
+  </script>
   <script defer data-domain="chorecharteasy.com" src="https://plausible.shipsolo.io/js/script.js"></script>
 <link rel="stylesheet" href="/assets/account.css?v=4">
 <script type="module" src="/assets/auth-nav.js"></script>
@@ -191,6 +201,7 @@
           <p class="hero-copy">Choose an age group, edit every task, and print a clear weekly chart on US Letter or A4.</p>
           <button class="button button-primary workbench-primary" type="button" data-start="weekly" data-track="hero_primary">Make my free chart</button>
           <p class="first-draft-note">Creates your first editable draft instantly.</p>
+          <p class="first-draft-note">No account or payment card needed. Free prints and PDFs include a watermark. <a href="/pricing">Optional Plus removes it.</a></p>
           <span class="sr-only">For parents and caregivers. No child account required.</span>
 
           <ul class="workbench-benefits" aria-label="Tool features">
@@ -357,10 +368,11 @@
       <div class="narrow">
         <span class="kicker">FAQ</span><h2>Frequently asked questions</h2>
         <div class="faq">
+          <details><summary>What is the official ChoreChartEasy website, and where do I start?</summary><p>The official ChoreChartEasy website is https://chorecharteasy.com/. The chart maker is on the homepage: choose an age group, then select Make my free chart or Start with a blank chart. Edit the tasks and title before printing.</p></details>
           <details><summary>Can I edit the days or add time-block columns?</summary><p>No. The chart uses fixed Monday-to-Sunday columns. You can edit the title and task text, add or remove task rows, and tick the daily checkboxes. The maker does not offer editable day columns or time-block columns.</p></details>
           <details><summary>How do I save an A4 chore chart as a PDF?</summary><p>Select A4 in the editor, click Print chart, then click Print or save PDF in the site preview. In your browser’s print controls, choose Save as PDF and inspect the saved file. Free PDFs include a watermark; Plus removes it.</p></details>
           <details><summary>Can I rearrange tasks or customize colors and fonts?</summary><p>The current maker has no drag-to-reorder control, color picker, or font selector. You can edit task text, add or remove rows, change the title, and tick the fixed weekday checkboxes. To change the order, rewrite the task text in the rows you want before ticking them.</p></details>
-          <details><summary>Is ChoreChartEasy free?</summary><p>Yes. You can make and print charts for free with a ChoreChartEasy watermark. Plus is a monthly subscription for watermark-free printing.</p></details>
+          <details><summary>Is ChoreChartEasy free?</summary><p>The ChoreChartEasy maker at chorecharteasy.com costs $0 to use without an account or payment card. Free prints and saved PDFs include a ChoreChartEasy watermark. Plus is an optional monthly subscription that removes the watermark; see the pricing page for current terms.</p></details>
           <details><summary>Do I need an account?</summary><p>No. The free chart maker does not require an account, and children should not create one. One active draft is stored in this browser so you can return on the same device.</p></details>
           <details><summary>What ages does the chart maker support?</summary><p>The starting library covers ages 3–12 in four groups: 3–4, 5–6, 7–9, and 10–12. The suggestions are starting points, so an adult should adjust every task to the child’s abilities and home environment.</p></details>
           <details><summary>Can I print on US Letter and A4 paper?</summary><p>Yes. Preview the chart, choose US Letter or A4, and use your browser’s print controls to print or save as PDF. Check your printer’s scale and margin settings before printing.</p></details>

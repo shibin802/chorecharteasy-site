@@ -1,6 +1,6 @@
 # GEO execution board
 
-Updated 2026-09-22. This board records the GEO workstream only. It does not replace deployment or billing configuration records.
+Updated 2026-09-24. This board records the GEO workstream only. It does not replace deployment or billing configuration records.
 
 ## Objective and method
 
@@ -76,3 +76,7 @@ Both platforms are now first-class measurement targets alongside Perplexity. Reu
 ## September 22 acceptance evidence
 
 Browser Save as PDF produced a local file, reopened with a PDF parser and rendered for visual inspection. SHA-256: `7e6fd382f512fe5893d2d5ef6d8b082a38822460a100a25bcd938399b7be4dea`. This is product-workflow evidence, not an AI citation or customer outcome. The guide now states the tested conditions and limits. Production release remains pending authorization.
+
+## September 24: official entry and free-plan boundary
+
+September 23 A03 diagnosis found a Gemini citation to a different tool (Simply Online), and a ChatGPT answer that omitted Free watermark and optional Plus. Added an official-entry FAQ with matching visible/schema text, a short Free/Plus note by the homepage start button, and a complete free-plan answer covering no account/payment card, watermark and optional subscription. Updated llms.txt and homepage sitemap date. Live pricing still states Free prints/PDFs have a watermark; no price amount is copied into the new answer. Production release remains pending; these changes do not prove AI retrieval or effect.
